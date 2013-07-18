@@ -1,3 +1,5 @@
+# Thorax Yeoman Generator
+
 Base all of the work off the latest version of this:
 
 https://github.com/walmartlabs/thorax-seed
