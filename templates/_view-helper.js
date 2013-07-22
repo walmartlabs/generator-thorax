@@ -1,0 +1,3 @@
+Handlebars.registerViewHelper('<%= name %>', function () {
+
+});

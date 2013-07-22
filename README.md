@@ -1,75 +1,91 @@
-# Thorax Yeoman Generator
+# Thorax Generator
 
-Base all of the work off the latest version of this:
+A Thorax generator for Yeoman that provides a boilerplate app out of the box. There are also a number of sub-generators which are used to create individual views, models, collections, etc.
 
-https://github.com/walmartlabs/thorax-seed
+## Getting started
 
-Structure the generator code much like the phoenix generator code. Each command should have a folder with `index.js` and `templates` if needed. Here are the commands:
+- Make sure you have [yo](https://github.com/yeoman/yo) installed:
+    `npm install -g yo`
+- Install the generator: `npm install -g generator-thorax`
+- Run: `yo thorax [app-name]`
 
-## yo thorax $appName
+## Generators
 
-Creates a new thorax app. Should generate all of the directories in the thorax seed + all of the files you presently see in the repo (everything in root + files in js).
+Available generators:
 
-Some of the files can just be copied, but anything that says "Application" will become a template string like `<%= _.slugify(name) %>`. Check out mweb/templates/_package.json for an example.
+* [thorax](#application)
+* [thorax:router](#router)
+* [thorax:view](#view)
+* [thorax:model](#model)
+* [thorax:collection](#collection)
+* [thorax:collection-view](#collection-view)
+* [thorax:helper](#helper)
+* [thorax:view-helper](#view-helper)
 
-After the app is initially created read in the generated `lumbar.json` and grab the app name and make it available to the generator templates.
+### Application
 
-Note that although to actually get the app to work we would need to modify `lumbar.json` and add some entries, we don't want to do that right now as we are moving to AMD and this will likely change in the near future. Version one is a proof of concept and I'll modify it to work with AMD.
+Generates a basic new Thorax app.
 
-## yo thorax:router $routerName
+```
+yo thorax [application-name]
+```
 
-Generate a new router in `js/routers/$routerName.js`. The file should look something like:
+### Router
 
-    new (Backbone.Router.extend({
-      routes: {}
-    }));
+Generates a new router in `js/routers/[router-name].js`.
 
-## yo thorax:view $viewName
+```
+yo thorax:router [router-name]
+```
 
-Generate a new `View` class in `js/views/$viewName.js`. The file should look something like:
+### View
 
-    <%= appName %>.View.extend({
-      name: '<%= viewName %>'
-    });
+Generates a new View class in `js/views/[view-name].js`.
 
-## yo thorax:model $modelName
+```
+yo thorax:view [view-name]
+```
 
-Generate a new `Model` class in `js/models/$modelName.js`. The file should look something like:
+### Model
 
-    <%= appName %>.Model.extend({
-      name: '<%= modelName %>'
-    });
+Generates a new Model class in `js/models/[model-name].js`.
 
-## yo thorax:collection $collectionName
+```
+yo thorax:model [model-name]
+```
 
-Generate a new `Collection` class in `js/collection/$collectionName.js`. The file should look something like:
+### Collection
 
-    <%= appName %>.Model.extend({
-      name: '<%= collectionName %>'
-    });
+Generates a new Collection class in `js/collections/[collection-name].js`.
 
-## yo thorax:collection-view $collectionViewName
+```
+yo thorax:collection [collection-name]
+```
 
-Generate a new `CollectionView` class in `js/views/$collectionViewName.js`. The file should look something like:
+### Collection View
 
-    <%= appName %>.CollectionView.extend({
-      name: '<%= collectionViewName %>'
-    });
+Generates a new CollectionView class in `js/views/[collection-view-name].js`.
 
-## yo thorax:helper $helperName
+```
+yo thorax:collection-view [collection-view-name]
+```
 
-(also create a new `helpers` folder in the initial project generator which is not reflected in the current thorax-seed)
+### Helper
 
-Generate a new Handlebars helper in `js/helpers/$helperName.js`. The file should look something like:
+Generates a new Handlebars helper in `js/helpers/[helper-name].js`.
 
-    Handlebars.registerHelper('<%= helperName %>', function() {
+```
+yo thorax:helper [helper-name]
+```
 
-    });
+### View Helper
 
-## yo thorax:view-helper $viewHelperName
+Generates a new Handlebars helper in `js/helpers/[view-helper-name].js`.
 
-Generate a new Handlebars helper in `js/helpers/$viewHelperName.js`. The file should look something like:
+```
+yo thorax:view-helper [view-helper-name]
+```
 
-    Handlebars.registerViewHelper('<%= viewHelperName %>', function() {
+## License
 
-    });
+[MIT License](http://en.wikipedia.org/wiki/MIT_License)
