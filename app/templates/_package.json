@@ -6,6 +6,7 @@
     "handlebars": "~1.0.0",
     "grunt-contrib-connect": "0.1.1",
     "grunt": "~0.4",
+    "grunt-cli": "0.1.9",
     "lumbar": "2.2.5",
     "thorax-inspector": "0.2.4",
     "open": "0.0.3",
