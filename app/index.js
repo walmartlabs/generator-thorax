@@ -1,6 +1,6 @@
 var util = require('util');
 var path = require('path');
-var Base = require('../lib/named-argument');
+var Base = require('../lib/base');
 
 var ThoraxGenerator = module.exports = function (args, options, config) {
   Base.apply(this, arguments);
@@ -12,6 +12,7 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
 
 util.inherits(ThoraxGenerator, Base);
 
+ThoraxGenerator.prototype._name  = 'application';
 ThoraxGenerator.prototype.askFor = Base.prototype._askFor;
 
 ThoraxGenerator.prototype.app = function () {

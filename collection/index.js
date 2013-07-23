@@ -8,8 +8,9 @@ var CollectionGenerator = module.exports = function () {
 
 util.inherits(CollectionGenerator, Generator);
 
+CollectionGenerator.prototype._name  = 'collection';
 CollectionGenerator.prototype.askFor = Generator.prototype.askFor;
 
 CollectionGenerator.prototype.createCollection = function () {
-  this._renderTemplate('collection', 'js/collections');
+  this._renderTemplate('js/collections');
 };

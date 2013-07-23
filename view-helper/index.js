@@ -8,8 +8,9 @@ var ViewHelperGenerator = module.exports = function () {
 
 util.inherits(ViewHelperGenerator, Generator);
 
+ViewHelperGenerator.prototype._name  = 'view helper';
 ViewHelperGenerator.prototype.askFor = Generator.prototype.askFor;
 
 ViewHelperGenerator.prototype.createViewHelper = function () {
-  this._renderTemplate('view-helper', 'js/helpers');
+  this._renderTemplate('js/helpers');
 };

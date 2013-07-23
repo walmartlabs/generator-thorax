@@ -8,8 +8,9 @@ var RouterGenerator = module.exports = function () {
 
 util.inherits(RouterGenerator, Generator);
 
+RouterGenerator.prototype._name  = 'router';
 RouterGenerator.prototype.askFor = Generator.prototype.askFor;
 
 RouterGenerator.prototype.createRouter = function () {
-  this._renderTemplate('router', 'js/routers');
+  this._renderTemplate('js/routers');
 };

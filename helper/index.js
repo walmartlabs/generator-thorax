@@ -8,8 +8,9 @@ var HelperGenerator = module.exports = function () {
 
 util.inherits(HelperGenerator, Generator);
 
+HelperGenerator.prototype._name  = 'helper';
 HelperGenerator.prototype.askFor = Generator.prototype.askFor;
 
 HelperGenerator.prototype.createHelper = function () {
-  this._renderTemplate('helper', 'js/helpers');
+  this._renderTemplate('js/helpers');
 };

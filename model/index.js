@@ -8,8 +8,9 @@ var ModelGenerator = module.exports = function () {
 
 util.inherits(ModelGenerator, Generator);
 
+ModelGenerator.prototype._name  = 'model';
 ModelGenerator.prototype.askFor = Generator.prototype.askFor;
 
 ModelGenerator.prototype.createModel = function () {
-  this._renderTemplate('model', 'js/models');
+  this._renderTemplate('js/models');
 };

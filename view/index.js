@@ -8,8 +8,9 @@ var ViewGenerator = module.exports = function () {
 
 util.inherits(ViewGenerator, Generator);
 
+ViewGenerator.prototype._name  = 'view';
 ViewGenerator.prototype.askFor = Generator.prototype.askFor;
 
 ViewGenerator.prototype.createView = function () {
-  this._renderTemplate('view', 'js/views');
+  this._renderTemplate('js/views');
 };

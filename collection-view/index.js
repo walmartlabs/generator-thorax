@@ -8,8 +8,9 @@ var CollectionViewGenerator = module.exports = function () {
 
 util.inherits(CollectionViewGenerator, Generator);
 
+CollectionViewGenerator.prototype._name  = 'collection view';
 CollectionViewGenerator.prototype.askFor = Generator.prototype.askFor;
 
 CollectionViewGenerator.prototype.createCollectionView = function () {
-  this._renderTemplate('collection-view', 'js/views');
+  this._renderTemplate('js/views');
 };
