@@ -2,15 +2,14 @@ var util      = require('util');
 var path      = require('path');
 var Generator = require('../lib/generator');
 
-var ViewGenerator = module.exports = function () {
+var CollectionGenerator = module.exports = function () {
   Generator.apply(this, arguments);
 };
 
-util.inherits(ViewGenerator, Generator);
+util.inherits(CollectionGenerator, Generator);
 
-ViewGenerator.prototype.createView = function () {
-  this.template(
-    path.join(__dirname, '..', 'templates', '_collection.js'),
-    path.join('js/collections', this._.slugify(this.name) + '.js')
-  );
+CollectionGenerator.prototype.askFor = Generator.prototype.askFor;
+
+CollectionGenerator.prototype.createCollection = function () {
+  this._renderTemplate('collection', 'js/collections');
 };

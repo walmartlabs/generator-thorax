@@ -28,6 +28,23 @@ describe('thorax generator', function () {
     assert(require('../view-helper'));
   });
 
+  describe('each generater', function () {
+    ['app', 'collection', 'collection-view', 'helper', 'model',
+     'router', 'view', 'view-helper'].forEach(function (name) {
+      it(name + ' can be run without an explicit name', function (done) {
+        this.app.run({}, function () {
+          var test = helpers.createGenerator('thorax:' + name, ['../../' + name]);
+          test.options['skip-install'] = true;
+          helpers.mockPrompt(test, {
+            'name': 'test'
+          });
+
+          test.run([], done);
+        });
+      });
+    });
+  });
+
   it('creates expected files', function (done) {
     var expected = [
       '.jshintrc',

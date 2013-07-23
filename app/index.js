@@ -1,17 +1,18 @@
-var util   = require('util');
-var path   = require('path');
-var yeoman = require('yeoman-generator');
-
+var util = require('util');
+var path = require('path');
+var Base = require('../lib/named-argument');
 
 var ThoraxGenerator = module.exports = function (args, options, config) {
-  yeoman.generators.NamedBase.apply(this, arguments);
+  Base.apply(this, arguments);
 
   this.on('end', function () {
     this.installDependencies({ skipInstall: options['skip-install'] });
   });
 };
 
-util.inherits(ThoraxGenerator, yeoman.generators.NamedBase);
+util.inherits(ThoraxGenerator, Base);
+
+ThoraxGenerator.prototype.askFor = Base.prototype._askFor;
 
 ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
@@ -36,7 +37,7 @@ ThoraxGenerator.prototype.scripts = function () {
   this.template('_index.html', 'public/index.html');
 };
 
-ThoraxGenerator.prototype.projectfiles = function () {
+ThoraxGenerator.prototype.projectFiles = function () {
   this.copy('jshintrc', '.jshintrc');
   this.copy('editorconfig', '.editorconfig');
 };
