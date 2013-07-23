@@ -92,7 +92,8 @@ describe('thorax generator', function () {
       view.run([], function () {
         helpers.assertFiles([
           ['js/views/foo.js', /Test.View.extend\(\{/],
-          ['js/views/foo.js', /name: 'foo'/]
+          ['js/views/foo.js', /name: 'foo'/],
+          'templates/foo.handlebars'
         ]);
         done();
       });
@@ -129,12 +130,15 @@ describe('thorax generator', function () {
 
   describe('Thorax Collection View', function () {
     it('generates a Thorax collection view', function (done) {
-      var collectionView = helpers.createGenerator('thorax:collection-view', ['../../collection-view'], ['foo']);
+      var collectionView = helpers.createGenerator('thorax:collection-view', ['../../collection-view'], ['fooBar']);
 
       collectionView.run([], function () {
         helpers.assertFiles([
-          ['js/views/foo.js', /Test.CollectionView.extend\(\{/],
-          ['js/views/foo.js', /name: 'foo'/]
+          ['js/views/foo-bar.js', /Test.CollectionView.extend\(\{/],
+          ['js/views/foo-bar.js', /name: 'fooBar'/],
+          'templates/foo-bar.handlebars',
+          'templates/foo-bar-item.handlebars',
+          'templates/foo-bar-empty.handlebars'
         ]);
         done();
       });
