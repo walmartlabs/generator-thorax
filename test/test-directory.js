@@ -1,4 +1,5 @@
 /* global describe, beforeEach, it */
+var fs      = require('fs');
 var path    = require('path');
 var assert  = require('assert');
 var helpers = require('yeoman-generator').test;
@@ -9,15 +10,15 @@ describe('thorax generator', function () {
   });
 
   it('will generate the app in a new directory', function (done) {
-    var app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+    var app = helpers.createGenerator('thorax:app', ['../../app'], 'testApp');
     app.options['skip-install'] = true;
 
     helpers.mockPrompt(app, {
-      'newDirectory': true,
-      'directoryName': 'testing'
+      'newDirectory': true
     });
 
     app.run([], function () {
+      assert(fs.existsSync(path.join(__dirname, 'temp', 'test-app')));
       helpers.assertFiles([
         '.jshintrc',
         '.editorconfig',

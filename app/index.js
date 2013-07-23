@@ -1,3 +1,4 @@
+var fs   = require('fs');
 var util = require('util');
 var path = require('path');
 var Base = require('../lib/base');
@@ -25,23 +26,31 @@ ThoraxGenerator.prototype.askFor = Base.prototype._askFor;
 ThoraxGenerator.prototype.directory = function () {
   if (!this.newDirectory) { return; }
 
-  var cb = this.async();
+  this._checkAndCreateDirectory(this._.dasherize(this.name), this.async());
+};
 
-  var prompts = [{
-    type: 'input',
-    name: 'directoryName',
-    message: 'Enter a name for the new directory:'
-  }];
+ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
+  if (!directory) { return cb(new Error('Please provide a directory name')); }
 
-  this.prompt(prompts, function (props) {
-    if (!props.directoryName) { return cb(); }
+  fs.exists(path.join(this.destinationRoot(), directory), function (exists) {
+    // If the directory doesn't already exist, create a new directory and set
+    // the base destination path here
+    if (!exists) {
+      this.mkdir(directory);
+      this.destinationRoot(directory);
+      this.newDirectory = false;
+      return cb();
+    }
 
-    // Creates a new directory and set the base path to here
-    this.mkdir(props.directoryName);
-    this.destinationRoot(props.directoryName);
-    this.newDirectory = false;
+    var prompts = [{
+      type: 'input',
+      name: 'directoryName',
+      message: 'Directory already exists, enter a new name:'
+    }];
 
-    cb();
+    return this.prompt(prompts, function (props) {
+      this._checkAndCreateDirectory(props.directoryName, cb);
+    }.bind(this));
   }.bind(this));
 };
 
@@ -50,10 +59,8 @@ ThoraxGenerator.prototype.app = function () {
   this.template('_lumbar.json', 'lumbar.json');
   this.template('_package.json', 'package.json');
 
-  // Using directory helper in turn with the new directory prompt breaks copying
-  // files across. Should investigate in Yeoman later in case, but for now we
-  // can work around the issue by manually copying everything
-  // this.directory('seed', '.', true);
+  // Using the destinationRoot function seem to break the directory copy helper
+  // this.directory('seed', '.');
 
   this.copy('seed/README.md', 'README.md');
   this.copy('seed/Gruntfile.js', 'Gruntfile.js');
