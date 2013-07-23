@@ -40,4 +40,5 @@ ThoraxGenerator.prototype.scripts = function () {
 ThoraxGenerator.prototype.projectFiles = function () {
   this.copy('jshintrc', '.jshintrc');
   this.copy('editorconfig', '.editorconfig');
+  this.copy('bowerrc', '.bowerrc');
 };
