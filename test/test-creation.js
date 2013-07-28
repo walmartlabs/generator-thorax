@@ -37,7 +37,8 @@ describe('thorax generator', function () {
         var test = helpers.createGenerator('thorax:' + name, ['../../' + name]);
         test.options['skip-install'] = true;
         helpers.mockPrompt(test, {
-          'name': 'test'
+          'name': 'test',
+          'newDirectory': false
         });
 
         test.run([], done);

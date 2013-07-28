@@ -30,7 +30,19 @@ ThoraxGenerator.prototype.directory = function () {
 };
 
 ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
-  if (!directory) { return cb(new Error('Please provide a directory name')); }
+  var prompts = [{
+    type: 'input',
+    name: 'directoryName',
+    message: 'Directory already exists, enter a new name:'
+  }];
+
+  if (!directory) {
+    prompts[0].message = 'A directory name is required';
+
+    return this.prompt(prompts, function (props) {
+      this._checkAndCreateDirectory(props.directoryName, cb);
+    }.bind(this));
+  }
 
   fs.exists(path.join(this.destinationRoot(), directory), function (exists) {
     // If the directory doesn't already exist, create a new directory and set
@@ -41,12 +53,6 @@ ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
       this.newDirectory = false;
       return cb();
     }
-
-    var prompts = [{
-      type: 'input',
-      name: 'directoryName',
-      message: 'Directory already exists, enter a new name:'
-    }];
 
     return this.prompt(prompts, function (props) {
       this._checkAndCreateDirectory(props.directoryName, cb);
