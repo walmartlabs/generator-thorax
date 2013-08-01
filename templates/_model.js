@@ -1,3 +1,5 @@
-<%= appName %>.Model.extend({
-  name: '<%= name %>'
+define(function () {
+  return <%= appName %>.Model.extend({
+    name: '<%= name %>'
+  });
 });

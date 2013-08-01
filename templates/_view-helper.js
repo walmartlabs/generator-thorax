@@ -1,3 +1,5 @@
-Handlebars.registerViewHelper('<%= name %>', function () {
+define(function () {
+  return Handlebars.registerViewHelper('<%= name %>', function () {
 
+  });
 });

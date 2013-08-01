@@ -1,3 +1,5 @@
-<%= appName %>.Collection.extend({
-  name: '<%= name %>'
+define(function () {
+  return <%= appName %>.Collection.extend({
+    name: '<%= name %>'
+  });
 });

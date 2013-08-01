@@ -1,3 +1,5 @@
-Handlebars.registerHelper('<%= name %>', function () {
+define(function () {
+  return Handlebars.registerHelper('<%= name %>', function () {
 
+  });
 });

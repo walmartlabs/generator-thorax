@@ -1,3 +1,7 @@
-new (Backbone.Router.extend({
-  routes: {}
-}));
+define(function () {
+  var Router = Backbone.Router.extend({
+    routes: {}
+  });
+
+  return new Router();
+});
