@@ -52,7 +52,6 @@ describe('thorax generator', function () {
       '.editorconfig',
       ['bower.json', /"name": "test"/g],
       ['package.json', /"name": "test"/g],
-      ['lumbar.json', /"name": "Test"/g],
       'Gruntfile.js',
       'README.md',
       'js/views',

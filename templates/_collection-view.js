@@ -1,7 +1,8 @@
+/* global <%= appName %>, Backbone, Thorax, $, _, Thorax */
 define([
-  'hbs!templates/<%= _.dasherize(name) %>.handlebars',
-  'hbs!templates/<%= _.dasherize(name) %>-item.handlebars',
-  'hbs!templates/<%= _.dasherize(name) %>-empty.handlebars'
+  'templates/<%= _.dasherize(name) %>',
+  'templates/<%= _.dasherize(name) %>-item',
+  'templates/<%= _.dasherize(name) %>-empty'
 ], function (template, itemTemplate, emptyTemplate) {
 
   return <%= appName %>.CollectionView.extend({

@@ -1,74 +1,171 @@
 module.exports = function(grunt) {
-  var port       = 8000,
-      publicDir  = './public',
-      jsDir      = publicDir + '/modules',
-      lumbarFile = './lumbar.json',
-      hostname   = 'localhost';
+  var port       = process.env.PORT || 8000;
+  var publicDir  = './public';
+  var modulesDir = publicDir + '/modules';
+  var hostname   = 'localhost';
+  var templates  = {};
+  var modules    = [];
 
-  grunt.file.mkdir(publicDir);
-  grunt.file.mkdir(jsDir);
+  // Register required tasks
+  grunt.loadTasks('tasks');
+  grunt.loadNpmTasks('thorax-inspector');
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
+  // Set up the templates object for Handlebars
+  grunt.file.glob.sync('templates/**/*.handlebars').forEach(function (file) {
+    templates[modulesDir + '/' + file.replace(/\.handlebars$/, '.js')] = file;
+  });
+
+  modules.push({
+    name: 'base',
+    include: [
+      '../../bower_components/requirejs/require',
+      'routes'
+    ]
+  });
+
+  grunt.util._.each(grunt.file.readJSON('routes.json'), function (file) {
+    modules.push({
+      name:    file,
+      exclude: ['base']
+    });
+  });
 
   grunt.initConfig({
-    // create a static webserver
+    modulesDir: modulesDir,
+
+    clean: {
+      modules: [ '<%= modulesDir %>' ]
+    },
+
+    concat: {
+      style: {
+        files: {
+          '<%= modulesDir %>/base.css': [
+            'bower_components/bootstrap/css/bootstrap.css',
+            'stylesheets/base.css'
+          ]
+        }
+      }
+    },
+
     connect: {
       server: {
         options: {
           hostname: hostname,
-          base: publicDir,
-          port: port
+          base:     publicDir,
+          port:     port
         }
       }
     },
-    lumbar: {
-      // performs an initial build so when tests
-      // and initial open are run, code is built
-      init: {
-        build: lumbarFile,
-        output: jsDir
-      },
-      // a long running process that will watch
-      // for updates, to include another long
-      // running task such as "watch", set
-      // background: true
-      watch: {
-        background: false,
-        watch: lumbarFile,
-        output: jsDir
-      }
-    },
-    // allows files to be opened when the
-    // Thorax Inspector Chrome extension
-    // is installed
+
     thorax: {
       inspector: {
+        editor:     'subl',
         background: true,
-        editor: "subl",
         paths: {
-          views: "./js/views",
-          models: "./js/models",
-          collections: "./js/collections",
-          templates: "./templates"
+          views:       './js/views',
+          models:      './js/models',
+          collections: './js/collections',
+          templates:   './templates'
+        }
+      }
+    },
+
+    requirejs: {
+      compile: {
+        options: {
+          appDir:       'js/',
+          baseUrl:      './',
+          dir:          '<%= modulesDir %>',
+          optimize:     'none',
+          keepBuildDir: true,
+          modules:      modules,
+          paths: {
+            'jquery':     '../bower_components/jquery/jquery',
+            'underscore': '../bower_components/underscore/underscore',
+            'handlebars': '../bower_components/handlebars/handlebars.runtime',
+            'backbone':   '../bower_components/backbone/backbone',
+            'thorax':     '../bower_components/thorax/thorax',
+            'bootstrap':  '../bower_components/bootstrap/js/bootstrap'
+          },
+          shim: {
+            'handlebars': {
+              exports: 'Handlebars'
+            },
+            'backbone': {
+              exports: 'Backbone',
+              deps: ['jquery', 'underscore']
+            },
+            'underscore': {
+              exports: '_'
+            },
+            'thorax': {
+              exports: 'Thorax',
+              deps: ['handlebars', 'backbone']
+            },
+            'bootstrap': {
+              deps: ['jquery']
+            }
+          }
+        }
+      }
+    },
+
+    handlebars: {
+      templates: {
+        options: {
+          namespace: false,
+          amd:       true
+        },
+        files: templates
+      }
+    },
+
+    'require-routes': {
+      routes: {
+        routes: grunt.file.readJSON('routes.json'),
+        output: '<%= modulesDir %>/routes.js'
+      }
+    },
+
+    watch: {
+      handlebars: {
+        files: ['templates/**/*.hbs'],
+        tasks: ['handlebars:templates']
+      },
+      scripts: {
+        files: ['js/**/*.js'],
+        tasks: ['requirejs:compile'],
+        options: {
+          livereload: true
+        }
+      },
+      styles: {
+        files: ['stylesheets/**/*.css'],
+        tasks: ['concat:style'],
+        options: {
+          livereload: true
         }
       }
     }
   });
 
-  grunt.registerTask('open-browser', function() {
+  grunt.registerTask('open-browser', function () {
     var open = require('open');
     open('http://' + hostname + ':' + port);
   });
 
-  grunt.loadTasks('tasks');
-  grunt.loadNpmTasks('thorax-inspector');
-  grunt.loadNpmTasks('lumbar');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-
   grunt.registerTask('default', [
     'ensure-installed',
+    'clean:modules',
+    'concat:style',
+    'handlebars:templates',
+    'require-routes',
+    'requirejs:compile',
     'thorax:inspector',
-    'lumbar:init',
     'connect:server',
     'open-browser',
-    'lumbar:watch'
+    'watch'
   ]);
 };

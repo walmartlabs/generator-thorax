@@ -1,5 +1,6 @@
+/* global <%= appName %>, Backbone, Thorax, $, _, Thorax */
 define([
-  'hbs!templates/<%= _.dasherize(name) %>.handlebars'
+  'templates/<%= _.dasherize(name) %>'
 ], function (template) {
   return <%= appName %>.View.extend({
     name: '<%= name %>',

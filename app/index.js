@@ -62,13 +62,13 @@ ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
 
 ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
-  this.template('_lumbar.json', 'lumbar.json');
   this.template('_package.json', 'package.json');
 
   // Using the destinationRoot function seem to break the directory copy helper
   // this.directory('seed', '.');
 
   this.copy('seed/README.md', 'README.md');
+  this.copy('seed/routes.json', 'routes.json');
   this.copy('seed/Gruntfile.js', 'Gruntfile.js');
 
   this.mkdir('public');
@@ -80,7 +80,10 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/stylesheets/base.css', 'stylesheets/base.css');
 
   this.mkdir('tasks');
+  this.copy('seed/tasks/require-routes.js', 'tasks/require-routes.js');
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
+  this.mkdir('tasks/tools');
+  this.copy('seed/tasks/tools/_require-routes.js', 'tasks/tools/_require-routes.js');
 
   this.mkdir('templates');
   this.copy('seed/templates/application.handlebars', 'templates/application.handlebars');
@@ -93,8 +96,9 @@ ThoraxGenerator.prototype.app = function () {
 };
 
 ThoraxGenerator.prototype.scripts = function () {
-  this.template('_view.js', 'js/view.js');
+  this.template('_base.js', 'js/base.js');
   this.template('_init.js', 'js/init.js');
+  this.template('_view.js', 'js/view.js');
   this.template('_model.js', 'js/model.js');
   this.template('_collection.js', 'js/collection.js');
 
