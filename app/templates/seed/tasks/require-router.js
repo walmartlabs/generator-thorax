@@ -12,7 +12,7 @@ module.exports = function (grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('require-routes', function () {
+  grunt.registerMultiTask('require-router', function () {
     var output = this.data.output,
         routes = this.data.routes,
         options;
@@ -25,7 +25,7 @@ module.exports = function (grunt) {
     options = this.options({});
 
     var snippet = grunt.util._.template(
-      grunt.file.read(__dirname + '/tools/_require-routes.js'),
+      grunt.file.read(__dirname + '/tools/_require-router.js'),
       { routes: JSON.stringify(routes) }
     );
 

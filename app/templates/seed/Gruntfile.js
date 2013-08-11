@@ -12,14 +12,14 @@ module.exports = function(grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   // Set up the templates object for Handlebars
-  grunt.file.glob.sync('templates/**/*.handlebars').forEach(function (file) {
-    templates[modulesDir + '/' + file.replace(/\.handlebars$/, '.js')] = file;
+  grunt.file.glob.sync('templates/**/*.{handlebars,hbs}').forEach(function (file) {
+    templates[modulesDir + '/' + file.replace(/\.(?:handlebars|hbs)$/, '.js')] = file;
   });
 
   modules.push({
     name: 'base',
     include: [
-      '../../bower_components/requirejs/require',
+      '../../bower_components/curl/dist/curl/curl.js',
       'routes'
     ]
   });
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
       }
     },
 
-    'require-routes': {
+    'require-router': {
       routes: {
         routes: grunt.file.readJSON('routes.json'),
         output: '<%= modulesDir %>/routes.js'
@@ -161,7 +161,7 @@ module.exports = function(grunt) {
     'clean:modules',
     'concat:style',
     'handlebars:templates',
-    'require-routes',
+    'require-router:routes',
     'requirejs:compile',
     'thorax:inspector',
     'connect:server',

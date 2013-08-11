@@ -4,6 +4,6 @@
   "dependencies": {
     "thorax": "2.0.0-rc12",
     "bootstrap": "components/bootstrap#~2.3.2",
-    "requirejs": "~2.1.8"
+    "curl": "~0.7.5"
   }
 }
