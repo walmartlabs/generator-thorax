@@ -1,22 +1,29 @@
-/* global require, Backbone */
-(function () {
-  var handlers = {};
+/* global <%= appName %>, require */
+require(['backbone'], function (Backbone) {
+  <%= appName %>.routes = <%= routers %>;
 
+  var handlers = {};
   handlers.routes = {};
 
-  _.each(<%= routes %>, function (module, route) {
-    var routeName = 'require_' + route;
-    // Requirejs module loading when we hit the route
-    handlers[routeName] = function () {
-      // Use requirejs to load the route and related backbone view
-      require([module], function () {
-        // Trigger a reload so the anything new can catch it
+  _.each(<%= appName %>.routes, function (routes, file) {
+    // Since every route here will be loading the same resource, we should
+    // reuse the same function in the Backbone.Router instance
+    var fn = function () {
+      return require([ 'routers/' + file ], function () {
         Backbone.history.loadUrl();
       });
     };
-    // Bind the route name spaced for Backbone
-    handlers.routes[route] = routeName;
+
+    // Loop through each of the routes and add to the loader
+    _.each(routes, function (invoke, route) {
+      var uniqueId = _.uniqueId('require');
+
+      handlers[uniqueId]     = fn;
+      handlers.routes[route] = uniqueId;
+    });
   });
 
   new (Backbone.Router.extend(handlers))();
-})();
+
+  return Backbone.history.loadUrl();
+});

@@ -83,7 +83,7 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/require-router.js', 'tasks/require-router.js');
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
   this.mkdir('tasks/tools');
-  this.copy('seed/tasks/tools/_require-routes.js', 'tasks/tools/_require-routes.js');
+  this.copy('seed/tasks/tools/_require-router.js', 'tasks/tools/_require-router.js');
 
   this.mkdir('templates');
   this.copy('seed/templates/application.handlebars', 'templates/application.handlebars');

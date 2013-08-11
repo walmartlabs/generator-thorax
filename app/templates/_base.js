@@ -1,3 +1,9 @@
+/* global Backbone, curl */
+
+// Allow continued use of `require`
+var require = curl;
+curl.config({ baseUrl: '/modules/' });
+
 require(['init', 'collection', 'model', 'view'], function () {
   $(function () {
     // Application and other templates included by the base
@@ -11,6 +17,5 @@ require(['init', 'collection', 'model', 'view'], function () {
     });
 
     <%= _.classify(name) %>.appendTo(document.body);
-    Backbone.history.loadUrl();
   });
 });

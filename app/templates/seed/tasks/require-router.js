@@ -13,8 +13,9 @@ module.exports = function (grunt) {
   // creation: http://gruntjs.com/creating-tasks
 
   grunt.registerMultiTask('require-router', function () {
-    var output = this.data.output,
-        routes = this.data.routes,
+    var output  = this.data.output,
+        routes  = this.data.routes,
+        appName = this.data.appName,
         options;
 
     if (typeof routes !== 'object') {
@@ -26,7 +27,7 @@ module.exports = function (grunt) {
 
     var snippet = grunt.util._.template(
       grunt.file.read(__dirname + '/tools/_require-router.js'),
-      { routes: JSON.stringify(routes) }
+      { routers: JSON.stringify(routes), appName: appName }
     );
 
     grunt.file.write(output, snippet);

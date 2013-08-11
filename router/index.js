@@ -1,3 +1,4 @@
+var fs        = require('fs');
 var util      = require('util');
 var path      = require('path');
 var Generator = require('../lib/generator');
@@ -17,8 +18,9 @@ RouterGenerator.prototype.createRouter = function () {
 
 RouterGenerator.prototype.appendRoute = function () {
   var routes = JSON.parse(this.readFileAsString('routes.json'));
+  var router = (routes[this._.dasherize(this.name)] = {});
 
-  routes[this._.slugify(this.name)] = 'routers/' + this._.dasherize(this.name);
+  router[this._.slugify(this.name)] = 'index';
 
-  this.write('routes.json', JSON.stringify(routes, null, 2));
+  fs.writeFileSync('routes.json', JSON.stringify(routes, null, 2));
 };
