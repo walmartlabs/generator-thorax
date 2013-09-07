@@ -1,4 +1,4 @@
-define(['Handlebars'], function () {
+define(['handlebars'], function () {
   return Handlebars.registerViewHelper('<%= name %>', function () {
 
   });

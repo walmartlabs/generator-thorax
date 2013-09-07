@@ -13,8 +13,20 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
     default: false
   });
 
+  this.prompts.push({
+    type: 'list',
+    name: 'starterApp',
+    choices: ["Hello World", "Todo List", "None"],
+    message: 'Would you like to setup your project with a sample application?',
+    default: "Hello World"
+  });
+
+  this.prompts.push();
+
   this.on('end', function () {
-    this.installDependencies({ skipInstall: options['skip-install'] });
+    this.installDependencies({
+      skipInstall: options['skip-install']
+    });
   });
 };
 
@@ -68,7 +80,6 @@ ThoraxGenerator.prototype.app = function () {
   // this.directory('seed', '.');
 
   this.copy('seed/README.md', 'README.md');
-  this.copy('seed/routes.json', 'routes.json');
   this.copy('seed/Gruntfile.js', 'Gruntfile.js');
   
   this.mkdir('public');
@@ -77,28 +88,22 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/public/img/glyphicons-halflings.png', 'public/img/glyphicons-halflings.png');
   this.copy('seed/public/img/glyphicons-halflings-white.png', 'public/img/glyphicons-halflings-white.png');
 
-  this.mkdir('stylesheets');
-  this.copy('seed/stylesheets/base.css', 'stylesheets/base.css');
+  this.mkdir('styles');
+  this.copy('seed/styles/base.css', 'styles/base.css');
 
   this.mkdir('tasks');
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
-  this.mkdir('tasks/tools');
 
   this.mkdir('js');
   this.mkdir('js/templates');
-  this.mkdir('js/templates/helpers');
   this.mkdir('js/views');
+  this.mkdir('js/templates/helpers');
   this.mkdir('js/models');
-  this.mkdir('js/routers');
   this.mkdir('js/collections');
-
-  this.template('_root.handlebars', 'js/templates/root.handlebars');
-  this.template('_root.js', 'js/views/root.handlebars');
 
 };
 
 ThoraxGenerator.prototype.scripts = function () {
-  this.template('_base.js', 'js/base.js');
   this.template('_init.js', 'js/init.js');
   this.template('_view.js', 'js/view.js');
   this.template('_collection-view.js', 'js/collection-view.js');

@@ -1,28 +1,43 @@
 module.exports = function(grunt) {
-  var port = process.env.PORT || 8000;
-  var publicDir = './public';
-  var outputDir = publicDir + '/output';
-  var hostname = 'localhost';
-  var templates = {};
-  var modules = [];
+  grunt.option('stack', true);
+
+  var port = process.env.PORT || 8000,
+      hostname = 'localhost',
+      templates = {},
+      paths = {
+        'public': 'public',
+        output: {
+          js: 'public/js',
+          css: 'public/css'
+        },
+        js: 'js',
+        css: 'styles',
+        templates: 'js/templates',
+        views: 'js/views',
+        models: 'js/models',
+        collections: 'js/collections'
+      };
 
   // Register required tasks
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('thorax-inspector');
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  grunt.initConfig({
+  grunt.config.init({
     pkg: grunt.file.readJSON('package.json'),
-    modulesDir: outputDir,
+    paths: paths,
     clean: {
-      modules: [ '<%= outputDir %>' ]
+      output: [
+        paths.output.js,
+        paths.output.css
+      ]
     },
     concat: {
       style: {
         files: {
-          '<%= outputDir %>/base.css': [
+          '<%= paths.output.css %>/base.css': [
             'bower_components/bootstrap/css/bootstrap.css',
-            'stylesheets/base.css'
+            paths.css + '/base.css'
           ]
         }
       }
@@ -31,7 +46,7 @@ module.exports = function(grunt) {
       server: {
         options: {
           hostname: hostname,
-          base: publicDir,
+          base: paths.public,
           port: port
         }
       }
@@ -41,24 +56,24 @@ module.exports = function(grunt) {
         editor: 'subl',
         background: true,
         paths: {
-          views: './js/views',
-          models: './js/models',
-          collections: './js/collections',
-          templates: './js/templates'
+          views: paths.views,
+          models: paths.models,
+          collections: paths.collections,
+          templates: paths.templates
         }
       }
     },
     requirejs: {
       compile: {
         options: {
-          appDir: 'js/',
+          appDir: paths.js,
           baseUrl: './',
-          dir: '<%= outputDir %>',
+          dir: paths.output.js,
           optimize: 'none',
           keepBuildDir: true,
           modules: [
             {
-              name: 'base',
+              name: 'init',
               include: [
                 'init'
               ]
@@ -90,28 +105,33 @@ module.exports = function(grunt) {
             'bootstrap': {
               deps: ['jquery']
             }
-          },
-          hbs: {
-            disableI18n: true,
-            disableHelpers: true,
-            compileOptions: {
-              data: true
-            }
           }
         }
       }
     },
 
+    handlebars: {
+      templates: {
+        options: {
+          namespace: false,
+          amd: true
+        }
+      }
+    },
+
     watch: {
+      handlebars: {
+        files: [paths.templates + '/**/*.hbs'],
+        tasks: ['templates']
+      },
       scripts: {
         files: [
-          'js/**/*.js',
-          'js/templates/**/*.hbs'
+          paths.js + '/**/*.js'
         ],
         tasks: ['scripts']
       },
       styles: {
-        files: ['stylesheets/**/*.css'],
+        files: [paths.css + '/**/*.css'],
         tasks: ['concat:style']
       }
     }
@@ -126,10 +146,25 @@ module.exports = function(grunt) {
     'requirejs:compile'
   ]);
 
+  grunt.registerTask('update-templates-list', function() {
+    // Set up the templates object for Handlebars
+    grunt.file.glob.sync(paths.templates + '/**/*.{handlebars,hbs}').forEach(function (file) {
+      var target = paths.output.js + '/templates' + file.substr(paths.templates.length).replace(/\.(?:handlebars|hbs)$/, '.js');
+      templates[target] = file;
+    });
+    grunt.config.set('handlebars.templates.files', templates);
+  });
+
+  grunt.registerTask('templates', [
+    'update-templates-list',
+    'handlebars:templates'
+  ]);
+
   grunt.registerTask('default', [
     'ensure-installed',
-    'clean:modules',
+    'clean:output',
     'concat:style',
+    'templates',
     'scripts',
     'thorax:inspector',
     'connect:server',
