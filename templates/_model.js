@@ -1,6 +1,5 @@
-/* global <%= appName %>, Backbone, Thorax, $, _, Thorax */
-define(function () {
-  return <%= appName %>.Model.extend({
+define(['model'], function (Model) {
+  return Model.extend({
     name: '<%= name %>'
   });
 });

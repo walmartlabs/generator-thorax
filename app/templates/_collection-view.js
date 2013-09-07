@@ -1,5 +1,5 @@
 define(['thorax'], function (Thorax) {
-  return Thorax.View.extend({
+  return Thorax.CollectionView.extend({
 
   });
 });

@@ -1,102 +1,76 @@
 module.exports = function(grunt) {
-  var port       = process.env.PORT || 8000;
-  var publicDir  = './public';
-  var modulesDir = publicDir + '/modules';
-  var hostname   = 'localhost';
-  var templates  = {};
-  var modules    = [];
+  var port = process.env.PORT || 8000;
+  var publicDir = './public';
+  var outputDir = publicDir + '/output';
+  var hostname = 'localhost';
+  var templates = {};
+  var modules = [];
 
   // Register required tasks
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('thorax-inspector');
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  // Set up the templates object for Handlebars
-  grunt.file.glob.sync('templates/**/*.{handlebars,hbs}').forEach(function (file) {
-    templates[modulesDir + '/' + file.replace(/\.(?:handlebars|hbs)$/, '.js')] = file;
-  });
-
-  modules.push({
-    name: 'base',
-    include: [
-      'routes'
-    ]
-  });
-
-  grunt.util._.each(grunt.file.readJSON('routes.json'), function (routes, file) {
-    modules.push({
-      name:    'routers/' + file,
-      exclude: ['base']
-    });
-  });
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
-    modulesDir: modulesDir,
-
+    modulesDir: outputDir,
     clean: {
-      modules: [ '<%= modulesDir %>' ]
+      modules: [ '<%= outputDir %>' ]
     },
-
     concat: {
       style: {
         files: {
-          '<%= modulesDir %>/base.css': [
+          '<%= outputDir %>/base.css': [
             'bower_components/bootstrap/css/bootstrap.css',
             'stylesheets/base.css'
           ]
         }
-      },
-      scripts: {
-        files: {
-          '<%= modulesDir %>/base.js': [
-            'bower_components/curl/dist/curl/curl.js',
-            '<%= modulesDir %>/base.js'
-          ]
-        }
       }
     },
-
     connect: {
       server: {
         options: {
           hostname: hostname,
-          base:     publicDir,
-          port:     port
+          base: publicDir,
+          port: port
         }
       }
     },
-
     thorax: {
       inspector: {
-        editor:     'subl',
+        editor: 'subl',
         background: true,
         paths: {
-          views:       './js/views',
-          models:      './js/models',
+          views: './js/views',
+          models: './js/models',
           collections: './js/collections',
-          templates:   './templates'
+          templates: './js/templates'
         }
       }
     },
-
     requirejs: {
       compile: {
         options: {
-          appDir:       'js/',
-          baseUrl:      './',
-          dir:          '<%= modulesDir %>',
-          optimize:     'none',
+          appDir: 'js/',
+          baseUrl: './',
+          dir: '<%= outputDir %>',
+          optimize: 'none',
           keepBuildDir: true,
-          modules:      modules,
+          modules: [
+            {
+              name: 'base',
+              include: [
+                'init'
+              ]
+            }
+          ],
           paths: {
-            'jquery':     '../bower_components/jquery/jquery',
+            'jquery': '../bower_components/jquery/jquery',
             'underscore': '../bower_components/underscore/underscore',
             'handlebars': '../bower_components/handlebars/handlebars.runtime',
-            'backbone':   '../bower_components/backbone/backbone',
-            'thorax':     '../bower_components/thorax/thorax',
-            'bootstrap':  '../bower_components/bootstrap/js/bootstrap'
+            'backbone': '../bower_components/backbone/backbone',
+            'thorax': '../bower_components/thorax/thorax',
+            'bootstrap': '../bower_components/bootstrap/js/bootstrap'
           },
           shim: {
             'handlebars': {
@@ -116,47 +90,29 @@ module.exports = function(grunt) {
             'bootstrap': {
               deps: ['jquery']
             }
+          },
+          hbs: {
+            disableI18n: true,
+            disableHelpers: true,
+            compileOptions: {
+              data: true
+            }
           }
         }
       }
     },
 
-    handlebars: {
-      templates: {
-        options: {
-          namespace: false,
-          amd:       true
-        },
-        files: templates
-      }
-    },
-
-    'require-router': {
-      routes: {
-        routes:  grunt.file.readJSON('routes.json'),
-        output:  '<%= modulesDir %>/routes.js',
-        appName: '<%= pkg.appName %>'
-      }
-    },
-
     watch: {
-      handlebars: {
-        files: ['templates/**/*.hbs'],
-        tasks: ['handlebars:templates']
-      },
       scripts: {
-        files: ['js/**/*.js'],
-        tasks: ['scripts'],
-        options: {
-          livereload: true
-        }
+        files: [
+          'js/**/*.js',
+          'js/templates/**/*.hbs'
+        ],
+        tasks: ['scripts']
       },
       styles: {
         files: ['stylesheets/**/*.css'],
-        tasks: ['concat:style'],
-        options: {
-          livereload: true
-        }
+        tasks: ['concat:style']
       }
     }
   });
@@ -167,16 +123,13 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('scripts', [
-    'require-router:routes',
-    'requirejs:compile',
-    'concat:scripts'
+    'requirejs:compile'
   ]);
 
   grunt.registerTask('default', [
     'ensure-installed',
     'clean:modules',
     'concat:style',
-    'handlebars:templates',
     'scripts',
     'thorax:inspector',
     'connect:server',

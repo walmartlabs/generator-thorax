@@ -1,6 +1,7 @@
-/* global <%= appName %>, Backbone, Thorax, $, _, Thorax */
-define(function () {
-  return Handlebars.registerHelper('<%= name %>', function () {
-
-  });
+define(['handlebars'], function (Handlebars) {
+  function <%= _.camelize(name) %>() {
+    
+  }
+  Handlebars.registerHelper('<%= _.dasherize(name) %>', <%= _.camelize(name) %>);
+  return <%= _.camelize(name) %>;
 });

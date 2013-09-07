@@ -1,5 +1,4 @@
-/* global <%= appName %>, Backbone, Thorax, $, _, Thorax */
-define(function () {
+define(['Handlebars'], function () {
   return Handlebars.registerViewHelper('<%= name %>', function () {
 
   });

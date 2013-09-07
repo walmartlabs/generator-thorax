@@ -12,5 +12,5 @@ HelperGenerator.prototype._name  = 'helper';
 HelperGenerator.prototype.askFor = Generator.prototype.askFor;
 
 HelperGenerator.prototype.createHelper = function () {
-  this._renderTemplate('js/helpers');
+  this._renderTemplate('js/templates/helpers');
 };

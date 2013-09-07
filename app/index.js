@@ -70,9 +70,10 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/README.md', 'README.md');
   this.copy('seed/routes.json', 'routes.json');
   this.copy('seed/Gruntfile.js', 'Gruntfile.js');
-
+  
   this.mkdir('public');
   this.mkdir('public/img');
+
   this.copy('seed/public/img/glyphicons-halflings.png', 'public/img/glyphicons-halflings.png');
   this.copy('seed/public/img/glyphicons-halflings-white.png', 'public/img/glyphicons-halflings-white.png');
 
@@ -80,25 +81,29 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/stylesheets/base.css', 'stylesheets/base.css');
 
   this.mkdir('tasks');
-  this.copy('seed/tasks/require-router.js', 'tasks/require-router.js');
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
   this.mkdir('tasks/tools');
   this.copy('seed/tasks/tools/_require-router.js', 'tasks/tools/_require-router.js');
 
-  this.mkdir('templates');
-  this.copy('seed/templates/application.handlebars', 'templates/application.handlebars');
-
   this.mkdir('js');
+  this.mkdir('js/templates');
+  this.mkdir('js/templates/helpers');
   this.mkdir('js/views');
   this.mkdir('js/models');
   this.mkdir('js/routers');
   this.mkdir('js/collections');
+
+  this.template('_root.handlebars', 'js/templates/root.handlebars');
+  this.template('_root.js', 'js/views/root.handlebars');
+
 };
 
 ThoraxGenerator.prototype.scripts = function () {
   this.template('_base.js', 'js/base.js');
   this.template('_init.js', 'js/init.js');
   this.template('_view.js', 'js/view.js');
+  this.template('_collection-view.js', 'js/collection-view.js');
+  this.template('_layout-view.js', 'js/layout-view.js');
   this.template('_model.js', 'js/model.js');
   this.template('_collection.js', 'js/collection.js');
 

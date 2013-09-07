@@ -1,5 +1,5 @@
-define(function () {
-  <%= _.classify(name) %>.Collection = Thorax.Collection.extend({
+define(['thorax'], function (Thorax) {
+  return Thorax.Collection.extend({
 
   });
 });

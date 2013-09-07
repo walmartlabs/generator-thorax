@@ -1,5 +1,5 @@
-define(function () {
-  <%= _.classify(name) %>.Model = Thorax.Model.extend({
+define(['thorax'], function (Thorax) {
+  return Thorax.Model.extend({
 
   });
 });

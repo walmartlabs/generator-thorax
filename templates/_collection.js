@@ -1,6 +1,5 @@
-/* global <%= appName %>, Backbone, Thorax, $, _, Thorax */
-define(function () {
-  return <%= appName %>.Collection.extend({
+define(['collection'], function (Collection) {
+  return Collection.extend({
     name: '<%= name %>'
   });
 });
