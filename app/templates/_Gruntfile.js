@@ -21,7 +21,11 @@ module.exports = function(grunt) {
   // Register required tasks
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('thorax-inspector');
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  require('matchdep').filterDev('grunt-*').forEach(function(task) {
+    if (task !== 'grunt-cli') {
+      grunt.loadNpmTasks(task);
+    }
+  });
 
   grunt.config.init({
     pkg: grunt.file.readJSON('package.json'),
@@ -116,7 +120,7 @@ module.exports = function(grunt) {
         files: [
           paths.js + '/**/*.js'
         ],
-        tasks: ['scripts']
+        tasks: ['scripts:development']
       },
       styles: {
         files: [paths.css + '/**/*'],
