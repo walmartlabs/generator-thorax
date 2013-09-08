@@ -14,14 +14,19 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 
   this.prompts.push({
+    type: 'confirm',
+    name: 'includeBootstrap',
+    message: 'Would you like to include Bootstrap?'
+    default: true
+  });
+
+  this.prompts.push({
     type: 'list',
     name: 'starterApp',
     choices: ["Hello World", "Todo List", "None"],
     message: 'Would you like to setup your project with a sample application?',
     default: "Hello World"
   });
-
-  this.prompts.push();
 
   this.on('end', function () {
     this.installDependencies({
@@ -84,10 +89,10 @@ ThoraxGenerator.prototype.app = function () {
   
   this.mkdir('public');
   this.mkdir('public/img');
-
-  this.copy('seed/public/img/glyphicons-halflings.png', 'public/img/glyphicons-halflings.png');
-  this.copy('seed/public/img/glyphicons-halflings-white.png', 'public/img/glyphicons-halflings-white.png');
-
+  this.mkdir('public/fonts');
+  this.mkdir('public/js');
+  this.mkdir('public/css');
+  
   this.mkdir('styles');
   this.copy('seed/styles/base.css', 'styles/base.css');
 
