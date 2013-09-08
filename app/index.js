@@ -1,4 +1,5 @@
 var fs   = require('fs');
+var path = require('path');
 var util = require('util');
 var path = require('path');
 var Base = require('../lib/base');
@@ -10,13 +11,13 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
     type: 'confirm',
     name: 'newDirectory',
     message: 'Would you like to generate the app in a new directory?',
-    default: false
+    default: true
   });
 
   this.prompts.push({
     type: 'confirm',
     name: 'includeBootstrap',
-    message: 'Would you like to include Bootstrap?'
+    message: 'Would you like to include Bootstrap?',
     default: true
   });
 
@@ -29,8 +30,16 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 
   this.on('end', function () {
+    this._sanitizeBowerJSON();
+    this._sanitizePackageJSON();
+
     this.installDependencies({
-      skipInstall: options['skip-install']
+      skipInstall: options['skip-install'],
+      callback: function() {
+        if (this.includeBootstrap) {
+          this._copyBootstrapAssets();
+        }
+      }.bind(this)
     });
   });
 };
@@ -81,9 +90,6 @@ ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
 
-  // Using the destinationRoot function seem to break the directory copy helper
-  // this.directory('seed', '.');
-
   this.copy('seed/README.md', 'README.md');
   this.copy('seed/Gruntfile.js', 'Gruntfile.js');
   
@@ -92,7 +98,7 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('public/fonts');
   this.mkdir('public/js');
   this.mkdir('public/css');
-  
+
   this.mkdir('styles');
   this.copy('seed/styles/base.css', 'styles/base.css');
 
@@ -105,7 +111,6 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/templates/helpers');
   this.mkdir('js/models');
   this.mkdir('js/collections');
-
 };
 
 ThoraxGenerator.prototype.scripts = function () {
@@ -115,7 +120,6 @@ ThoraxGenerator.prototype.scripts = function () {
   this.template('_layout-view.js', 'js/layout-view.js');
   this.template('_model.js', 'js/model.js');
   this.template('_collection.js', 'js/collection.js');
-
   this.template('_index.html', 'public/index.html');
 };
 
@@ -123,4 +127,29 @@ ThoraxGenerator.prototype.projectFiles = function () {
   this.copy('jshintrc', '.jshintrc');
   this.copy('editorconfig', '.editorconfig');
   this.copy('bowerrc', '.bowerrc');
+};
+
+ThoraxGenerator.prototype._copyBootstrapAssets = function() {
+  [
+    'glyphicons-halflings-regular.eot',
+    'glyphicons-halflings-regular.svg',
+    'glyphicons-halflings-regular.ttf',
+    'glyphicons-halflings-regular.woff'
+  ].forEach(function(asset) {
+    var source = path.join(this.destinationRoot(), 'bower_components/bootstrap/dist/fonts', asset);
+    var target = path.join(this.destinationRoot(), 'public/fonts', asset);
+    fs.createReadStream(source).pipe(fs.createWriteStream(target));
+  }.bind(this));      
+};
+
+// We rendered the JSON files with a template, parse and stringify
+// for ideal spacing
+ThoraxGenerator.prototype._sanitizeBowerJSON = function() {
+  var bowerJSONPath = path.join(this.destinationRoot(), 'bower.json');
+  fs.writeFileSync(bowerJSONPath, JSON.stringify(JSON.parse(fs.readFileSync(bowerJSONPath)), null, 2));
+};
+
+ThoraxGenerator.prototype._sanitizePackageJSON = function() {
+  var packageJSONPath = path.join(this.destinationRoot(), 'package.json');
+  fs.writeFileSync(packageJSONPath, JSON.stringify(JSON.parse(fs.readFileSync(packageJSONPath)), null, 2));
 };

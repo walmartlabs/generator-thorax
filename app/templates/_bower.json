@@ -2,7 +2,7 @@
   "name": "<%= _.dasherize(name) %>",
   "version": "0.0.0",
   "dependencies": {
-    "thorax": "~2.0",
-    "bootstrap": "~3.0"
+    "thorax": "~2.0"
+    <% if (includeBootstrap) { %>, "bootstrap": "~3.0"<% } %>
   }
 }
