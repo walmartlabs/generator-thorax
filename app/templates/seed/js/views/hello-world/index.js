@@ -1,5 +1,5 @@
 define([
-  'view'
+  'view',
   'templates/hello-world/index'
 ], function(View, template) {
   return View.extend({

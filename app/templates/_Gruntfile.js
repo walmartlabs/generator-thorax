@@ -32,15 +32,31 @@ module.exports = function(grunt) {
         paths.output.css
       ]
     },
-    concat: {
-      style: {
-        files: {
-          '<%= paths.output.css %>/base.css': [
-            'bower_components/bootstrap/css/bootstrap.css',
-            paths.css + '/base.css'
-          ]
-        }
-      }
+    copy: {
+      styles: {
+        files: [
+          {
+            expand: true,
+            cwd: paths.css,
+            src: '*.css',
+            dest: paths.output.css
+          }
+        ]
+      }<% if (includeBootstrap) { %>,
+      bootstrap: {
+        files: [
+          {
+            expand: true,
+            src: ['bower_components/bootstrap/css/bootstrap.css'],
+            dest: 'public/css/bootstrap.css'
+          },
+          {
+            expand: true,
+            src: ['bower_components/bootstrap/fonts/*'],
+            dest: 'public/fonts'
+          }
+        ]
+      }<% } %>
     },
     connect: {
       server: {
@@ -109,7 +125,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
     handlebars: {
       templates: {
         options: {
@@ -118,7 +133,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
     watch: {
       handlebars: {
         files: [paths.templates + '/**/*.hbs'],
@@ -131,8 +145,8 @@ module.exports = function(grunt) {
         tasks: ['scripts']
       },
       styles: {
-        files: [paths.css + '/**/*.css'],
-        tasks: ['concat:style']
+        files: [paths.css + '/**/*'],
+        tasks: ['copy:styles']
       }
     }
   });
@@ -155,15 +169,26 @@ module.exports = function(grunt) {
     grunt.config.set('handlebars.templates.files', templates);
   });
 
+  grunt.registerTask('create-output-directories', function() {
+    grunt.file.mkdir('public/js');
+    grunt.file.mkdir('public/css');
+  });
+
   grunt.registerTask('templates', [
     'update-templates-list',
     'handlebars:templates'
   ]);
 
+  grunt.registerTask('styles', [
+    'copy:styles'<% if (includeBootstrap) { %>,
+    'copy:bootstrap'<% } %>
+  ]);
+
   grunt.registerTask('default', [
     'ensure-installed',
     'clean:output',
-    'concat:style',
+    'create-output-directories',
+    'styles',
     'templates',
     'scripts',
     'thorax:inspector',

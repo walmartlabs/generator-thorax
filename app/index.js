@@ -34,12 +34,7 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
     this._sanitizePackageJSON();
 
     this.installDependencies({
-      skipInstall: options['skip-install'],
-      callback: function() {
-        if (this.includeBootstrap) {
-          this._copyBootstrapAssets();
-        }
-      }.bind(this)
+      skipInstall: options['skip-install']
     });
   });
 };
@@ -89,9 +84,9 @@ ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
 ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
+  this.template('_Gruntfile.js', 'Gruntfile.js');
 
   this.copy('seed/README.md', 'README.md');
-  this.copy('seed/Gruntfile.js', 'Gruntfile.js');
   
   this.mkdir('public');
   this.mkdir('public/img');
@@ -111,6 +106,9 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/templates/helpers');
   this.mkdir('js/models');
   this.mkdir('js/collections');
+
+  this.copy('seed/js/views/root.js', 'js/views/root.js');
+  this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 };
 
 ThoraxGenerator.prototype.scripts = function () {
@@ -129,17 +127,21 @@ ThoraxGenerator.prototype.projectFiles = function () {
   this.copy('bowerrc', '.bowerrc');
 };
 
-ThoraxGenerator.prototype._copyBootstrapAssets = function() {
-  [
-    'glyphicons-halflings-regular.eot',
-    'glyphicons-halflings-regular.svg',
-    'glyphicons-halflings-regular.ttf',
-    'glyphicons-halflings-regular.woff'
-  ].forEach(function(asset) {
-    var source = path.join(this.destinationRoot(), 'bower_components/bootstrap/dist/fonts', asset);
-    var target = path.join(this.destinationRoot(), 'public/fonts', asset);
-    fs.createReadStream(source).pipe(fs.createWriteStream(target));
-  }.bind(this));      
+ThoraxGenerator.prototype.helloWorld = function() {
+  if (this.starterApp === 'Hello World') {
+    this.mkdir('js/views/hello-world');
+    this.mkdir('js/templates/hello-world');
+    this.copy('seed/js/views/hello-world/index.js', 'js/views/hello-world/index.js');
+    this.copy('seed/js/templates/hello-world/index.hbs', 'js/templates/hello-world/index.hbs');
+    this.copy('seed/js/routers/hello-world.js', 'js/routers/hello-world.js');
+    this.copy('seed/styles/hello-world.css', 'css/hello-world.css');
+  }
+};
+
+ThoraxGenerator.prototype.todoList = function() {
+  if (this.starterApp === 'Todo List') {
+
+  }
 };
 
 // We rendered the JSON files with a template, parse and stringify

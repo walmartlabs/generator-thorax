@@ -1,56 +1,39 @@
 require([
-  'views/root',
-  'routers/welcome'
-], function (RootView, WelcomeRouter) {
-  // set base on window object for easy debugging
-  window.<%= _.classify(name) %> = Base;
-  
-  // initialize the root view and append it to the body
-  RootView.getInstance(document.body);
-
-
-  Base.setup();
-  Base.start(function() {
-    // initialize any routers here
-    new WelcomeRouter;
-  });
-});
-
-
-
-define([
-  'views/root',
-  'underscore',
   'jquery',
-  'view',
-  'layout-view',
-  'collection-view',
-  'model',
-  'collection'
-], function(RootView, _) {
-  return _.extend({
-    setup: function() {
-      this.root = new RootView;
-    },
-    start: function(complete) {
-      $(_.bind(function() {
-        Backbone.history.start({
-          pushState: false,
-          root: '/',
-          silent: true
-        });
+  'backbone',
+  'views/root'<% if (starterApp === 'Hello World') { %>,
+  'routers/hello-world'<% } else if (starterApp === 'Todo List') { %>,
+  'routers/todo-list'<% } %>
+], function ($, Backbone, RootView<% if (starterApp === 'Hello World') { %>, HelloWorldRouter<% } else if (starterApp === 'Todo List') { %>, TodoListRouter <% } %>) {
+  
+  initialize(function(next) {
+    // Load any data that your app requires to boot
+    // and initialize all routers here, the callback
+    // `next` is provided in case the operations
+    // needed are aysynchronous
+    <% if (starterApp === 'Hello World') { %>new HelloWorldRouter;<% } else if (starterApp === 'Todo List') { %>new TodoListRouter;<% } %>
 
-        // View may use link or url helpers which
-        // depend on Backbone history being setup
-        // so need to wait to loadUrl() (which will)
-        // actually execute the route
-        this.root.appendTo(document.body);
+    next();
+  });
 
-        complete(function() {
-          Backbone.history.loadUrl();
-        });
+  function initialize() {
+    $(function() {
+      Backbone.history.start({
+        pushState: false,
+        root: '/',
+        silent: true
+      });
 
-      }, this));
-    }
-  }, Backbone.Events);
+      // RootView may use link or url helpers which
+      // depend on Backbone history being setup
+      // so need to wait to loadUrl() (which will)
+      // actually execute the route
+      RootView.getInstance(document.body);
+
+      complete(function() {
+        Backbone.history.loadUrl();
+      });
+    });
+  }
+
 });
