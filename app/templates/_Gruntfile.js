@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           css: 'public/css'
         },
         js: 'js',
-        css: 'styles',
+        css: 'css',
         templates: 'js/templates',
         views: 'js/views',
         models: 'js/models',

@@ -94,8 +94,8 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('public/js');
   this.mkdir('public/css');
 
-  this.mkdir('styles');
-  this.copy('seed/styles/base.css', 'styles/base.css');
+  this.mkdir('css');
+  this.copy('seed/css/base.css', 'css/base.css');
 
   this.mkdir('tasks');
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
@@ -134,7 +134,7 @@ ThoraxGenerator.prototype.helloWorld = function() {
     this.copy('seed/js/views/hello-world/index.js', 'js/views/hello-world/index.js');
     this.copy('seed/js/templates/hello-world/index.hbs', 'js/templates/hello-world/index.hbs');
     this.copy('seed/js/routers/hello-world.js', 'js/routers/hello-world.js');
-    this.copy('seed/styles/hello-world.css', 'css/hello-world.css');
+    this.copy('seed/css/hello-world.css', 'css/hello-world.css');
   }
 };
 
