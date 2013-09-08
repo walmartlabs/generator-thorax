@@ -33,6 +33,14 @@ module.exports = function(grunt) {
       ]
     },
     copy: {
+      requirejs: {
+        files: [
+          {
+            src: 'bower_components/requirejs/require.js',
+            dest: 'public/js/require.js'
+          }
+        ]
+      },
       styles: {
         files: [
           {
@@ -59,11 +67,19 @@ module.exports = function(grunt) {
       }<% } %>
     },
     connect: {
-      server: {
+      development: {
         options: {
           hostname: hostname,
           base: paths.public,
           port: port
+        }
+      },
+      production:  {
+        options: {
+          hostname: hostname,
+          base: paths.public,
+          port: port,
+          keepalive: true
         }
       }
     },
@@ -80,50 +96,8 @@ module.exports = function(grunt) {
       }
     },
     requirejs: {
-      compile: {
-        options: {
-          appDir: paths.js,
-          baseUrl: './',
-          dir: paths.output.js,
-          optimize: 'none',
-          keepBuildDir: true,
-          modules: [
-            {
-              name: 'init',
-              include: [
-                'init'
-              ]
-            }
-          ],
-          paths: {
-            'jquery': '../bower_components/jquery/jquery',
-            'underscore': '../bower_components/underscore/underscore',
-            'handlebars': '../bower_components/handlebars/handlebars.runtime',
-            'backbone': '../bower_components/backbone/backbone',
-            'thorax': '../bower_components/thorax/thorax',
-            'bootstrap': '../bower_components/bootstrap/js/bootstrap'
-          },
-          shim: {
-            'handlebars': {
-              exports: 'Handlebars'
-            },
-            'backbone': {
-              exports: 'Backbone',
-              deps: ['jquery', 'underscore']
-            },
-            'underscore': {
-              exports: '_'
-            },
-            'thorax': {
-              exports: 'Thorax',
-              deps: ['handlebars', 'backbone']
-            },
-            'bootstrap': {
-              deps: ['jquery']
-            }
-          }
-        }
-      }
+      development: getRequireJSOptions('development'),
+      production: getRequireJSOptions('production')
     },
     handlebars: {
       templates: {
@@ -151,13 +125,73 @@ module.exports = function(grunt) {
     }
   });
 
+  function getRequireJSOptions(env) {
+    var options = {
+      appDir: paths.js,
+      baseUrl: './',
+      dir: paths.output.js,
+      modules: [
+        {
+          name: 'main'
+        } 
+      ],
+      paths: {
+        'jquery': '../bower_components/jquery/jquery',
+        'underscore': '../bower_components/underscore/underscore',
+        'handlebars': '../bower_components/handlebars/handlebars.runtime',
+        'backbone': '../bower_components/backbone/backbone',
+        'thorax': '../bower_components/thorax/thorax',
+        'bootstrap': '../bower_components/bootstrap/js/bootstrap'
+      },
+      shim: {
+        'handlebars': {
+          exports: 'Handlebars'
+        },
+        'backbone': {
+          exports: 'Backbone',
+          deps: ['jquery', 'underscore']
+        },
+        'underscore': {
+          exports: '_'
+        },
+        'thorax': {
+          exports: 'Thorax',
+          deps: ['handlebars', 'backbone']
+        },
+        'bootstrap': {
+          deps: ['jquery']
+        }
+      }
+    };
+    if (env === 'production') {
+      /*
+      TODO
+      options.keepBuildDir = true;
+      options.optimize = 'uglify';
+      */
+    }
+    if (env === 'development') {
+      options.keepBuildDir = true;
+      options.optimize = 'none';
+    }
+    return {
+      options: options
+    };
+  }
+
   grunt.registerTask('open-browser', function () {
     var open = require('open');
     open('http://' + hostname + ':' + port);
   });
 
-  grunt.registerTask('scripts', [
-    'requirejs:compile'
+  grunt.registerTask('scripts:development', [
+    'copy:requirejs',
+    'requirejs:development'
+  ]);
+
+  grunt.registerTask('scripts:production', [
+    'copy:requirejs',
+    'requirejs:production'
   ]);
 
   grunt.registerTask('update-templates-list', function() {
@@ -190,10 +224,20 @@ module.exports = function(grunt) {
     'create-output-directories',
     'styles',
     'templates',
-    'scripts',
+    'scripts:development',
     'thorax:inspector',
-    'connect:server',
+    'connect:development',
     'open-browser',
     'watch'
+  ]);
+
+  grunt.registerTask('production', [
+    'clean:output',
+    'create-output-directories',
+    'styles',
+    'templates',
+    'scripts:production',
+    'open-browser',
+    'connect:production'
   ]);
 };

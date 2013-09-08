@@ -2,7 +2,7 @@ define([
   'layout-view',
   'templates/root'
 ], function(LayoutView, rootTemplate) {
-  var RootView = new LayoutView({
+  var RootView = LayoutView.extend({
     name: 'root',
     template: rootTemplate
   });

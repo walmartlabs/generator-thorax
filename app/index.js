@@ -112,7 +112,7 @@ ThoraxGenerator.prototype.app = function () {
 };
 
 ThoraxGenerator.prototype.scripts = function () {
-  this.template('_init.js', 'js/init.js');
+  this.template('_main.js', 'js/main.js');
   this.template('_view.js', 'js/view.js');
   this.template('_collection-view.js', 'js/collection-view.js');
   this.template('_layout-view.js', 'js/layout-view.js');
