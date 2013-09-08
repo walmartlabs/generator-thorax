@@ -16,7 +16,7 @@ require([
     next();
   });
 
-  function initialize() {
+  function initialize(complete) {
     $(function() {
       Backbone.history.start({
         pushState: false,
