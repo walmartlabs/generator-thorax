@@ -2,9 +2,9 @@ define([
   'views/root',
   'backbone'
 ], function (RootView, Backbone) {
-  return new (Backbone.Router.extend({
+  return Backbone.Router.extend({
     routes: {
 
     }
-  }));
+  });
 });
