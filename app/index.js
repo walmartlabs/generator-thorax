@@ -85,8 +85,6 @@ ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_Gruntfile.js', 'Gruntfile.js');
-
-  this.copy('seed/README.md', 'README.md');
   
   this.mkdir('public');
   this.mkdir('public/img');
