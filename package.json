@@ -24,7 +24,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/eastridge/generator-thorax.git"
+    "url": "git://github.com/walmartlabs/generator-thorax.git"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha"
