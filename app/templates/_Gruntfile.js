@@ -58,8 +58,11 @@ module.exports = function(grunt) {
       bootstrap: {
         files: [
           {
-            expand: true,
-            src: ['bower_components/bootstrap/css/bootstrap.css'],
+            src: ['bower_components/bootstrap/dist/js/bootstrap.js'],
+            dest: 'public/js/bootstrap.js'
+          },
+          {
+            src: ['bower_components/bootstrap/dist/css/bootstrap.css'],
             dest: 'public/css/bootstrap.css'
           },
           {
