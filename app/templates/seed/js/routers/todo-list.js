@@ -6,7 +6,7 @@ define([
 ], function(Backbone, Collection, RootView, TodoListIndexView) {
   return Backbone.Router.extend({
     routes: {
-      "todos": "index"
+      "": "index"
     },
     index: function() {
       var collection = new Collection([{

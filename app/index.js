@@ -140,7 +140,12 @@ ThoraxGenerator.prototype.helloWorld = function() {
 
 ThoraxGenerator.prototype.todoList = function() {
   if (this.starterApp === 'Todo List') {
-
+    this.mkdir('js/views/todo-list');
+    this.mkdir('js/templates/todo-list');
+    this.copy('seed/js/views/todo-list/index.js', 'js/views/todo-list/index.js');
+    this.copy('seed/js/templates/todo-list/index.hbs', 'js/templates/todo-list/index.hbs');
+    this.copy('seed/js/routers/todo-list.js', 'js/routers/todo-list.js');
+    this.copy('seed/css/todo-list.css', 'css/todo-list.css');
   }
 };
 
