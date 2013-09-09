@@ -7,13 +7,20 @@
     "generator",
     "yeoman-generator"
   ],
-  "homepage": "https://github.com/eastridge/generator-thorax",
-  "bugs": "https://github.com/eastridge/generator-thorax/issues",
+  "homepage": "https://github.com/walmartlabs/generator-thorax",
+  "bugs": "https://github.com/walmartlabs/generator-thorax/issues",
   "author": {
-    "name": "Blake Embrey",
-    "email": "hello@blakeembrey.com",
-    "url": "https://github.com/blakeembrey"
+    "name": "Ryan Eastridge",
+    "email": "ryan.eastridge@formidablelabs.com",
+    "url": "https://github.com/eastridge"
   },
+  "contributors": [
+    {
+      "name": "Blake Embrey",
+      "email": "blake.embrey@formidablelabs.com",
+      "url": "https://github.com/blakeembrey"
+    }
+  ],
   "main": "app/index.js",
   "repository": {
     "type": "git",
