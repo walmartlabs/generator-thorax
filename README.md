@@ -76,52 +76,49 @@ Now create your app and cd into the directory:
           Todo List 
         ❯ None 
 
-To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. To get started, let's generate our first model:
+To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. To get started, let's generate our first view:
 
-    
+    yo thorax:view todos/index
 
+This will generate two new files, a view and a matching template...
 
+    create js/views/todos/index.js
+    create js/templates/todos/index.handlebars
 
-
-
-### Setup
-
-### Using Root View
-
-The only view included by default is the `root` view, which is a [LayoutView](http://thoraxjs.org/api.html#thorax.layout-view) class that will attach itself to the body.
-
-    require([
-      'views/root'
-    ], function(RootView) {
-      RootView.getInstance().setView(myView);
-    });
-
-    
+...and inserted the following code into index.js:
 
     define([
-      'todo-list/index'
-    ], function(Backbone, RootView, TodoListIndexView) {
-      return Backbone.Router.extend({
-        routes: {
-          "": "index"
-        },
-        index: function() {
-          var view = new 
-        }
+     'view',
+     'templates/todos/index'
+    ], function (View, template) {
+     return View.extend({
+       name: 'todos/index',
+       template: template
       });
-    })
+    });
+    
+Those familiar with RequireJS will be thrilled to see that define() call, and those who aren't should read the [API](http://requirejs.org/docs/api.html). In short, RequireJS is going to make the code found in the files `view` and `templates/todos/index` available inside of the callback as `View` and `template`, respectively. We'll come back to these. You can leave the `.js` off when adding dependencies to a module in RequireJS, it's expecting a script. All file paths are relative to the directory set in the `baseUrl` property of the options object in the function that configures RequireJS `getRequireJSOptions` found in Gruntfile.js, or `./` by default. 
 
-## Build Process
+Next, we'll create our first router:
 
-Development
+    yo thorax:router 
+    
+This will generate one new file...
 
-Production
+    create js/routers/todo-list.js
 
-## Testing
+...into which the following code will be inserted:
 
-## Proxying
+    define([
+      'views/root',
+      'backbone'
+    ], function (RootView, Backbone) {
+      return Backbone.Router.extend({
+       routes: {
+       }
+      });
+    });
 
-## Deploying
 
 
 
@@ -136,50 +133,11 @@ Old content below ------Old content below ------Old content below ------Old cont
 
 
 
-To generate your first view run:
 
-    grunt generate:view:todos/index
 
-In addition to modifying `lumbar.json` a number of files will be created:
 
-- `js/views/todos/index.js`
-- `templates/todos/index.handlebars`
 
-It will also initialize a `todos` module since it doesn't exist yet. This will in turn create:
 
-- `js/routers/todos.js`
-- `stylesheets/todos.css`
-
-Modules and lumbar.json
------------------------
-A Lumbar module is composed of routes (to be passed to `Backbone.Router`s), stylesheets and JavaScripts. When a route is visited the scripts and styles associated with the module will be loaded. After running the `generate:view` task your `lumbar.json` should look like this:
-
-    {
-      "mixins": [
-        "node_modules/lumbar-loader",
-        "node_modules/thorax",
-        "config/base.json"
-      ],
-      "modules": {
-        "todos": {
-          "routes": {},
-          "scripts": [
-            "js/routers/todos.js",
-            "js/views/todos/index.js"
-          ],
-          "styles": [
-            "stylesheets/todos.css"
-          ]
-        }
-      },
-      "templates": {
-        "js/init.js": [
-          "templates/application.handlebars"
-        ]
-      }
-    }
-
-`mixins` loads up the base configurations for the project. To edit what libraries (jQuery / Bootstrap, etc) are included in the project open up `bower.json`. The `templates` hash defines what templates map to a given view. An entry only needs to be added if the name of a view doesn't match the name of a template. For instance, the generator created `js/views/todos/index.js` and `templates/todos/index.js`, but it doesn't need to be defined here as the names match.
 
 Since all routes are specified in `lumbar.json`, to create our first route it needs to be added there so we will create an empty (root) route pointing at an `index` method:
 
@@ -203,7 +161,7 @@ Note that `module.routes` is automatically made available and will contain the h
 
 Application and Views
 ---------------------
-The `Application` object contains a number of subclasses defined in the `js` folder:
+The `Application` object contains a number of subclasses defined in the `js` folder: [stub model view and collection for you to fill in - shorter name, when you need a view class pull that in]
 
 - `js/view.js` contains `Application.View` descends from `Thorax.View`
 - `js/collection.js` contains `Application.Collection` descends from `Thorax.Collection`
@@ -313,5 +271,7 @@ Our finished `js/views/todos.js` file should look like:
     });
 
 And that's a finished non persistent todo list application! For a more complex todos example see the [Thorax + Lumbar TodoMVC example](https://github.com/addyosmani/todomvc/tree/gh-pages/labs/dependency-examples/thorax_lumbar)
+
+
 
 
