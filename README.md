@@ -101,7 +101,7 @@ Those familiar with RequireJS will be thrilled to see that define() call, and th
 
 Next, we'll create our first router:
 
-    yo thorax:router 
+    yo thorax:router todo-list
     
 This will generate one new file...
 
