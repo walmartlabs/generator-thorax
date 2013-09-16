@@ -55,7 +55,7 @@ Available generators:
     yo thorax:helper name
     yo thorax:view-helper name
 
-The `name` argument may include a directory path, such as `todo-list/index`
+The `name` argument may include a directory path, such as `todo-list/index`:
 
     yo thorax:router todo-list
     yo thorax:view todo-list/index
@@ -66,10 +66,22 @@ If you haven't yet already make sure the generator is installed.
 
     npm install -g yo generator-thorax
 
-Now create your app and 
+Now create your app and cd into the directory:
 
     yo thorax app
-    cd app
+    [?] Would you like to generate the app in a new directory? Yes
+    [?] Would you like to include Bootstrap? Yes
+    [?] Would you like to setup your project with a sample application? (Use arrow keys)
+          Hello World 
+          Todo List 
+        ❯ None 
+
+To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. To get started, let's generate our first model:
+
+    
+
+
+
 
 
 ### Setup
@@ -111,30 +123,18 @@ Production
 
 ## Deploying
 
-Old content below
-
------
 
 
+************************************************************************************************
+************************************************************************************************
+Old content below ------Old content below ------Old content below ------Old content below ------
+Old content below ------Old content below ------Old content below ------Old content below ------
+Old content below ------Old content below ------Old content below ------Old content below ------
+Old content below ------Old content below ------Old content below ------Old content below ------
+************************************************************************************************
+************************************************************************************************
 
 
-
-
-Scaffolding
------------
-The seed comes with some simple code generation tools that will automatically create files, folders and update your `lumbar.json` file. To run the code generation tools you first need the `grunt-cli`:
-
-    npm install -g grunt-cli
-
-Once you've got that installed you can run any of the following commands:
-
-- `grunt generate:module:moduleName`
-- `grunt generate:view:moduleName/viewName`
-- `grunt generate:collection-view:moduleName/viewName`
-- `grunt generate:model:moduleName/modelName`
-- `grunt generate:collection:moduleName/collectionName`
-- `grunt generate:router:moduleName`
-- `grunt generate:stylesheet:moduleName`
 
 To generate your first view run:
 
