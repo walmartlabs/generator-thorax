@@ -66,9 +66,9 @@ If you haven't yet already make sure the generator is installed.
 
     npm install -g yo generator-thorax
 
-Now create your app and cd into the directory:
+Now create your app, (later you'll replace 'todo-list' with your own project name)...
 
-    yo thorax app
+    yo thorax todo-list
     [?] Would you like to generate the app in a new directory? Yes
     [?] Would you like to include Bootstrap? Yes
     [?] Would you like to setup your project with a sample application? (Use arrow keys)
@@ -76,24 +76,24 @@ Now create your app and cd into the directory:
           Todo List 
         ❯ None 
 
-To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. To get started, let's generate our first view:
+...and then `cd todo-list`. To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. We'll generate the needed files first, then start editing them. To get started, let's generate our first view:
 
-    yo thorax:view todos/index
+    yo thorax:view todo-list/index
 
 This will generate two new files, a view and a matching template...
 
-    create js/views/todos/index.js
-    create js/templates/todos/index.handlebars
+    create js/views/todo-list/index.js
+    create js/templates/todo-list/index.handlebars
 
 ...and inserted the following code into index.js:
 
-    define([
+    define([  //dependencies array
      'view',
-     'templates/todos/index'
-    ], function (View, template) {
+     'templates/todo-list/index'
+    ], function (View, template) {  //callback
      return View.extend({
-       name: 'todos/index',
-       template: template
+       name: 'todo-list/index',
+       template: template  //templates/todo-list/index.js is passed in as the arg 'template' above, then assigned as a property of the view 
       });
     });
     
@@ -110,14 +110,47 @@ This will generate one new file...
 ...into which the following code will be inserted:
 
     define([
-      'views/root',
+      'views/root',  
       'backbone'
     ], function (RootView, Backbone) {
-      return Backbone.Router.extend({
-       routes: {
-       }
+      return Backbone.Router.extend({  //plain Backbone. Thorax doesn't touch the router.
+        routes: {
+        }
       });
     });
+
+Now that we have our files, we can start editing them. Let's first get something up on the screen. We'll add our index route to `js/routers/todo-list.js`, and an `index` function Backbone will fire for us when that route is hit. Inside of that function we'll create an instance of our view, which we'll be able to access because we've passed it into scope by way of the dependencies array...
+
+    define([
+      'backbone',  //included because we're calling the Backbone object below. While Backbone depends on Underscore, we wouldn't pass that in unless we were going to use "_" inside of our callback.
+      'views/root',  //this is what's going to get attached to the DOM. More on that soon.
+      'views/todo-list/index'  //this is the view class we're going to instantiate below...
+    ], function (RootView, Backbone, TodoListIndexView) {  //...but to make it available we're going to need to add it and pass it into our callback, here we've named it TodoListIndexView
+      return Backbone.Router.extend({
+        routes: {
+          "": "index" //add an index route hereabouts.
+        },
+        index: function(){
+          var view = new TodoListIndexView({})  //Hey! I'm a view getting instantiated! My template will be rendered. Purr.
+          RootView.getInstance().setView(view)  //Nuke whatever was in the {{layout-element}} element in root.hbs (and do memory management), replace it with the template rendered by the line above.  
+        }
+      });
+    });
+
+...and then give `templates/todo-list/index.handlebars` something to render:
+
+    <p> Arrrr! I'm a pirate with a handlebar mustache. </p>
+    
+
+
+
+
+
+
+
+
+BUILD
+those dependencies which require will load which have been written as require modules (ie., define([] callback) will know their dependencies because they are defined explicitely. Those modules, such as vendor libraries like jquery and backbone, which have NOT been written as require modules, must have their dependencies explicitely defined in the gruntfile. THIS MEANS that if you add a vendor library… you need to go into the shim to make that shit work. 
 
 
 
