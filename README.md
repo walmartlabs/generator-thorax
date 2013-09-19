@@ -66,7 +66,7 @@ If you haven't yet already make sure the generator is installed.
 
     npm install -g yo generator-thorax
 
-Now create your app, (later you'll replace 'todo-list' with your own project name)...
+Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled down their dependencies. Now create your app, (later you'll replace 'todo-list' with your own project name)...
 
     yo thorax todo-list
     [?] Would you like to generate the app in a new directory? Yes
