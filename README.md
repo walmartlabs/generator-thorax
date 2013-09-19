@@ -97,7 +97,7 @@ This generated two new files, a view and a matching template...
       });
     });
     
-Those familiar with RequireJS will be thrilled to see that define() call, and those who aren't should read the [API](http://requirejs.org/docs/api.html). In short, RequireJS is going to make the code found in the files `view` and `templates/todos/index` available inside of the callback as `View` and `template`, respectively. We'll come back to these. You can leave the `.js` off when adding dependencies to a module in RequireJS, it's expecting a script. All file paths are relative to the directory set in the `baseUrl` property of the options object in the function that configures RequireJS `getRequireJSOptions` found in Gruntfile.js, or `./` by default. 
+Those familiar with RequireJS will be thrilled to see that define() call, and those who aren't should read the [API](http://requirejs.org/docs/api.html). In short, RequireJS is going to make the code found in the files `view` and `templates/todos/index` available inside of the callback as `View` and `template`, respectively. We'll come back to these. You can leave the `.js` off when adding dependencies to a module in RequireJS; it's expecting a script. All file paths are relative to the directory set in the `baseUrl` property of the options object in the function that configures RequireJS `getRequireJSOptions` found in Gruntfile.js, or `./` by default. 
 
 Next, we'll create our first router:
 
