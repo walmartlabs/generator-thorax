@@ -46,29 +46,29 @@ TODO
 
 Available generators:
 
-    yo thorax name
-    yo thorax:router name
-    yo thorax:view name
-    yo thorax:model name
-    yo thorax:collection name
-    yo thorax:collection-view name
-    yo thorax:helper name
-    yo thorax:view-helper name
+    $ yo thorax name
+    $ yo thorax:router name
+    $ yo thorax:view name
+    $ yo thorax:model name
+    $ yo thorax:collection name
+    $ yo thorax:collection-view name
+    $ yo thorax:helper name
+    $ yo thorax:view-helper name
 
 The `name` argument may include a directory path, such as `todo-list/index`:
 
-    yo thorax:router todo-list
-    yo thorax:view todo-list/index
+    $ yo thorax:router todo-list
+    $ yo thorax:view todo-list/index
 
 ## From Zero to Todos
 
 If you haven't yet already, make sure the generator is installed:
 
-    npm install -g yo generator-thorax
+    $ npm install -g yo generator-thorax
 
  Now create your app, (later you'll replace 'todo-list' with your own project name)...
 
-    yo thorax todo-list
+    $ yo thorax todo-list
     [?] Would you like to generate the app in a new directory? Yes
     [?] Would you like to include Bootstrap? Yes
     [?] Would you like to setup your project with a sample application? (Use arrow keys)
@@ -76,9 +76,9 @@ If you haven't yet already, make sure the generator is installed:
           Todo List 
         ❯ None 
 
-...and then `cd todo-list`. Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled down their dependencies during the creation of the application. To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. We'll generate the needed files first, then start editing them. To get started, let's generate our first view:
+...and then `$ cd todo-list`. Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled down their dependencies during the creation of the application. To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. We'll generate the needed files first, then start editing them. To get started, let's generate our first view:
 
-    yo thorax:view todo-list/index
+    $ yo thorax:view todo-list/index
 
 This will generate two new files, a view and a matching template...
 
@@ -101,7 +101,7 @@ Those familiar with RequireJS will be thrilled to see that define() call, and th
 
 Next, we'll create our first router:
 
-    yo thorax:router todo-list
+    $ yo thorax:router todo-list
     
 This will generate one new file...
 
@@ -141,7 +141,7 @@ Now that we have our files, we can start editing them. Let's first get something
 
     <p> Arrrr! I'm a pirate with a handlebar mustache. </p>
     
-At this point, we'll run the command `npm start` to build the project. You might try having two windows - your terminal and your text editor - open at the same time when you do this. In your text editor, make sure the contents of the `public` folder are visible (should be empty). When you run the command, your files will be copied into the `public` folder, which is what goes over the wire. It will also open up your browser to the project. During build, Require is going to make sure your scripts are loaded correctly - because so long as they've been written as a module (as above) they are aware of their dependencies. Unfortunately, many third-party libraries such as JQuery are not written as Require modules, must have their dependencies explicitely defined in `grunfile.js` in the `shim` section of the require configuration and manually declare the dependencies of those libraries, following the example of those already there.   
+At this point, we'll run the command `$ npm start` to build the project. You might try having two windows - your terminal and your text editor - open at the same time when you do this. In your text editor, make sure the contents of the `public` folder are visible (should be empty). When you run the command, your files will be copied into the `public` folder, which is what goes over the wire. It will also open up your browser to the project. During build, Require is going to make sure your scripts are loaded correctly - because so long as they've been written as a module (as above) they are aware of their dependencies. Unfortunately, many third-party libraries such as JQuery are not written as Require modules, must have their dependencies explicitely defined in `grunfile.js` in the `shim` section of the require configuration and manually declare the dependencies of those libraries, following the example of those already there.   
 
 What about RootView? (FILL IN). Now that we have something on screen, let's get some data on the screen and finish the rest of our todo list.
 
