@@ -62,11 +62,11 @@ The `name` argument may include a directory path, such as `todo-list/index`:
 
 ## From Zero to Todos
 
-If you haven't yet already make sure the generator is installed.
+If you haven't yet already, make sure the generator is installed:
 
     npm install -g yo generator-thorax
 
-Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled down their dependencies. Now create your app, (later you'll replace 'todo-list' with your own project name)...
+ Now create your app, (later you'll replace 'todo-list' with your own project name)...
 
     yo thorax todo-list
     [?] Would you like to generate the app in a new directory? Yes
@@ -76,7 +76,7 @@ Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled do
           Todo List 
         ❯ None 
 
-...and then `cd todo-list`. To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. We'll generate the needed files first, then start editing them. To get started, let's generate our first view:
+...and then `cd todo-list`. Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled down their dependencies during the creation of the application. To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. We'll generate the needed files first, then start editing them. To get started, let's generate our first view:
 
     yo thorax:view todo-list/index
 
