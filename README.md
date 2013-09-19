@@ -1,13 +1,13 @@
 # Thorax Generator
 
-Generate a new [Thorax](http://thoraxjs.org/) application with. Includes some configurable options and some opinions.
+Generate a new [Thorax](http://thoraxjs.org/) application. Includes some configurable options and some opinions.
 
-    npm install -g yo generator-thorax
-    yo thorax desired-application
-    cd desired-application
-    npm start
+    $ npm install -g yo generator-thorax
+    $ yo thorax desired-application
+    $ cd desired-application
+    $ npm start
 
-For a snazzier development environment it's recommended that you install the [Thorax Inspector Chrome Extension](https://chrome.google.com/webstore/detail/thorax-inspector/poioalbefcopgeaeaadelomciijaondk?hl=en-US) before getting started.
+For a snazzier development environment, it's recommended that you install the [Thorax Inspector Chrome Extension](https://chrome.google.com/webstore/detail/thorax-inspector/poioalbefcopgeaeaadelomciijaondk?hl=en-US) before getting started.
 
 ## Stack
 
@@ -172,7 +172,15 @@ To implement a todo list, we need to create a collection and set it on the view.
       });
     }); 
 
-To display the collection we will edit `templates/todo-list/index.handlebars` and use the `collection` handlebars helper, which functions as a `forEach` and will `{{#collection}} render the code between the opening and closing collection tags for each model in the collection {{/collection}}`. Beautifully, all of the properties of the associated model are available in the helpers (see `{{title}}` below).  A `tag` option may be specified to define what type of HTML tag will be used when creating the collection element:
+To display the collection we will edit `templates/todo-list/index.handlebars` and use the `collection` handlebars helper, which functions as a `forEach` and will 
+
+    {{#collection}} 
+        render the code between the opening and 
+        closing collection tags for each model 
+        in the collection 
+    {{/collection}}` 
+
+Beautifully, all of the properties of the associated model are available in the helpers (see `{{title}}` below).  A `tag` option may be specified to define what type of HTML tag will be used when creating the collection element:
 
     {{#collection tag="ul"}}
       <li>{{title}}</li>
