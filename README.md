@@ -80,12 +80,12 @@ If you haven't yet already, make sure the generator is installed:
 
     $ yo thorax:view todo-list/index
 
-This will generate two new files, a view and a matching template...
+This generated two new files, a view and a matching template...
 
     create js/views/todo-list/index.js
     create js/templates/todo-list/index.handlebars
 
-...and inserted the following code into index.js:
+...and inserted the following code into `views/todo-list/index.js`:
 
     define([  //dependencies array
      'view',
