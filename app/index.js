@@ -22,6 +22,13 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 
   this.prompts.push({
+    type: 'confirm',
+    name: 'includeCoffeeScript',
+    message: 'Would you like to use CoffeeScript?',
+    default: false
+  });
+
+  this.prompts.push({
     type: 'list',
     name: 'starterApp',
     choices: ["Hello World", "Todo List", "None"],
@@ -85,7 +92,7 @@ ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_Gruntfile.js', 'Gruntfile.js');
-  
+
   this.mkdir('public');
   this.mkdir('public/img');
   this.mkdir('public/fonts');

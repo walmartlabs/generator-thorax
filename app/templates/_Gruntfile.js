@@ -118,6 +118,15 @@ module.exports = function(grunt) {
       handlebars: {
         files: [paths.templates + '/**/*.hbs'],
         tasks: ['templates']
+      } <% if (includeCoffeeScript) { %>,
+      coffee: {
+        files: ['app/assets/src/coffee/**/*.coffee', 'app/assets/src/coffee/*.coffee', 'app/webserver.coffee'],
+        tasks: ['coffee:dev', 'replace', 'mochaTest'],
+        options: {
+          nospawn: true
+        }
+      }
+      <% } %>
       },
       scripts: {
         files: [
@@ -140,7 +149,7 @@ module.exports = function(grunt) {
       modules: [
         {
           name: 'main'
-        } 
+        }
       ],
       paths: {
         'jquery': '../bower_components/jquery/jquery',

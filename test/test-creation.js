@@ -170,4 +170,39 @@ describe('thorax generator', function () {
       });
     });
   });
+
+  describe('CoffeeScript', function () {
+    beforeEach(function (done) {
+      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+        if (err) { return done(err); }
+
+        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app.options['skip-install'] = true;
+
+        helpers.mockPrompt(this.app, {
+          'newDirectory': false,
+          'includeCoffeeScript': true
+        });
+
+        this.app.run({}, done);
+      }.bind(this));
+    });
+
+    it('generates CoffeeScript templates when requested', function (done) {
+
+      this.app.run({}, function () {
+        helpers.assertFiles([
+          'coffee/views',
+          'coffee/models',
+          'coffee/routers',
+          'coffee/collections',
+          ['cofee/init.coffee', /var Test = window.Test = new Thorax.LayoutView/],
+          ['cofee/view.coffee', /Test.View extends Thorax.View/],
+          ['cofee/model.coffee', /Test.Model extends Thorax.Model/],
+          ['cofee/collection.coffee', /Test.Collection extends Thorax.Collection/],
+        ]);
+        done();
+      });
+    });
+  });
 });
