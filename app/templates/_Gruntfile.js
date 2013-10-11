@@ -158,8 +158,25 @@ module.exports = function(grunt) {
         'handlebars': '../bower_components/handlebars/handlebars.runtime',
         'backbone': '../bower_components/backbone/backbone',
         'thorax': '../bower_components/thorax/thorax',
-        'bootstrap': '../bower_components/bootstrap/js/bootstrap'
-      },
+        'bootstrap': '../bower_components/bootstrap/js/bootstrap',
+        'cs' :'../bower_components/cs',
+        'coffee-script': '../bower_components/coffee-script'
+      }<% if (includeCoffeeScript) { %>,
+      packages: [
+        {
+          name: 'cs',
+          location: 'require-cs',
+          main: 'cs'
+        },
+        {
+          name: 'coffee-script',
+          main: 'index'
+        }
+      ],
+      //Stub out the cs module after a build since
+      //it will not be needed.
+      stubModules: ['cs'],
+      ]<% } %>,
       shim: {
         'handlebars': {
           exports: 'Handlebars'

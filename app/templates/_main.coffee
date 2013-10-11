@@ -1,9 +1,9 @@
 require [
   'jquery',
   'backbone',
-  'views/root'<% if (starterApp === 'Hello World') { %>,
-  'routers/hello-world'<% } else if (starterApp === 'Todo List') { %>,
-  'routers/todo-list'<% } %>
+  'cs!views/root'<% if (starterApp === 'Hello World') { %>
+  'cs!routers/hello-world'<% } else if (starterApp === 'Todo List') { %>
+  'cs!routers/todo-list'<% } %>
 ], ($, Backbone, RootView<% if (starterApp === 'Hello World') { %>, HelloWorldRouter<% } else if (starterApp === 'Todo List') { %>, TodoListRouter <% } %>) ->
 
   initialize (next) ->

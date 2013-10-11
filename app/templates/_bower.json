@@ -5,5 +5,6 @@
     "requirejs": "~2.1",
     "thorax": "~2.0"
     <% if (includeBootstrap) { %>, "bootstrap": "~3.0"<% } %>
+    <% if (includeCoffeeScript) { %>, "require-cs": "~0.4.4"<% } %>
   }
 }
