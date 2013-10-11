@@ -89,6 +89,8 @@ ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
 };
 
 ThoraxGenerator.prototype.app = function () {
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_Gruntfile.js', 'Gruntfile.js');
@@ -103,7 +105,7 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/css/base.css', 'css/base.css');
 
   this.mkdir('tasks');
-  this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
+  this.copy('seed/tasks/ensure-installed' + scriptExt, 'tasks/ensure-installed' + scriptExt);
 
   this.mkdir('js');
   this.mkdir('js/templates');
@@ -112,17 +114,17 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/models');
   this.mkdir('js/collections');
 
-  this.copy('seed/js/views/root.js', 'js/views/root.js');
+  this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
+
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 };
 
 ThoraxGenerator.prototype.scripts = function () {
-  this.template('_main.js', 'js/main.js');
-  this.template('_view.js', 'js/view.js');
-  this.template('_collection-view.js', 'js/collection-view.js');
-  this.template('_layout-view.js', 'js/layout-view.js');
-  this.template('_model.js', 'js/model.js');
-  this.template('_collection.js', 'js/collection.js');
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+  var scripts = ['_main', '_view', '_collection-view', '_layout-view', '_model', '_collection'];
+  scripts.forEach(function(script) {
+    this.template(script + scriptExt, 'js/' + script + scriptExt);
+  });
   this.template('_index.html', 'public/index.html');
 };
 
