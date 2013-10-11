@@ -121,11 +121,12 @@ ThoraxGenerator.prototype.app = function () {
 
 ThoraxGenerator.prototype.scripts = function () {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
-  var scripts = ['_main', '_view', '_collection-view', '_layout-view', '_model', '_collection'];
+  var scripts = ['_view', '_collection-view', '_layout-view', '_model', '_collection'];
   scripts.forEach(function(script) {
     var name = script + scriptExt;
     this.template(name, 'js/' + name);
   }, this);
+  this.template('_main.js', 'js/main.js');
   this.template('_index.html', 'public/index.html');
 };
 

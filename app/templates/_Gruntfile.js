@@ -118,7 +118,7 @@ module.exports = function(grunt) {
       handlebars: {
         files: [paths.templates + '/**/*.hbs'],
         tasks: ['templates']
-      } <% if (includeCoffeeScript) { %>,
+      <% if (includeCoffeeScript) { %>},
       coffee: {
         glob_to_multiple: {
           expand: true,
@@ -127,9 +127,7 @@ module.exports = function(grunt) {
           src: ['*.coffee'],
           dest: 'public/js/',
           ext: '.js'
-        }
-      },
-      <% } %>
+        }<% } %>
       },
       scripts: {
         files: [
