@@ -123,8 +123,9 @@ ThoraxGenerator.prototype.scripts = function () {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
   var scripts = ['_main', '_view', '_collection-view', '_layout-view', '_model', '_collection'];
   scripts.forEach(function(script) {
-    this.template(script + scriptExt, 'js/' + script + scriptExt);
-  });
+    var name = script + scriptExt;
+    this.template(name, 'js/' + name);
+  }, this);
   this.template('_index.html', 'public/index.html');
 };
 
@@ -136,23 +137,27 @@ ThoraxGenerator.prototype.projectFiles = function () {
 };
 
 ThoraxGenerator.prototype.helloWorld = function() {
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+
   if (this.starterApp === 'Hello World') {
     this.mkdir('js/views/hello-world');
     this.mkdir('js/templates/hello-world');
-    this.copy('seed/js/views/hello-world/index.js', 'js/views/hello-world/index.js');
+    this.copy('seed/js/views/hello-world/index' + scriptExt, 'js/views/hello-world/index' + scriptExt);
     this.copy('seed/js/templates/hello-world/index.hbs', 'js/templates/hello-world/index.hbs');
-    this.copy('seed/js/routers/hello-world.js', 'js/routers/hello-world.js');
+    this.copy('seed/js/routers/hello-world' + scriptExt, 'js/routers/hello-world' + scriptExt);
     this.copy('seed/css/hello-world.css', 'css/hello-world.css');
   }
 };
 
 ThoraxGenerator.prototype.todoList = function() {
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+
   if (this.starterApp === 'Todo List') {
     this.mkdir('js/views/todo-list');
     this.mkdir('js/templates/todo-list');
-    this.copy('seed/js/views/todo-list/index.js', 'js/views/todo-list/index.js');
+    this.copy('seed/js/views/todo-list/index' + scriptExt, 'js/views/todo-list/index' + scriptExt);
     this.copy('seed/js/templates/todo-list/index.hbs', 'js/templates/todo-list/index.hbs');
-    this.copy('seed/js/routers/todo-list.js', 'js/routers/todo-list.js');
+    this.copy('seed/js/routers/todo-list' + scriptExt, 'js/routers/todo-list' + scriptExt);
     this.copy('seed/css/todo-list.css', 'css/todo-list.css');
   }
 };
