@@ -12,7 +12,9 @@ describe('thorax generator', function () {
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
-        'newDirectory': false
+        'newDirectory': false,
+        'starterApp': "",
+        'includeBootstrap': false
       });
 
       this.app.run({}, done);
@@ -38,6 +40,8 @@ describe('thorax generator', function () {
         test.options['skip-install'] = true;
         helpers.mockPrompt(test, {
           'name': 'test',
+          'starterApp': "none",
+          'includeBootstrap': false,
           'newDirectory': false
         });
 
