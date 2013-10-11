@@ -120,12 +120,15 @@ module.exports = function(grunt) {
         tasks: ['templates']
       } <% if (includeCoffeeScript) { %>,
       coffee: {
-        files: ['app/assets/src/coffee/**/*.coffee', 'app/assets/src/coffee/*.coffee', 'app/webserver.coffee'],
-        tasks: ['coffee:dev', 'replace', 'mochaTest'],
-        options: {
-          nospawn: true
+        glob_to_multiple: {
+          expand: true,
+          flatten: true,
+          cwd: 'coffee/',
+          src: ['*.coffee'],
+          dest: 'public/js/',
+          ext: '.js'
         }
-      }
+      },
       <% } %>
       },
       scripts: {
