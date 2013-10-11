@@ -1,8 +1,8 @@
 define [
   'backbone'
-  'collection'
-  'views/root'
-  'views/todo-list/index'
+  'cs!collection'
+  'cs!views/root'
+  'cs!views/todo-list/index'
 ], (Backbone, Collection, RootView, TodoListIndexView) ->
   return Backbone.Router.extend
     routes:

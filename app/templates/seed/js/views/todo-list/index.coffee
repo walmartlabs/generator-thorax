@@ -1,5 +1,5 @@
 define [
-  'view'
+  'cs!view'
   'templates/todo-list/index'
 ], (View, template) ->
   View.extend

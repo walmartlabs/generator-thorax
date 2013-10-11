@@ -1,7 +1,7 @@
 define [
   'backbone'
-  'views/root'
-  'views/hello-world/index'
+  'cs!views/root'
+  'cs!views/hello-world/index'
 ], (Backbone, RootView, IndexView) ->
   return Backbone.Router.extend
     routes:

@@ -1,2 +1,2 @@
-define(['thorax'], (Thorax) ->
+define ['thorax'], (Thorax) ->
   class View extends Thorax.View

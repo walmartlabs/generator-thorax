@@ -1,5 +1,5 @@
 define [
-  'layout-view',
+  'cs!layout-view',
   'templates/root'
 ], (LayoutView, rootTemplate) ->
   class RootView extends LayoutView

@@ -1,5 +1,5 @@
 define [
-  'view'
+  'cs!view'
   'templates/hello-world/index'
 ], (View, template) ->
   View.extend

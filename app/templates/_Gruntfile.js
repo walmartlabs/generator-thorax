@@ -113,6 +113,16 @@ module.exports = function(grunt) {
           amd: true
         }
       }
+    <% if (includeCoffeeScript) { %>},
+    coffee: {
+      glob_to_multiple: {
+        expand: true,
+        flatten: true,
+        cwd: 'js/',
+        src: ['*.coffee'],
+        dest: 'public/js/',
+        ext: '.js'
+      }<% } %>
     },
     watch: {
       handlebars: {
@@ -120,15 +130,9 @@ module.exports = function(grunt) {
         tasks: ['templates']
       <% if (includeCoffeeScript) { %>},
       coffee: {
-        glob_to_multiple: {
-          expand: true,
-          flatten: true,
-          cwd: 'js/',
-          src: ['*.coffee'],
-          dest: 'public/js/',
-          ext: '.js'
-        }<% } %>
-      },
+        files: './**/*.coffee',
+        tasks: ["coffee"]
+      <% } %>},
       scripts: {
         files: [
           paths.js + '/**/*.js'
@@ -158,25 +162,23 @@ module.exports = function(grunt) {
         'handlebars': '../bower_components/handlebars/handlebars.runtime',
         'backbone': '../bower_components/backbone/backbone',
         'thorax': '../bower_components/thorax/thorax',
-        'bootstrap': '../bower_components/bootstrap/js/bootstrap',
-        'cs' :'../bower_components/cs',
-        'coffee-script': '../bower_components/coffee-script'
+        'bootstrap': '../bower_components/bootstrap/js/bootstrap'
       }<% if (includeCoffeeScript) { %>,
       packages: [
         {
           name: 'cs',
-          location: 'require-cs',
+          location: '../../bower_components/require-cs',
           main: 'cs'
         },
         {
           name: 'coffee-script',
-          main: 'index'
+          location: '../../bower_components/require-cs',
+          main: 'coffee-script'
         }
       ],
       //Stub out the cs module after a build since
       //it will not be needed.
-      stubModules: ['cs'],
-      ]<% } %>,
+      stubModules: ['cs']<% } %>,
       shim: {
         'handlebars': {
           exports: 'Handlebars'
