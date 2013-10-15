@@ -192,14 +192,14 @@ describe('thorax generator', function () {
 
       this.app.run({}, function () {
         helpers.assertFiles([
-          'coffee/views',
-          'coffee/models',
-          'coffee/routers',
-          'coffee/collections',
-          ['cofee/init.coffee', /var Test = window.Test = new Thorax.LayoutView/],
-          ['cofee/view.coffee', /Test.View extends Thorax.View/],
-          ['cofee/model.coffee', /Test.Model extends Thorax.Model/],
-          ['cofee/collection.coffee', /Test.Collection extends Thorax.Collection/],
+          'js/views',
+          'js/models',
+          'js/routers',
+          'js/collections',
+          ['js/init.coffee', /Test = window.Test = new Thorax.LayoutView/],
+          ['js/view.coffee', /Test.View extends Thorax.View/],
+          ['js/model.coffee', /Test.Model extends Thorax.Model/],
+          ['js/collection.coffee', /Test.Collection extends Thorax.Collection/],
         ]);
         done();
       });
