@@ -118,7 +118,7 @@ module.exports = function(grunt) {
       glob_to_multiple: {
         expand: true,
         flatten: true,
-        cwd: 'js/',
+        cwd: paths.js,
         src: ['*.coffee'],
         dest: 'public/js/',
         ext: '.js'
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
         tasks: ['templates']
       <% if (includeCoffeeScript) { %>},
       coffee: {
-        files: './**/*.coffee',
+        files: paths.js + '/**/*.coffee',
         tasks: ["coffee"]
       <% } %>},
       scripts: {
