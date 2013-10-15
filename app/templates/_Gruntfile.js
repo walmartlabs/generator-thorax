@@ -152,7 +152,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: paths.css,
-          src: ['*.less'],
+          src: ['*.styl'],
           dest: paths.output.css,
           ext: '.css'
         }]
@@ -266,10 +266,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('styles', [
     'copy:styles'<% if (includeBootstrap) { %>,
-    'copy:bootstrap'<% } %><% if (styleProcessor === 'sass') { %>,
-    'sass'<% } %><% if (styleProcessor === 'less') { %>,
-    'less'<% } %><% if (styleProcessor === 'stylus') { %>,
-    'stylus'<% } %>
+    'copy:bootstrap'<% } %><% if (styleProcessor !== 'none') { %>,
+    <%= styleProcessor } %>
   ]);
 
   grunt.registerTask('default', [
