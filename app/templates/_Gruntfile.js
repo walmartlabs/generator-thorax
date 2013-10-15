@@ -165,6 +165,7 @@ module.exports = function(grunt) {
         'bootstrap': '../bower_components/bootstrap/js/bootstrap'
       }<% if (includeCoffeeScript) { %>,
       packages: [
+        // include the requirejs coffeescript plugin and the coffeescript compiler
         {
           name: 'cs',
           location: '../../bower_components/require-cs',
