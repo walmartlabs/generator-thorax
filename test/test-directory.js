@@ -14,7 +14,9 @@ describe('thorax generator', function () {
     app.options['skip-install'] = true;
 
     helpers.mockPrompt(app, {
-      'newDirectory': true
+      'newDirectory': true,
+      'starterApp': "none",
+      'includeBootstrap': false
     });
 
     app.run([], function () {
