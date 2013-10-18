@@ -12,29 +12,13 @@ require.config({
         'fixtures'      : '../test/admin/fixtures/fixtures',
         'jquery'        : 'libs/jquery/jquery.min',
         'underscore'    : 'libs/underscore/underscore',
-        'backbone'      : 'vendor/backbone',
-        'visualsearch'  : 'libs/backbone/visualsearch',
-        'highcharts'    : 'libs/highcharts/highcharts',
-        'charts'        : 'vendor/highcharts',
+        'backbone'      : 'vendor/backbone'
         'templates'     : 'templates/templates'
     },
     shim: {
         backbone: {
-            deps: ['use!underscore', 'jquery'],
+            deps: ['underscore', 'jquery'],
             exports: 'Backbone'
-        },
-        'libs/backbone/backbone': {
-            deps: ['use!underscore', 'jquery'],
-            exports: 'Backbone'
-        },
-        'libs/leaflet/leaflet-src': {
-            exports: 'L'
-        },
-        underscore: {
-            exports: '_'
-        },
-        mocha: {
-            exports: 'mocha'
         }
     }
 });
