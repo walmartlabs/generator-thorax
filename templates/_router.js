@@ -20,7 +20,7 @@ define([
     posts: function(id) {
       if (id) {
         // Fetch a single model with id `id` and render a view for it
-        var model = this.posts.get(id);
+        var model = this.posts.get(id) || this.posts.add({id: id});
         var view = new PostView({model: model});
         model.fetch();
       } else {
