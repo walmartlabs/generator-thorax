@@ -1,7 +1,7 @@
 define(['collection'], function (Collection) {
   return Collection.extend({
     name: '<%= name %>',
-    url: '<%= name %>',
+    url: '<%= name %>'<% if (useStubMethods) { %>,
 
     // Set up event listeners for related models and collections (but not views)
     initialize: function(models, options) {
@@ -12,8 +12,15 @@ define(['collection'], function (Collection) {
     // setting up nested relationships, here.
     parse: function(resp) {
 
-      // By default just returns what was passed in
-      return resp.posts;
+      // If your JSON response is namespaced like:
+      // {
+      //   ...
+      //   posts: [...]
+      // }
+      // you would return resp.posts
+
+      // By default just returns what was passed in.
+      return resp;
     },
 
 
@@ -26,6 +33,6 @@ define(['collection'], function (Collection) {
       var data = _.clone(this.models);
 
       return data;
-    },
+    }<% } %>
   });
 });

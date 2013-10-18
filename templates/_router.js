@@ -3,6 +3,9 @@ define([
   'backbone'
 ], function (RootView, Backbone) {
   return Backbone.Router.extend({
+    <% if (useStubMethods) { %>
+    // For example, if your app was a blog and had a `posts` model, your router
+    // might look something like this:
     routes: {
       '': 'posts',
       'posts': 'posts'
@@ -11,7 +14,7 @@ define([
 
     initialize: function() {
       // set up any instance variables here
-      // this.posts = new PostsCollection;
+      this.posts = new PostsCollection;
     },
 
     posts: function(id) {
@@ -25,7 +28,6 @@ define([
         var view = new PostsView({collection: this.posts});
         this.posts.fetch();
       }
-    }
-
+    }<% } %>
   });
 });

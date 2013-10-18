@@ -2,7 +2,7 @@ define(['model'], function (Model) {
   return Model.extend({
     urlRoot: '/<%= name %>',
 
-    name: '<%= name %>',
+    name: '<%= name %>'<% if (useStubMethods) { %>,
 
     // Set up event listeners for related models and collections (but not views)
     initialize: function(attributes, options) {
@@ -28,6 +28,6 @@ define(['model'], function (Model) {
       data.foo = 'bar';
 
       return data;
-    },
+    }<% } %>
   });
 });
