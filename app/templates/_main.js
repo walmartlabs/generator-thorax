@@ -1,11 +1,13 @@
 require([
   'jquery',
   'backbone',
-  'views/root'<% if (starterApp === 'Hello World') { %>,
-  'routers/hello-world'<% } else if (starterApp === 'Todo List') { %>,
-  'routers/todo-list'<% } %>
+  'views/root',<% if (starterApp === 'Hello World') { %>
+  'routers/hello-world',<% } else if (starterApp === 'Todo List') { %>
+  'routers/todo-list',<% } %>
+  'templates/helpers',
+  'views/view-helpers'
 ], function ($, Backbone, RootView<% if (starterApp === 'Hello World') { %>, HelloWorldRouter<% } else if (starterApp === 'Todo List') { %>, TodoListRouter <% } %>) {
-  
+
   initialize(function(next) {
     // Load any data that your app requires to boot
     // and initialize all routers here, the callback

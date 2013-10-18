@@ -85,7 +85,7 @@ ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_Gruntfile.js', 'Gruntfile.js');
-  
+
   this.mkdir('public');
   this.mkdir('public/img');
   this.mkdir('public/fonts');
@@ -101,10 +101,11 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js');
   this.mkdir('js/templates');
   this.mkdir('js/views');
-  this.mkdir('js/templates/helpers');
   this.mkdir('js/models');
   this.mkdir('js/collections');
 
+  this.copy('seed/js/templates/helpers.js', 'js/templates/helpers.js');
+  this.copy('seed/js/views/view-helpers.js', 'js/views/view-helpers.js');
   this.copy('seed/js/views/root.js', 'js/views/root.js');
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 };
