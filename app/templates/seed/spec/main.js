@@ -50,8 +50,3 @@ console = window.console || function() {};
 
 // Don't track
 window.notrack = true;
-
-// Mocha run helper, used for browser
-var runMocha = function() {
-    mocha.run();
-};
