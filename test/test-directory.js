@@ -1,7 +1,9 @@
 /* global describe, beforeEach, it */
 var fs      = require('fs');
 var path    = require('path');
-var assert  = require('assert');
+var chai = require('chai');
+var expect = chai.expect;
+var should = chai.should();
 var helpers = require('yeoman-generator').test;
 
 describe('thorax generator', function () {
@@ -9,26 +11,31 @@ describe('thorax generator', function () {
     helpers.testDirectory(path.join(__dirname, 'temp'), done);
   });
 
-  it('will generate the app in a new directory', function (done) {
+  it('should generate the app in a new directory', function (done) {
     var app = helpers.createGenerator('thorax:app', ['../../app'], 'testApp');
     app.options['skip-install'] = true;
 
     helpers.mockPrompt(app, {
-      'newDirectory': true
+      'newDirectory': true,
+      'starterApp': "",
+      'includeBootstrap': false
     });
 
     app.run([], function () {
-      assert(fs.existsSync(path.join(__dirname, 'temp', 'test-app')));
+      expect(fs.existsSync(path.join(__dirname, 'temp', 'test-app'))).to.equal(true);
       helpers.assertFiles([
+        'bower.json',
+        'package.json',
+        'Gruntfile.js',
+        'js',
+        'css',
+        'js/views',
+        'js/templates',
+        'public',
         '.jshintrc',
         '.editorconfig',
-        'Gruntfile.js',
-        'README.md',
-        'js/views',
-        'js/models',
-        'js/routers',
-        'js/collections',
-        'public/index.html'
+        '.bowerrc',
+        '.gitignore'
       ]);
       done();
     });

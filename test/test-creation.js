@@ -1,6 +1,8 @@
 /* global describe, beforeEach, it */
 var path    = require('path');
-var assert  = require('assert');
+var chai = require('chai');
+var expect = chai.expect;
+var should = chai.should();
 var helpers = require('yeoman-generator').test;
 
 describe('thorax generator', function () {
@@ -12,7 +14,9 @@ describe('thorax generator', function () {
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
-        'newDirectory': false
+        'newDirectory': false,
+        'starterApp': '',
+        'includeBootstrap': false
       });
 
       this.app.run({}, done);
@@ -20,30 +24,14 @@ describe('thorax generator', function () {
   });
 
   it('every generator can be required without throwing', function () {
-    assert(require('../app'));
-    assert(require('../collection'));
-    assert(require('../collection-view'));
-    assert(require('../helper'));
-    assert(require('../model'));
-    assert(require('../router'));
-    assert(require('../view'));
-    assert(require('../view-helper'));
-  });
-
-  describe('each generater', function () {
-    ['app', 'collection', 'collection-view', 'helper', 'model',
-     'router', 'view', 'view-helper'].forEach(function (name) {
-      it(name + ' can be run without an explicit name', function (done) {
-        var test = helpers.createGenerator('thorax:' + name, ['../../' + name]);
-        test.options['skip-install'] = true;
-        helpers.mockPrompt(test, {
-          'name': 'test',
-          'newDirectory': false
-        });
-
-        test.run([], done);
-      });
-    });
+    require('../app');
+    require('../collection');
+    require('../collection-view');
+    require('../helper');
+    require('../model');
+    require('../router');
+    require('../view');
+    require('../view-helper');
   });
 
   it('creates expected files', function (done) {
@@ -53,19 +41,15 @@ describe('thorax generator', function () {
       ['bower.json', /"name": "test"/g],
       ['package.json', /"name": "test"/g],
       'Gruntfile.js',
-      'README.md',
       'js/views',
       'js/models',
-      'js/routers',
       'js/collections',
-      ['js/init.js', /var Test = window.Test = new Thorax.LayoutView\(\{/],
-      ['js/view.js', /Test.View = Thorax.View.extend\(\{/],
-      ['js/model.js', /Test.Model = Thorax.Model.extend\(\{/],
-      ['js/collection.js', /Test.Collection = Thorax.Collection.extend\(\{/],
+      ['js/view.js', /Thorax.View.extend\(\{/],
+      ['js/model.js', /Thorax.Model.extend\(\{/],
+      ['js/collection.js', /Thorax.Collection.extend\(\{/],
       'public/index.html',
-      'stylesheets/base.css',
-      'tasks/ensure-installed.js',
-      'templates/application.handlebars'
+      'css/base.css',
+      'tasks/ensure-installed.js'
     ];
 
     helpers.assertFiles(expected);
@@ -78,7 +62,7 @@ describe('thorax generator', function () {
 
       router.run([], function () {
         helpers.assertFiles([
-          ['js/routers/foo.js', /new \(Backbone.Router.extend\(\{/]
+          ['js/routers/foo.js', /Backbone.Router.extend\(\{/]
         ]);
         done();
       });
@@ -91,9 +75,9 @@ describe('thorax generator', function () {
 
       view.run([], function () {
         helpers.assertFiles([
-          ['js/views/foo.js', /Test.View.extend\(\{/],
+          ['js/views/foo.js', /View.extend\(\{/],
           ['js/views/foo.js', /name: 'foo'/],
-          'templates/foo.handlebars'
+          'js/templates/foo.handlebars'
         ]);
         done();
       });
@@ -106,7 +90,7 @@ describe('thorax generator', function () {
 
       model.run([], function () {
         helpers.assertFiles([
-          ['js/models/foo.js', /Test.Model.extend\(\{/],
+          ['js/models/foo.js', /Model.extend\(\{/],
           ['js/models/foo.js', /name: 'foo'/]
         ]);
         done();
@@ -120,7 +104,7 @@ describe('thorax generator', function () {
 
       collection.run([], function () {
         helpers.assertFiles([
-          ['js/collections/foo.js', /Test.Collection.extend\(\{/],
+          ['js/collections/foo.js', /Collection.extend\(\{/],
           ['js/collections/foo.js', /name: 'foo'/]
         ]);
         done();
@@ -134,11 +118,11 @@ describe('thorax generator', function () {
 
       collectionView.run([], function () {
         helpers.assertFiles([
-          ['js/views/foo-bar.js', /Test.CollectionView.extend\(\{/],
+          ['js/views/foo-bar.js', /CollectionView.extend\(\{/],
           ['js/views/foo-bar.js', /name: 'fooBar'/],
-          'templates/foo-bar.handlebars',
-          'templates/foo-bar-item.handlebars',
-          'templates/foo-bar-empty.handlebars'
+          'js/templates/foo-bar.handlebars',
+          'js/templates/foo-bar-item.handlebars',
+          'js/templates/foo-bar-empty.handlebars'
         ]);
         done();
       });
@@ -151,7 +135,7 @@ describe('thorax generator', function () {
 
       helper.run([], function () {
         helpers.assertFiles([
-          ['js/helpers/foo.js', /Handlebars.registerHelper\('foo', function/]
+          ['js/templates/helpers/foo.js', /Handlebars.registerHelper\('foo', foo/]
         ]);
         done();
       });
