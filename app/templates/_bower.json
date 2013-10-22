@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "dependencies": {
     "requirejs": "~2.1",
-    "thorax": "~2.0"
+    "thorax": "~2.0",
+    "jquery": "1.9.0",
+    "underscore": "1.4.4",
+    "zepto": "1.0.0",
+    "handlebars": "1.0.0",
+    "backbone": "1.0.0"
     <% if (includeBootstrap) { %>, "bootstrap": "~3.0"<% } %>
   }
 }
