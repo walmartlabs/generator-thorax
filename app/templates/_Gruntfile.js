@@ -113,7 +113,51 @@ module.exports = function(grunt) {
           amd: true
         }
       }
-    },
+    },<% if (styleProcessor === 'sass') { %>
+    sass: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: paths.css,
+          src: ['*.scss'],
+          dest: paths.output.css,
+          ext: '.css'
+        }]
+      }
+    },<% } %><% if (styleProcessor === 'less') { %>
+    less: {
+      development: {
+        options: {},
+        files: [{
+          expand: true,
+          cwd: paths.css,
+          src: ['*.less'],
+          dest: paths.output.css,
+          ext: '.css'
+        }]
+      },
+      production: {
+        options: {},
+        files: [{
+          expand: true,
+          cwd: paths.css,
+          src: ['*.less'],
+          dest: paths.output.css,
+          ext: '.css'
+        }]
+      }
+    },<% } %><% if (styleProcessor === 'stylus') { %>
+    stylus: {
+      compile: {
+        files: [{
+          expand: true,
+          cwd: paths.css,
+          src: ['*.styl'],
+          dest: paths.output.css,
+          ext: '.css'
+        }]
+      }
+    },<% } %>
     watch: {
       handlebars: {
         files: [paths.templates + '/**/*.hbs'],
@@ -127,7 +171,7 @@ module.exports = function(grunt) {
       },
       styles: {
         files: [paths.css + '/**/*'],
-        tasks: ['copy:styles']
+        tasks: ['styles']
       }
     }
   });
@@ -140,7 +184,7 @@ module.exports = function(grunt) {
       modules: [
         {
           name: 'main'
-        } 
+        }
       ],
       paths: {
         'jquery': '../bower_components/jquery/jquery',
@@ -222,7 +266,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('styles', [
     'copy:styles'<% if (includeBootstrap) { %>,
-    'copy:bootstrap'<% } %>
+    'copy:bootstrap'<% } %><% if (styleProcessor !== 'none') { %>,
+    <%= styleProcessor %><% } %>
   ]);
 
   grunt.registerTask('default', [
