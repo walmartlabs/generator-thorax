@@ -16,7 +16,7 @@ TODO
 ## Directory Structure
 
 - `bower_components` Installed third party libraries. Managed by [Bower](http://bower.io/), do not modify directly.
-- `css` Regardless of wether you are using a CSS superset (LESS / Stylus / SASS) or plain CSS, this is where your CSS should live. This will get copied or compiled to `public/css`
+- `css` Regardless of whether you are using a CSS superset (LESS / Stylus / SASS) or plain CSS, this is where your CSS should live. This will get copied or compiled to `public/css`
 - `js`
   - `collections`
   - `models`
@@ -33,7 +33,7 @@ TODO
 - `public` The connect server will serve this directory.
   - `css` Generated or copied CSS from the `css` directory, do not modify.
   - `fonts` Any web fonts for your application, safe to modify.
-  - `img` Any web 
+  - `img` Any web
   - `js` Generated or copied JavaScript from the `js` directory, do not modify.
   - `index.html`
 - `tasks` Put any extra grunt tasks here.
@@ -72,9 +72,9 @@ If you haven't yet already, make sure the generator is installed:
     [?] Would you like to generate the app in a new directory? Yes
     [?] Would you like to include Bootstrap? Yes
     [?] Would you like to setup your project with a sample application? (Use arrow keys)
-          Hello World 
-          Todo List 
-        ❯ None 
+          Hello World
+          Todo List
+        ❯ None
 
 ...and then `$ cd todo-list`. Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled down their dependencies during the creation of the application. To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. We'll generate the needed files first, then start editing them. To get started, let's generate our first view:
 
@@ -93,16 +93,16 @@ This generated two new files, a view and a matching template...
     ], function (View, template) {  //callback
      return View.extend({
        name: 'todo-list/index',
-       template: template  //templates/todo-list/index.js is passed in as the arg 'template' above, then assigned as a property of the view 
+       template: template  //templates/todo-list/index.js is passed in as the arg 'template' above, then assigned as a property of the view
       });
     });
-    
-Those familiar with RequireJS will be thrilled to see that define() call, and those who aren't should read the [API](http://requirejs.org/docs/api.html). In short, RequireJS is going to make the code found in the files `view` and `templates/todos/index` available inside of the callback as `View` and `template`, respectively. We'll come back to these. You can leave the `.js` off when adding dependencies to a module in RequireJS; it's expecting a script. All file paths are relative to the directory set in the `baseUrl` property of the options object in the function that configures RequireJS `getRequireJSOptions` found in Gruntfile.js, or `./` by default. 
+
+Those familiar with RequireJS will be thrilled to see that define() call, and those who aren't should read the [API](http://requirejs.org/docs/api.html). In short, RequireJS is going to make the code found in the files `view` and `templates/todos/index` available inside of the callback as `View` and `template`, respectively. We'll come back to these. You can leave the `.js` off when adding dependencies to a module in RequireJS; it's expecting a script. All file paths are relative to the directory set in the `baseUrl` property of the options object in the function that configures RequireJS `getRequireJSOptions` found in Gruntfile.js, or `./` by default.
 
 Next, we'll create our first router:
 
     $ yo thorax:router todo-list
-    
+
 This will generate one new file...
 
     create js/routers/todo-list.js
@@ -110,7 +110,7 @@ This will generate one new file...
 ...into which the following code will be inserted:
 
     define([
-      'views/root',  
+      'views/root',
       'backbone'
     ], function (RootView, Backbone) {
       return Backbone.Router.extend({  //plain Backbone. Thorax doesn't touch the router.
@@ -132,7 +132,7 @@ Now that we have our files, we can start editing them. Let's first get something
         },
         index: function(){
           var view = new TodoListIndexView({})  //Hey! I'm a view getting instantiated! My template will be rendered. Purr.
-          RootView.getInstance().setView(view)  //Nuke whatever was in the {{layout-element}} element in root.hbs (and do memory management), replace it with the template rendered by the line above.  
+          RootView.getInstance().setView(view)  //Nuke whatever was in the {{layout-element}} element in root.hbs (and do memory management), replace it with the template rendered by the line above.
         }
       });
     });
@@ -140,8 +140,8 @@ Now that we have our files, we can start editing them. Let's first get something
 ...and then give `templates/todo-list/index.handlebars` something to render:
 
     <p> Arrrr! I'm a pirate with a handlebar mustache. </p>
-    
-At this point, we'll run the command `$ npm start` to build the project. You might try having two windows - your terminal and your text editor - open at the same time when you do this. In your text editor, make sure the contents of the `public` folder are visible (should be empty). When you run the command, your files will be copied into the `public` folder, which is what goes over the wire. It will also open up your browser to the project. During build, Require is going to make sure your scripts are loaded correctly - because so long as they've been written as a module (as above) they are aware of their dependencies. Unfortunately, many third-party libraries such as JQuery are not written as Require modules, must have their dependencies explicitely defined in `grunfile.js` in the `shim` section of the require configuration and manually declare the dependencies of those libraries, following the example of those already there.   
+
+At this point, we'll run the command `$ npm start` to build the project. You might try having two windows - your terminal and your text editor - open at the same time when you do this. In your text editor, make sure the contents of the `public` folder are visible (should be empty). When you run the command, your files will be copied into the `public` folder, which is what goes over the wire. It will also open up your browser to the project. During build, Require is going to make sure your scripts are loaded correctly - because so long as they've been written as a module (as above) they are aware of their dependencies. Unfortunately, many third-party libraries such as JQuery are not written as Require modules, must have their dependencies explicitely defined in `grunfile.js` in the `shim` section of the require configuration and manually declare the dependencies of those libraries, following the example of those already there.
 
 What about RootView? (FILL IN). Now that we have something on screen, let's get some data on the screen and finish the rest of our todo list.
 
@@ -170,15 +170,15 @@ To implement a todo list, we need to create a collection and set it on the view.
           RootView.getInstance().setView(view);
         }
       });
-    }); 
+    });
 
-To display the collection we will edit `templates/todo-list/index.handlebars` and use the `collection` handlebars helper, which functions as a `forEach` and will 
+To display the collection we will edit `templates/todo-list/index.handlebars` and use the `collection` handlebars helper, which functions as a `forEach` and will
 
-    {{#collection}} 
-        render the code between the opening and 
-        closing collection tags for each model 
-        in the collection 
-    {{/collection}}` 
+    {{#collection}}
+        render the code between the opening and
+        closing collection tags for each model
+        in the collection
+    {{/collection}}`
 
 Beautifully, all of the properties of the associated model are available in the helpers (see `{{title}}` below).  A `tag` option may be specified to define what type of HTML tag will be used when creating the collection element:
 

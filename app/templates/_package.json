@@ -18,6 +18,7 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-handlebars": "~0.5.10",
     "require-handlebars-plugin": "git://github.com/SlexAxton/require-handlebars-plugin.git"
+    <% if (includeCoffeeScript) { %>, "grunt-contrib-coffee": "~0.7.0"<% } %>
   },
   "scripts": {
     "start": "node ./node_modules/.bin/grunt",
