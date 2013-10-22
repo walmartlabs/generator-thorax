@@ -15,6 +15,14 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 
   this.prompts.push({
+    type: 'list',
+    name: 'styleProcessor',
+    choices: ['none', 'less', 'sass', 'stylus'],
+    message: 'Would you like to set up your project with a style preprocessor (choose "none" for plain css)',
+    default: 'none'
+  });
+
+  this.prompts.push({
     type: 'confirm',
     name: 'includeBootstrap',
     message: 'Would you like to include Bootstrap?',
@@ -85,7 +93,7 @@ ThoraxGenerator.prototype.app = function () {
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_Gruntfile.js', 'Gruntfile.js');
-  
+
   this.mkdir('public');
   this.mkdir('public/img');
   this.mkdir('public/fonts');
