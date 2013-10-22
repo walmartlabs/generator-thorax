@@ -2,7 +2,6 @@
 var path    = require('path');
 var chai = require('chai');
 var expect = chai.expect;
-var should = chai.should();
 var helpers = require('yeoman-generator').test;
 
 describe('thorax generator', function () {
@@ -16,7 +15,8 @@ describe('thorax generator', function () {
       helpers.mockPrompt(this.app, {
         'newDirectory': false,
         'starterApp': '',
-        'includeBootstrap': false
+        'includeBootstrap': false,
+        'includeCoffeeScript': false
       });
 
       this.app.run({}, done);
@@ -164,7 +164,9 @@ describe('thorax generator', function () {
         this.app.options['skip-install'] = true;
 
         helpers.mockPrompt(this.app, {
-          'newDirectory': false,
+          'newDirectory': true,
+          'starterApp': "",
+          'includeBootstrap': false,
           'includeCoffeeScript': true
         });
 
@@ -178,12 +180,93 @@ describe('thorax generator', function () {
         helpers.assertFiles([
           'js/views',
           'js/models',
-          'js/routers',
           'js/collections',
-          ['js/init.coffee', /Test = window.Test = new Thorax.LayoutView/],
-          ['js/view.coffee', /Test.View extends Thorax.View/],
-          ['js/model.coffee', /Test.Model extends Thorax.Model/],
-          ['js/collection.coffee', /Test.Collection extends Thorax.Collection/],
+          'js/views/root.coffee',
+          ['js/view.coffee', /class View extends Thorax.View/],
+          ['js/model.coffee', /class Model extends Thorax.Model/],
+          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+        ]);
+        done();
+      });
+    });
+  });
+
+  describe('CoffeeScript - HelloWorld', function () {
+    beforeEach(function (done) {
+      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+        if (err) { return done(err); }
+
+        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app.options['skip-install'] = true;
+
+        helpers.mockPrompt(this.app, {
+          'newDirectory': true,
+          'starterApp': "Hello World",
+          'includeBootstrap': false,
+          'includeCoffeeScript': true
+        });
+
+        this.app.run({}, done);
+      }.bind(this));
+    });
+
+    it('generates CoffeeScript templates when requested', function (done) {
+
+      this.app.run({}, function () {
+        helpers.assertFiles([
+          'js/views',
+          'js/models',
+          'js/collections',
+          'js/views/root.coffee',
+          'js/routers/hello-world.coffee',
+          'js/views/hello-world/index.coffee',
+          ['js/view.coffee', /class View extends Thorax.View/],
+          ['js/model.coffee', /class Model extends Thorax.Model/],
+          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+        ]);
+        done();
+      });
+    });
+  });
+
+  describe('CoffeeScript - Todo List', function () {
+    beforeEach(function (done) {
+      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+        if (err) { return done(err); }
+
+        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app.options['skip-install'] = true;
+
+        helpers.mockPrompt(this.app, {
+          'newDirectory': true,
+          'starterApp': "Todo List",
+          'includeBootstrap': false,
+          'includeCoffeeScript': true
+        });
+
+        this.app.run({}, done);
+      }.bind(this));
+    });
+
+    it('generates CoffeeScript templates when requested', function (done) {
+
+      this.app.run({}, function () {
+        helpers.assertFiles([
+          'js/views',
+          'js/models',
+          'js/collections',
+          'js/views/root.coffee',
+          'js/routers/todo-list.coffee',
+          'js/views/todo-list/index.coffee',
+          ['js/view.coffee', /class View extends Thorax.View/],
+          ['js/model.coffee', /class Model extends Thorax.Model/],
+          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
         ]);
         done();
       });
