@@ -9,7 +9,7 @@ define [
   instance = null
   RootView.getInstance = (target) ->
     unless instance
-      instance = new RootView
+      instance = new RootView()
       instance.appendTo target || document.body
     instance
 

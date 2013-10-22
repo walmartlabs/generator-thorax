@@ -175,21 +175,18 @@ describe('thorax generator', function () {
     });
 
     it('generates CoffeeScript templates when requested', function (done) {
-
-      this.app.run({}, function () {
-        helpers.assertFiles([
-          'js/views',
-          'js/models',
-          'js/collections',
-          'js/views/root.coffee',
-          ['js/view.coffee', /class View extends Thorax.View/],
-          ['js/model.coffee', /class Model extends Thorax.Model/],
-          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
-          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
-          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
-        ]);
-        done();
-      });
+      helpers.assertFiles([
+        'js/views',
+        'js/models',
+        'js/collections',
+        'js/views/root.coffee',
+        ['js/view.coffee', /class View extends Thorax.View/],
+        ['js/model.coffee', /class Model extends Thorax.Model/],
+        ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+        ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+        ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+      ]);
+      done();
     });
   });
 
@@ -213,23 +210,20 @@ describe('thorax generator', function () {
     });
 
     it('generates CoffeeScript templates when requested', function (done) {
-
-      this.app.run({}, function () {
-        helpers.assertFiles([
-          'js/views',
-          'js/models',
-          'js/collections',
-          'js/views/root.coffee',
-          'js/routers/hello-world.coffee',
-          'js/views/hello-world/index.coffee',
-          ['js/view.coffee', /class View extends Thorax.View/],
-          ['js/model.coffee', /class Model extends Thorax.Model/],
-          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
-          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
-          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
-        ]);
-        done();
-      });
+      helpers.assertFiles([
+        'js/views',
+        'js/models',
+        'js/collections',
+        'js/views/root.coffee',
+        'js/routers/hello-world.coffee',
+        'js/views/hello-world/index.coffee',
+        ['js/view.coffee', /class View extends Thorax.View/],
+        ['js/model.coffee', /class Model extends Thorax.Model/],
+        ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+        ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+        ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+      ]);
+      done();
     });
   });
 
@@ -253,23 +247,20 @@ describe('thorax generator', function () {
     });
 
     it('generates CoffeeScript templates when requested', function (done) {
-
-      this.app.run({}, function () {
-        helpers.assertFiles([
-          'js/views',
-          'js/models',
-          'js/collections',
-          'js/views/root.coffee',
-          'js/routers/todo-list.coffee',
-          'js/views/todo-list/index.coffee',
-          ['js/view.coffee', /class View extends Thorax.View/],
-          ['js/model.coffee', /class Model extends Thorax.Model/],
-          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
-          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
-          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
-        ]);
-        done();
-      });
+      helpers.assertFiles([
+        'js/views',
+        'js/models',
+        'js/collections',
+        'js/views/root.coffee',
+        'js/routers/todo-list.coffee',
+        'js/views/todo-list/index.coffee',
+        ['js/view.coffee', /class View extends Thorax.View/],
+        ['js/model.coffee', /class Model extends Thorax.Model/],
+        ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+        ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+        ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+      ]);
+      done();
     });
   });
 });
