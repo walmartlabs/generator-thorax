@@ -8,5 +8,5 @@ define [
       "": "index"
 
     index: ->
-      view = new IndexView
+      view = new IndexView()
       RootView.getInstance().setView view
