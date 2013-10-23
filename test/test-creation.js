@@ -156,8 +156,9 @@ describe('thorax generator', function () {
     });
   });
 
-  describe('SASS', function () {
-    beforeEach(function (done) {
+  describe('Style Processors', function(){
+
+    beforeEach(function (done){
       helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
         if (err) { return done(err); }
 
@@ -167,7 +168,7 @@ describe('thorax generator', function () {
         helpers.mockPrompt(this.app, {
           'newDirectory': false,
           'starterApp': "None",
-          'styleProcessor': "sass",
+          'styleProcessor': this.styleOption,
           'includeBootstrap': false
         });
 
@@ -175,68 +176,46 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('is included when selected in the prompt', function (done) {
-      helpers.assertFiles([
-        ['Gruntfile.js', /sass: \{/],
-        ['package.json', /grunt-contrib-sass/]
-      ]);
-      done();
-    });
-  });
+    describe('SASS', function () {
+      before(function () {
+        this.styleOption = "sass";
+      });
 
-  describe('LESS', function () {
-    beforeEach(function (done) {
-      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-        if (err) { return done(err); }
-
-        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
-        this.app.options['skip-install'] = true;
-
-        helpers.mockPrompt(this.app, {
-          'newDirectory': false,
-          'starterApp': "None",
-          'styleProcessor': "less",
-          'includeBootstrap': false
-        });
-
-        this.app.run({}, done);
-      }.bind(this));
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['Gruntfile.js', /sass: \{/],
+          ['package.json', /grunt-contrib-sass/]
+        ]);
+        done();
+      });
     });
 
-    it('is included when selected in the prompt', function (done) {
-      helpers.assertFiles([
-        ['Gruntfile.js', /less: \{/],
-        ['package.json', /grunt-contrib-less/]
-      ]);
-      done();
-    });
-  });
+    describe('LESS', function () {
+      before(function () {
+        this.styleOption = "less";
+      });
 
-  describe('Stylus', function () {
-    beforeEach(function (done) {
-      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-        if (err) { return done(err); }
-
-        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
-        this.app.options['skip-install'] = true;
-
-        helpers.mockPrompt(this.app, {
-          'newDirectory': false,
-          'starterApp': "None",
-          'styleProcessor': "stylus",
-          'includeBootstrap': false
-        });
-
-        this.app.run({}, done);
-      }.bind(this));
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['Gruntfile.js', /less: \{/],
+          ['package.json', /grunt-contrib-less/]
+        ]);
+        done();
+      });
     });
 
-    it('is included when selected in the prompt', function (done) {
-      helpers.assertFiles([
-        ['Gruntfile.js', /stylus: \{/],
-        ['package.json', /grunt-contrib-stylus/]
-      ]);
-      done();
+    describe('Stylus', function () {
+      before(function () {
+        this.styleOption = "stylus";
+      });
+
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['Gruntfile.js', /stylus: \{/],
+          ['package.json', /grunt-contrib-stylus/]
+        ]);
+        done();
+      });
     });
   });
 });
