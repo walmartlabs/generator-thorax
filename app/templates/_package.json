@@ -17,6 +17,9 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-handlebars": "~0.5.10",
+    <% if (styleProcessor === 'less') { %>"grunt-contrib-less": "~0.5.0",<% } %>
+    <% if (styleProcessor === 'sass') { %>"grunt-contrib-sass": "~0.5.0",<% } %>
+    <% if (styleProcessor === 'stylus') { %>"grunt-contrib-stylus": "~0.4.0",<% } %>
     "require-handlebars-plugin": "git://github.com/SlexAxton/require-handlebars-plugin.git"
     <% if (includeCoffeeScript) { %>, "grunt-contrib-coffee": "~0.7.0"<% } %>
   },

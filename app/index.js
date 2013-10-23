@@ -15,6 +15,14 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 
   this.prompts.push({
+    type: 'list',
+    name: 'styleProcessor',
+    choices: ['none', 'less', 'sass', 'stylus'],
+    message: 'Would you like to set up your project with a style preprocessor (choose "none" for plain css)',
+    default: 'none'
+  });
+
+  this.prompts.push({
     type: 'confirm',
     name: 'includeBootstrap',
     message: 'Would you like to include Bootstrap?',

@@ -14,7 +14,8 @@ describe('thorax generator', function () {
 
       helpers.mockPrompt(this.app, {
         'newDirectory': false,
-        'starterApp': '',
+        'starterApp': "None",
+        'styleProcessor': "none",
         'includeBootstrap': false,
         'includeCoffeeScript': false
       });
@@ -165,7 +166,8 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
-          'starterApp': "",
+          'starterApp': "None",
+          'styleProcessor': "none",
           'includeBootstrap': false,
           'includeCoffeeScript': true
         });
@@ -201,6 +203,7 @@ describe('thorax generator', function () {
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
           'starterApp': "Hello World",
+          'styleProcessor': "none",
           'includeBootstrap': false,
           'includeCoffeeScript': true
         });
@@ -238,6 +241,7 @@ describe('thorax generator', function () {
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
           'starterApp': "Todo List",
+          'styleProcessor': "none",
           'includeBootstrap': false,
           'includeCoffeeScript': true
         });
@@ -261,6 +265,70 @@ describe('thorax generator', function () {
         ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
       ]);
       done();
+    });
+  });
+
+  describe('Style Processors', function(){
+
+    beforeEach(function (done){
+      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+        if (err) { return done(err); }
+
+        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app.options['skip-install'] = true;
+
+        helpers.mockPrompt(this.app, {
+          'newDirectory': false,
+          'starterApp': "None",
+          'styleProcessor': this.styleOption,
+          'includeBootstrap': false,
+          'includeCoffeeScript': false
+        });
+
+        this.app.run({}, done);
+      }.bind(this));
+    });
+
+    describe('SASS', function () {
+      before(function () {
+        this.styleOption = "sass";
+      });
+
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['Gruntfile.js', /sass: \{/],
+          ['package.json', /grunt-contrib-sass/]
+        ]);
+        done();
+      });
+    });
+
+    describe('LESS', function () {
+      before(function () {
+        this.styleOption = "less";
+      });
+
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['Gruntfile.js', /less: \{/],
+          ['package.json', /grunt-contrib-less/]
+        ]);
+        done();
+      });
+    });
+
+    describe('Stylus', function () {
+      before(function () {
+        this.styleOption = "stylus";
+      });
+
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['Gruntfile.js', /stylus: \{/],
+          ['package.json', /grunt-contrib-stylus/]
+        ]);
+        done();
+      });
     });
   });
 });
