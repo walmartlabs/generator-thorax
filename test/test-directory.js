@@ -3,7 +3,6 @@ var fs      = require('fs');
 var path    = require('path');
 var chai = require('chai');
 var expect = chai.expect;
-var should = chai.should();
 var helpers = require('yeoman-generator').test;
 
 describe('thorax generator', function () {
@@ -18,7 +17,8 @@ describe('thorax generator', function () {
     helpers.mockPrompt(app, {
       'newDirectory': true,
       'starterApp': "",
-      'includeBootstrap': false
+      'includeBootstrap': false,
+      'includeCoffeeScript': false
     });
 
     app.run([], function () {

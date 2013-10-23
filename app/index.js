@@ -22,6 +22,13 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 
   this.prompts.push({
+    type: 'confirm',
+    name: 'includeCoffeeScript',
+    message: 'Would you like to use CoffeeScript?',
+    default: false
+  });
+
+  this.prompts.push({
     type: 'list',
     name: 'starterApp',
     choices: ["Hello World", "Todo List", "None"],
@@ -82,10 +89,12 @@ ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
 };
 
 ThoraxGenerator.prototype.app = function () {
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+
   this.template('_bower.json', 'bower.json');
   this.template('_package.json', 'package.json');
   this.template('_Gruntfile.js', 'Gruntfile.js');
-  
+
   this.mkdir('public');
   this.mkdir('public/img');
   this.mkdir('public/fonts');
@@ -105,17 +114,19 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/models');
   this.mkdir('js/collections');
 
-  this.copy('seed/js/views/root.js', 'js/views/root.js');
+  this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
+
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 };
 
 ThoraxGenerator.prototype.scripts = function () {
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+  var scripts = ['view', 'collection-view', 'layout-view', 'model', 'collection'];
+  scripts.forEach(function(script) {
+    var name = script + scriptExt;
+    this.template('_' + name, 'js/' + name);
+  }, this);
   this.template('_main.js', 'js/main.js');
-  this.template('_view.js', 'js/view.js');
-  this.template('_collection-view.js', 'js/collection-view.js');
-  this.template('_layout-view.js', 'js/layout-view.js');
-  this.template('_model.js', 'js/model.js');
-  this.template('_collection.js', 'js/collection.js');
   this.template('_index.html', 'public/index.html');
 };
 
@@ -127,23 +138,27 @@ ThoraxGenerator.prototype.projectFiles = function () {
 };
 
 ThoraxGenerator.prototype.helloWorld = function() {
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+
   if (this.starterApp === 'Hello World') {
     this.mkdir('js/views/hello-world');
     this.mkdir('js/templates/hello-world');
-    this.copy('seed/js/views/hello-world/index.js', 'js/views/hello-world/index.js');
+    this.copy('seed/js/views/hello-world/index' + scriptExt, 'js/views/hello-world/index' + scriptExt);
     this.copy('seed/js/templates/hello-world/index.hbs', 'js/templates/hello-world/index.hbs');
-    this.copy('seed/js/routers/hello-world.js', 'js/routers/hello-world.js');
+    this.copy('seed/js/routers/hello-world' + scriptExt, 'js/routers/hello-world' + scriptExt);
     this.copy('seed/css/hello-world.css', 'css/hello-world.css');
   }
 };
 
 ThoraxGenerator.prototype.todoList = function() {
+  var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
+
   if (this.starterApp === 'Todo List') {
     this.mkdir('js/views/todo-list');
     this.mkdir('js/templates/todo-list');
-    this.copy('seed/js/views/todo-list/index.js', 'js/views/todo-list/index.js');
+    this.copy('seed/js/views/todo-list/index' + scriptExt, 'js/views/todo-list/index' + scriptExt);
     this.copy('seed/js/templates/todo-list/index.hbs', 'js/templates/todo-list/index.hbs');
-    this.copy('seed/js/routers/todo-list.js', 'js/routers/todo-list.js');
+    this.copy('seed/js/routers/todo-list' + scriptExt, 'js/routers/todo-list' + scriptExt);
     this.copy('seed/css/todo-list.css', 'css/todo-list.css');
   }
 };
