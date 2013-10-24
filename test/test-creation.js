@@ -28,11 +28,9 @@ describe('thorax generator', function () {
     require('../app');
     require('../collection');
     require('../collection-view');
-    require('../helper');
     require('../model');
     require('../router');
     require('../view');
-    require('../view-helper');
   });
 
   it('creates expected files', function (done) {
@@ -48,6 +46,8 @@ describe('thorax generator', function () {
       ['js/view.js', /Thorax.View.extend\(\{/],
       ['js/model.js', /Thorax.Model.extend\(\{/],
       ['js/collection.js', /Thorax.Collection.extend\(\{/],
+      ['js/views/view-helpers.js', /define\(\['handlebars'\]/],
+      ['js/templates/helpers.js', /define\(\['handlebars'\]/],
       'public/index.html',
       'css/base.css',
       'tasks/ensure-installed.js'
@@ -124,32 +124,6 @@ describe('thorax generator', function () {
           'js/templates/foo-bar.handlebars',
           'js/templates/foo-bar-item.handlebars',
           'js/templates/foo-bar-empty.handlebars'
-        ]);
-        done();
-      });
-    });
-  });
-
-  describe('Thorax Helper', function () {
-    it('generates a Handlebars helper', function (done) {
-      var helper = helpers.createGenerator('thorax:helper', ['../../helper'], ['foo']);
-
-      helper.run([], function () {
-        helpers.assertFiles([
-          ['js/templates/helpers/foo.js', /Handlebars.registerHelper\('foo', foo/]
-        ]);
-        done();
-      });
-    });
-  });
-
-  describe('Thorax View Helper', function () {
-    it('generates a Handlebars view helper', function (done) {
-      var viewHelper = helpers.createGenerator('thorax:view-helper', ['../../view-helper'], ['foo']);
-
-      viewHelper.run([], function () {
-        helpers.assertFiles([
-          ['js/helpers/foo.js', /Handlebars.registerViewHelper\('foo', function/]
         ]);
         done();
       });
