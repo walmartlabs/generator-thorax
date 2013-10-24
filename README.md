@@ -52,8 +52,6 @@ Available generators:
     $ yo thorax:model name
     $ yo thorax:collection name
     $ yo thorax:collection-view name
-    $ yo thorax:helper name
-    $ yo thorax:view-helper name
 
 The `name` argument may include a directory path, such as `todo-list/index`:
 

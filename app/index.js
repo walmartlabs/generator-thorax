@@ -118,12 +118,11 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js');
   this.mkdir('js/templates');
   this.mkdir('js/views');
-  this.mkdir('js/templates/helpers');
   this.mkdir('js/models');
   this.mkdir('js/collections');
-
   this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
-
+  this.copy('seed/js/templates/helpers.js', 'js/templates/helpers.js');
+  this.copy('seed/js/views/view-helpers.js', 'js/views/view-helpers.js');
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 };
 
