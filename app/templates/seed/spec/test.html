@@ -3,32 +3,39 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="../libs/mocha.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="../bower_components/mocha/mocha.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
     <div id="mocha"></div>
-    <script src="../libs/mocha.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../libs/sinon.js" type="text/javascript" charset="utf-8"></script>
 
-    <script src="../../js/libs/require/require.js" data-main="main" type="text/javascript" charset="utf-8"></script>
+    <script src="../bower_components/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../bower_components/chai/chai.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../bower_components/sinon-chai/lib/sinon-chai.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../bower_components/sinon/lib/sinon.js" type="text/javascript" charset="utf-8"></script>
 
+    <!-- Set up mocha -->
+    <script type="text/javascript" charset="utf-8">
+        // You can do this in the grunt config for each mocha task, see the `options` config
+        mocha.setup({
+            ui: 'bdd',
+            ignoreLeaks: true
+        });
+
+        window.expect = chai.expect;
+    </script>
+
+    <!-- Require any test helpers -->
     <script src="./spec-helpers.js" type="text/javascript" charset="utf-8"></script>
 
+    <!-- List all app modules -->
+    <script src="../js/views/root.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- List all your spec modules here -->
+    <script src="./app.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Finally, run the tests -->
     <script type="text/javascript" charset="utf-8">
-        require([
-            'specs/app.js',
-            'specs/configBundle.js',
-            'specs/device.js',
-            'specs/email.js',
-            'specs/group.js',
-            'specs/map.js',
-            'specs/modal.js',
-            'specs/policy.js',
-            'specs/user.js',
-            'specs/util.js'
-        ], function() {
-            mocha.run();
-        });
+        mocha.run();
     </script>
 </body>
 </html>

@@ -130,8 +130,8 @@ module.exports = function(grunt) {
         src: ['*.coffee'],
         dest: 'public/js/',
         ext: '.js'
-      }<% } %>
-    },<% if (styleProcessor === 'sass') { %>
+      }
+    },<% } %><% if (styleProcessor === 'sass') { %>
     sass: {
       dist: {
         files: [{
@@ -142,7 +142,7 @@ module.exports = function(grunt) {
           ext: '.css'
         }]
       }
-    },<% } %><% if (styleProcessor === 'less') { %>
+    },<% } else if (styleProcessor === 'less') { %>
     less: {
       development: {
         options: {},
@@ -164,7 +164,7 @@ module.exports = function(grunt) {
           ext: '.css'
         }]
       }
-    },<% } %><% if (styleProcessor === 'stylus') { %>
+    },<% } else if (styleProcessor === 'stylus') { %>
     stylus: {
       compile: {
         files: [{
@@ -206,7 +206,7 @@ module.exports = function(grunt) {
       tests: {
         files: [paths.test + '/**/*.js'],
         tasks: ['test']
-      }
+      },
       styles: {
         files: [paths.css + '/**/*'],
         tasks: ['styles']

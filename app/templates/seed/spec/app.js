@@ -1,33 +1,25 @@
-define(function(require) {
-    var UploadApp   = require('view/apps/uploadAppDialog'),
-        modalShared = require('../shared/modal.js');
+describe('App', function() {
+    describe('Model', function() {
 
-    describe('App', function() {
-        describe('Model', function() {
+    });
 
-        });
+    describe('Collection', function() {
 
-        describe('Collection', function() {
+    });
 
-        });
-
-        describe('Views', function() {
-            describe('Upload App', function() {
-                before(function() {
-                    this.view = new UploadApp();
-                    // This disables the animation, which breaks during the test.
-                    // Most likely because it requires CSS
-                    this.view.$el.removeClass('fade');
-                });
-
-                after(function() {
-                    this.view.close({ remove: true });
-                    this.view = undefined;
-                });
-
-                modalShared();
+    describe('Views', function() {
+        describe('Root View', function() {
+            before(function() {
+                this.view = new RootView();
             });
 
+            after(function() {
+                this.view.remove();
+            });
+
+            it('Should render properly', function() {
+                expect(this.view.render()).not.to.throw();
+            });
         });
     });
 });
