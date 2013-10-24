@@ -201,7 +201,8 @@ module.exports = function(grunt) {
         }
       ],
       paths: {
-        'jquery': '../bower_components/jquery/jquery',
+        <% if (!useZepto) { %>'jquery': '../bower_components/jquery/jquery',<% } %>
+        <% if (useZepto) { %>'zepto': '../bower_components/zepto/zepto',<% } %>
         'underscore': '../bower_components/underscore/underscore',
         'handlebars': '../bower_components/handlebars/handlebars.runtime',
         'backbone': '../bower_components/backbone/backbone',
@@ -230,7 +231,8 @@ module.exports = function(grunt) {
         },
         'backbone': {
           exports: 'Backbone',
-          deps: ['jquery', 'underscore']
+        <% if (!useZepto) { %>deps: ['jquery', 'underscore']<% } %>
+        <% if (useZepto) { %>deps: ['zepto', 'underscore']<% } %>
         },
         'underscore': {
           exports: '_'
@@ -240,8 +242,15 @@ module.exports = function(grunt) {
           deps: ['handlebars', 'backbone']
         },
         'bootstrap': {
-          deps: ['jquery']
+        <% if (!useZepto) { %>deps: ['jquery']<% } %>
+        <% if (useZepto) { %>deps: ['zepto']<% } %>
         }
+        <% if (useZepto) { %>
+        ,
+        'zepto': {
+          exports: '$'
+        }
+        <% } %>
       }
     };
     if (env === 'production') {
