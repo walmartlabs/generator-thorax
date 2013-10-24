@@ -7,7 +7,7 @@ require.config({
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
     mocha: '../bower_components/mocha/mocha',
-    sinon: '../bower_components/sinon/sinon',
+    sinon: '../bower_components/sinon/lib/sinon',
     'sinon-chai': '../bower_components/sinon-chai/lib/sinon-chai',
     chai: '../bower_components/chai/chai'
   },
@@ -29,18 +29,22 @@ mocha.setup({
   ignoreLeaks: true
 });
 
+// Assertion libraries and extensions for mocha
+var vendorDeps = [
+  'chai',
+  'sinon',
+  'sinon-chai'
+];
+
 // Add all your test dependencies here
 var deps = [
   '../spec/spec-helpers',
   '../spec/app'
-]
+];
 
-require(deps, function() {
+deps = vendorDeps.concat(deps);
+
+require(deps, function(chai) {
   window.expect = chai.expect;
-
-  if (typeof mochaPhantomJS !== "undefined") {
-    mochaPhantomJS.run();
-  } else {
-    mocha.run();
-  }
+  (window.mochaPhantomJS || mocha).run();
 });
