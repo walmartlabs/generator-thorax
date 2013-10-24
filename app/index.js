@@ -134,7 +134,11 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 
   this.mkdir('spec');
+  this.copy('seed/spec/app.js', 'spec/app.js');
   this.copy('seed/spec/base.js', 'spec/base.js');
+  this.copy('seed/spec/main.js', 'spec/main.js');
+  this.copy('seed/spec/spec-helpers.js', 'spec/spec-helpers.js');
+  this.copy('seed/spec/test.html', 'spec/test.html');
 };
 
 ThoraxGenerator.prototype.scripts = function () {
