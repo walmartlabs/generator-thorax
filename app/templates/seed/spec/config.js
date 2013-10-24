@@ -30,15 +30,10 @@ mocha.setup({
 });
 
 // Add all your test dependencies here
-var testDeps = [
-  'app'
-];
-
-testDeps = testDeps.map(function(dep) {
-  return '../spec/' + dep;
-});
-
-var deps = ['../spec/spec-helpers'].concat(testDeps);
+var deps = [
+  '../spec/spec-helpers',
+  '../spec/app'
+]
 
 require(deps, function() {
   window.expect = chai.expect;
