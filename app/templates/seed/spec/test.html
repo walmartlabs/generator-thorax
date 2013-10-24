@@ -24,18 +24,7 @@
         window.expect = chai.expect;
     </script>
 
-    <!-- Require any test helpers -->
-    <script src="./spec-helpers.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../bower_components/requirejs/require.js" data-main="config" type="text/javascript" charset="utf-8"></script>
 
-    <!-- List all app modules -->
-    <script src="../js/views/root.js" type="text/javascript" charset="utf-8"></script>
-
-    <!-- List all your spec modules here -->
-    <script src="./app.js" type="text/javascript" charset="utf-8"></script>
-
-    <!-- Finally, run the tests -->
-    <script type="text/javascript" charset="utf-8">
-        mocha.run();
-    </script>
 </body>
 </html>

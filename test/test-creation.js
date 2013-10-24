@@ -51,9 +51,10 @@ describe('thorax generator', function () {
       ['js/model.js', /Thorax.Model.extend\(\{/],
       ['js/collection.js', /Thorax.Collection.extend\(\{/],
       ['spec/app.js', /describe/],
+      ['spec/config.js', /require.config/],
       ['spec/base.js', /expect/],
       'spec/spec-helpers.js',
-      ['spec/test.html', /mocha.run/],
+      ['spec/test.html', /mocha.setup/],
       'public/index.html',
       'css/base.css',
       'tasks/ensure-installed.js'
