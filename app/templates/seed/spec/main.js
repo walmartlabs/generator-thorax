@@ -7,7 +7,6 @@ require.config({
         // Testing libs
         'chai'          : '../test/libs/chai',
         'sinon-chai'    : '../test/libs/sinon-chai',
-        'chai-jquery'   : '../test/libs/chai-jquery',
         'common'        : '../test/libs/common',
         'fixtures'      : '../test/admin/fixtures/fixtures',
         'jquery'        : 'libs/jquery/jquery.min',
