@@ -6,6 +6,9 @@ require.config({
     jquery: '../bower_components/jquery/jquery',
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
+    mocha: '../bower_components/mocha/mocha',
+    sinon: '../bower_components/sinon/sinon',
+    'sinon-chai': '../bower_components/sinon-chai/lib/sinon-chai',
     chai: '../bower_components/chai/chai'
   },
   shim: {
@@ -20,6 +23,12 @@ require.config({
   }
 });
 
+// You can do this in the grunt config for each mocha task, see the `options` config
+mocha.setup({
+  ui: 'bdd',
+  ignoreLeaks: true
+});
+
 // Add all your test dependencies here
 var testDeps = [
   'app'
@@ -32,6 +41,11 @@ testDeps = testDeps.map(function(dep) {
 var deps = ['../spec/spec-helpers'].concat(testDeps);
 
 require(deps, function() {
-  if (typeof mochaPhantomJS !== "undefined") { mochaPhantomJS.run(); }
-  else { mocha.run(); }
+  window.expect = chai.expect;
+
+  if (typeof mochaPhantomJS !== "undefined") {
+    mochaPhantomJS.run();
+  } else {
+    mocha.run();
+  }
 });

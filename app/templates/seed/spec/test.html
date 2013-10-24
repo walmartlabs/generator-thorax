@@ -4,25 +4,14 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="../bower_components/mocha/mocha.css" type="text/css" media="screen" title="no title" charset="utf-8">
-</head>
-<body>
-    <div id="mocha"></div>
 
     <script src="../bower_components/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
     <script src="../bower_components/chai/chai.js" type="text/javascript" charset="utf-8"></script>
     <script src="../bower_components/sinon-chai/lib/sinon-chai.js" type="text/javascript" charset="utf-8"></script>
     <script src="../bower_components/sinon/lib/sinon.js" type="text/javascript" charset="utf-8"></script>
-
-    <!-- Set up mocha -->
-    <script type="text/javascript" charset="utf-8">
-        // You can do this in the grunt config for each mocha task, see the `options` config
-        mocha.setup({
-            ui: 'bdd',
-            ignoreLeaks: true
-        });
-
-        window.expect = chai.expect;
-    </script>
+</head>
+<body>
+    <div id="mocha"></div>
 
     <script src="../bower_components/requirejs/require.js" data-main="config" type="text/javascript" charset="utf-8"></script>
 

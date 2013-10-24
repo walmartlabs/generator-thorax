@@ -93,7 +93,7 @@ module.exports = function(grunt) {
       'test-server': {
         options: {
           hostname: hostname,
-          base: paths.test,
+          base: paths.tests,
           port: 8981,
         }
       }
@@ -177,14 +177,13 @@ module.exports = function(grunt) {
       }
     },<% } %>
     // test runner
-    mocha: {
-      test: {
+    mocha_phantomjs: {
+      all: {
         options: {
           mocha: {
             ignoreLeaks: false
           },
-          urls: ['http://' + hostname + ':8981/test.html'],
-          run: true
+          urls: ['http://' + hostname + ':8981/test.html']
         }
       }
     },
@@ -350,6 +349,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'connect:test-server',
-    'mocha:test'
+    'mocha_phantomjs'
   ]);
 };
