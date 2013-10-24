@@ -61,9 +61,28 @@ describe('thorax generator', function () {
     it('generates a Backbone router', function (done) {
       var router = helpers.createGenerator('thorax:router', ['../../router'], ['foo']);
 
+      helpers.mockPrompt(router, {
+        'useStubMethods': false
+      });
+
       router.run([], function () {
         helpers.assertFiles([
           ['js/routers/foo.js', /Backbone.Router.extend\(\{/]
+        ]);
+        done();
+      });
+    });
+
+    it('generates a Backbone router with stubbed methods', function (done) {
+      var router = helpers.createGenerator('thorax:router', ['../../router'], ['foo']);
+
+      helpers.mockPrompt(router, {
+        'useStubMethods': true
+      });
+
+      router.run([], function () {
+        helpers.assertFiles([
+          ['js/routers/foo.js', /initialize: function/]
         ]);
         done();
       });
@@ -74,11 +93,30 @@ describe('thorax generator', function () {
     it('generates a Thorax view', function (done) {
       var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo']);
 
+      helpers.mockPrompt(view, {
+        'useStubMethods': false
+      });
+
       view.run([], function () {
         helpers.assertFiles([
           ['js/views/foo.js', /View.extend\(\{/],
           ['js/views/foo.js', /name: 'foo'/],
           'js/templates/foo.handlebars'
+        ]);
+        done();
+      });
+    });
+
+    it('generates a Thorax view with stubbed methods', function (done) {
+      var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo']);
+
+      helpers.mockPrompt(view, {
+        'useStubMethods': true
+      });
+
+      view.run([], function () {
+        helpers.assertFiles([
+          ['js/views/foo.js', /initialize: function/]
         ]);
         done();
       });
@@ -89,10 +127,29 @@ describe('thorax generator', function () {
     it('generates a Thorax model', function (done) {
       var model = helpers.createGenerator('thorax:model', ['../../model'], ['foo']);
 
+      helpers.mockPrompt(model, {
+        'useStubMethods': false
+      });
+
       model.run([], function () {
         helpers.assertFiles([
           ['js/models/foo.js', /Model.extend\(\{/],
           ['js/models/foo.js', /name: 'foo'/]
+        ]);
+        done();
+      });
+    });
+
+    it('generates a Thorax model with stubbed methods', function (done) {
+      var model = helpers.createGenerator('thorax:model', ['../../model'], ['foo']);
+
+      helpers.mockPrompt(model, {
+        'useStubMethods': true
+      });
+
+      model.run([], function () {
+        helpers.assertFiles([
+          ['js/models/foo.js', /initialize: function/]
         ]);
         done();
       });
@@ -103,10 +160,29 @@ describe('thorax generator', function () {
     it('generates a Thorax collection', function (done) {
       var collection = helpers.createGenerator('thorax:collection', ['../../collection'], ['foo']);
 
+      helpers.mockPrompt(collection, {
+        'useStubMethods': false
+      });
+
       collection.run([], function () {
         helpers.assertFiles([
           ['js/collections/foo.js', /Collection.extend\(\{/],
           ['js/collections/foo.js', /name: 'foo'/]
+        ]);
+        done();
+      });
+    });
+
+    it('generates a Thorax collection with stubbed methods', function (done) {
+      var collection = helpers.createGenerator('thorax:collection', ['../../collection'], ['foo']);
+
+      helpers.mockPrompt(collection, {
+        'useStubMethods': true
+      });
+
+      collection.run([], function () {
+        helpers.assertFiles([
+          ['js/collections/foo.js', /initialize: function/]
         ]);
         done();
       });
@@ -116,6 +192,10 @@ describe('thorax generator', function () {
   describe('Thorax Collection View', function () {
     it('generates a Thorax collection view', function (done) {
       var collectionView = helpers.createGenerator('thorax:collection-view', ['../../collection-view'], ['fooBar']);
+
+      helpers.mockPrompt(collectionView, {
+        'useStubMethods': false
+      });
 
       collectionView.run([], function () {
         helpers.assertFiles([
