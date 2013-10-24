@@ -302,7 +302,10 @@ describe('thorax generator', function () {
       it('is included when selected in the prompt', function (done) {
         helpers.assertFiles([
           ['bower.json', /jquery/],
-          ['js/main.js', /jquery/]
+          ['js/main.js', /jquery/],
+          ['Gruntfile.js', /bower_components\/jquery\/jquery/],
+          ['Gruntfile.js', /deps: \['jquery', 'underscore'\]/],
+          ['Gruntfile.js', /deps: \['jquery'\]/]
         ]);
         done();
       });
@@ -316,7 +319,11 @@ describe('thorax generator', function () {
       it('is included when selected in the prompt', function (done) {
         helpers.assertFiles([
           ['bower.json', /zepto/],
-          ['js/main.js', /zepto/]
+          ['js/main.js', /zepto/],
+          ['Gruntfile.js', /bower_components\/zepto\/zepto/],
+          ['Gruntfile.js', /deps: \['zepto', 'underscore'\]/],
+          ['Gruntfile.js', /deps: \['zepto'\]/],
+          ['Gruntfile.js', /exports: '\$'/]
         ]);
         done();
       });
