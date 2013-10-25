@@ -1,6 +1,6 @@
 define([
   'view',
-  'templates/todo-list/index'
+  'hbs!templates/todo-list/index'
 ], function(View, template) {
   return View.extend({
     name: "todo-list/index",

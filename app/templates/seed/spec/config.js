@@ -2,7 +2,10 @@ require.config({
   baseUrl: "../js",
   paths: {
     thorax: '../bower_components/thorax/thorax',
-    handlebars: '../bower_components/handlebars/handlebars',
+    hbs: '../bower_components/hbs/hbs',
+    i18nprecompile: '../bower_components/hbs/hbs/i18nprecompile',
+    json2: '../bower_components/hbs/hbs/json2',
+    handlebars: '../bower_components/hbs/Handlebars',
     jquery: '../bower_components/jquery/jquery',
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
@@ -16,10 +19,19 @@ require.config({
       deps: ['jquery', 'underscore'],
       exports: 'Backbone'
     },
+    underscore: {
+      exports: '_'
+    },
     thorax: {
       deps: ['backbone', 'handlebars'],
       exports: 'Thorax'
     }
+  },
+  hbs: {
+    templateExtension : 'hbs',
+    // if disableI18n is `true` it won't load locales and the i18n helper
+    // won't work as well.
+    disableI18n : true
   }
 });
 
