@@ -5,7 +5,7 @@ require.config({
     hbs: '../bower_components/hbs/hbs',
     i18nprecompile: '../bower_components/hbs/hbs/i18nprecompile',
     json2: '../bower_components/hbs/hbs/json2',
-    handlebars: '../bower_components/hbs/Handlebars',
+    Handlebars: '../bower_components/handlebars/Handlebars',
     jquery: '../bower_components/jquery/jquery',
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
@@ -22,8 +22,11 @@ require.config({
     underscore: {
       exports: '_'
     },
+    Handlebars: {
+      exports: 'Handlebars'
+    },
     thorax: {
-      deps: ['backbone', 'handlebars'],
+      deps: ['backbone', 'Handlebars', 'hbs'],
       exports: 'Thorax'
     }
   },
@@ -31,7 +34,13 @@ require.config({
     templateExtension : 'hbs',
     // if disableI18n is `true` it won't load locales and the i18n helper
     // won't work as well.
-    disableI18n : true
+    disableI18n : true,
+
+    // Don't auto-load helpers from a templates directory
+    disableHelpers: true
+  },
+  map: {
+    "*": {"handlebars": "Handlebars"}
   }
 });
 
