@@ -15,7 +15,8 @@ module.exports = function(grunt) {
         templates: 'js/templates',
         views: 'js/views',
         models: 'js/models',
-        collections: 'js/collections'
+        collections: 'js/collections',
+        tests: 'spec'
       };
 
   // Register required tasks
@@ -88,6 +89,13 @@ module.exports = function(grunt) {
           port: port,
           keepalive: true
         }
+      },
+      'test-server': {
+        options: {
+          hostname: hostname,
+          base: paths.tests,
+          port: 8981,
+        }
       }
     },
     thorax: {
@@ -113,7 +121,7 @@ module.exports = function(grunt) {
           amd: true
         }
       }
-    <% if (includeCoffeeScript) { %>},
+    },<% if (includeCoffeeScript) { %>
     coffee: {
       glob_to_multiple: {
         expand: true,
@@ -122,8 +130,8 @@ module.exports = function(grunt) {
         src: ['*.coffee'],
         dest: 'public/js/',
         ext: '.js'
-      }<% } %>
-    },<% if (styleProcessor === 'sass') { %>
+      }
+    },<% } %><% if (styleProcessor === 'sass') { %>
     sass: {
       dist: {
         files: [{
@@ -134,7 +142,7 @@ module.exports = function(grunt) {
           ext: '.css'
         }]
       }
-    },<% } %><% if (styleProcessor === 'less') { %>
+    },<% } else if (styleProcessor === 'less') { %>
     less: {
       development: {
         options: {},
@@ -156,7 +164,7 @@ module.exports = function(grunt) {
           ext: '.css'
         }]
       }
-    },<% } %><% if (styleProcessor === 'stylus') { %>
+    },<% } else if (styleProcessor === 'stylus') { %>
     stylus: {
       compile: {
         files: [{
@@ -168,6 +176,17 @@ module.exports = function(grunt) {
         }]
       }
     },<% } %>
+    // test runner
+    mocha_phantomjs: {
+      all: {
+        options: {
+          mocha: {
+            ignoreLeaks: false
+          },
+          urls: ['http://' + hostname + ':8981/test.html']
+        }
+      }
+    },
     watch: {
       handlebars: {
         files: [paths.templates + '/**/*.hbs'],
@@ -182,6 +201,10 @@ module.exports = function(grunt) {
           paths.js + '/**/*.js'
         ],
         tasks: ['scripts:development']
+      },
+      tests: {
+        files: [paths.test + '/**/*.js'],
+        tasks: ['test']
       },
       styles: {
         files: [paths.css + '/**/*'],
@@ -318,6 +341,7 @@ module.exports = function(grunt) {
     'scripts:development',
     'thorax:inspector',
     'connect:development',
+    'test',
     'open-browser',
     'watch'
   ]);
@@ -330,5 +354,10 @@ module.exports = function(grunt) {
     'scripts:production',
     'open-browser',
     'connect:production'
+  ]);
+
+  grunt.registerTask('test', [
+    'connect:test-server',
+    'mocha_phantomjs'
   ]);
 };

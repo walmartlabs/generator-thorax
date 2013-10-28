@@ -1,6 +1,6 @@
 define([
   'view',
-  'templates/hello-world/index'
+  'hbs!templates/hello-world/index'
 ], function(View, template) {
   return View.extend({
     name: 'hello-world/index',
