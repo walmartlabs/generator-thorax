@@ -37,7 +37,11 @@ require.config({
     disableI18n : true,
 
     // Don't auto-load helpers from a templates directory
-    disableHelpers: true
+    disableHelpers: true,
+
+    compileOptions: {
+      data: true
+    }
   },
   map: {
     "*": {"handlebars": "Handlebars"}
