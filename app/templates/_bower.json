@@ -7,7 +7,7 @@
     <% if (!useZepto) { %>"jquery": "1.9.0",<% } %>
     <% if (useZepto) { %>"zepto": "1.0.0",<% } %>
     "underscore": "1.4.4",
-    "hbs": "~0.4.0",
+    "hbs": "a9819e78f54dd5655b18dea976a2507baf660e1c",
     "handlebars": "1.0.0",
     "backbone": "1.0.0"
     <% if (includeBootstrap) { %>, "bootstrap": "~3.0"<% } %>
