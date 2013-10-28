@@ -19,7 +19,7 @@ define(['views/root'], function(RootView) {
                 });
 
                 it('Should render properly', function() {
-                    expect(this.view.render()).not.to.throw();
+                    expect(this.view.render()).to.contain('data-layout-cid');
                 });
             });
         });
