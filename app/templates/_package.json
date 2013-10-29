@@ -2,7 +2,9 @@
   "name": "<%= _.dasherize(name) %>",
   "appName": "<%= _.classify(name) %>",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "connect": "~2.10.x"
+  },
   "devDependencies": {
     "grunt-contrib-connect": "0.3.0",
     "grunt": "~0.4",
@@ -27,7 +29,7 @@
     <% if (includeCoffeeScript) { %>, "grunt-contrib-coffee": "~0.7.0"<% } %>
   },
   "scripts": {
-    "start": "node ./node_modules/.bin/grunt",
+    "start": "node ./server.js",
     "test": "node ./node_modules/.bin/grunt test"
   },
   "engines": {
