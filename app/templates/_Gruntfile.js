@@ -32,10 +32,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     paths: paths,
     clean: {
-      output: [
-        paths.output.js,
-        paths.output.css
-      ]
+      development: [paths.output.js, paths.output.css],
+      production: ['tmpjs', 'dist/*', '!dist/index.html']
     },
     copy: {
       requirejs: {
@@ -44,6 +42,12 @@ module.exports = function(grunt) {
             src: 'bower_components/requirejs/require.js',
             dest: 'public/js/require.js'
           }
+        ]
+      },
+      tmpjs: {
+        files: [
+          {expand: true, cwd: 'js/', src: ['**', '!templates/**'], dest: 'tmpjs'},
+          {src: 'bower_components/almond/almond.js', dest: 'tmpjs/almond.js'}
         ]
       },
       styles: {
@@ -74,6 +78,9 @@ module.exports = function(grunt) {
         ]
       }<% } %>
     },
+    cssmin: {
+      combine: {files: {'dist/styles.css': ['css/**/*.css']}}
+    },
     connect: {
       development: {
         options: {
@@ -92,7 +99,7 @@ module.exports = function(grunt) {
       production:  {
         options: {
           hostname: hostname,
-          base: paths.public,
+          base: 'dist',
           port: port,
           keepalive: true
         }
@@ -202,16 +209,59 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.registerTask('open-browser', function () {
+    var open = require('open');
+    open('http://' + hostname + ':' + port);
+  });
+
+  grunt.registerTask('templates', function(outputDir) {
+    templatesList(outputDir);
+    grunt.task.run('handlebars:templates');
+  });
+
+  grunt.registerTask('styles', [
+    'copy:styles'<% if (includeBootstrap) { %>,
+    'copy:bootstrap'<% } %><% if (styleProcessor !== 'none') { %>,
+    <%= styleProcessor %><% } %>
+  ]);
+
+  grunt.registerTask('default', [
+    'ensure-installed',
+    'clean:development',
+    'styles',
+    'templates:public/js',
+    'copy:requirejs',
+    'requirejs:development',
+    // 'thorax:inspector', // shared port 35729 w/ livereload
+    'connect:development',
+    'open-browser',
+    'watch'
+  ]);
+
+  grunt.registerTask('production', [
+    'clean:production',
+    'cssmin',
+    'templates:tmpjs',
+    'copy:tmpjs',
+    'requirejs:production',
+    'open-browser',
+    'connect:production'
+  ]);
+
+  //helper functions
+
+  function templatesList(outputDir) {
+    if (arguments.length === 0) throw new Error('update-templates-list must be provided the output directory as a colong seperated object(defined on paths ideally)');
+    // Set up the templates object for Handlebars
+    grunt.file.glob.sync(paths.templates + '/**/*.{handlebars,hbs}').forEach(function (file) {
+      var target = outputDir + '/templates' + file.substr(paths.templates.length).replace(/\.(?:handlebars|hbs)$/, '.js');
+      templates[target] = file;
+    });
+    grunt.config.set('handlebars.templates.files', templates);
+  }
+
   function getRequireJSOptions(env) {
     var options = {
-      appDir: paths.js,
-      baseUrl: './',
-      dir: paths.output.js,
-      modules: [
-        {
-          name: 'main'
-        }
-      ],
       paths: {
         <% if (!useZepto) { %>'jquery': '../bower_components/jquery/jquery',<% } %>
         <% if (useZepto) { %>'zepto': '../bower_components/zepto/zepto',<% } %>
@@ -265,82 +315,43 @@ module.exports = function(grunt) {
         <% } %>
       }
     };
+
+    var devOptions = {
+      appDir: paths.js,
+      baseUrl: './',
+      dir: paths.output.js,
+      keepBuildDir: true,
+      optimize: 'none',
+      modules: [{name: 'main'}]
+    };
+
+    var prodOptions = {
+      almond: true,
+      name: 'requireLib',
+      include: ['main'],
+      baseUrl: 'tmpjs',
+      out: 'dist/main.js',
+      removeCombined: true,
+      findNestedDependencies: true,
+      optimize: 'uglify2'
+    };
+
+    if (env === 'development') merge(options, devOptions);
     if (env === 'production') {
-      /*
-      TODO
-      options.keepBuildDir = true;
-      options.optimize = 'uglify';
-      */
+      merge(options, prodOptions);
+      options.paths.requireLib = 'almond';
     }
-    if (env === 'development') {
-      options.keepBuildDir = true;
-      options.optimize = 'none';
-    }
+
     return {
       options: options
     };
   }
 
-  grunt.registerTask('open-browser', function () {
-    var open = require('open');
-    open('http://' + hostname + ':' + port);
-  });
+  function merge(original, updates) {
+    for (var prop in updates) {
+      if (!updates.hasOwnProperty(prop)) { continue; }
+      original[prop] = updates[prop];
+    }
+  }
 
-  grunt.registerTask('scripts:development', [
-    'copy:requirejs',
-    'requirejs:development'
-  ]);
-
-  grunt.registerTask('scripts:production', [
-    'copy:requirejs',
-    'requirejs:production'
-  ]);
-
-  grunt.registerTask('update-templates-list', function() {
-    // Set up the templates object for Handlebars
-    grunt.file.glob.sync(paths.templates + '/**/*.{handlebars,hbs}').forEach(function (file) {
-      var target = paths.output.js + '/templates' + file.substr(paths.templates.length).replace(/\.(?:handlebars|hbs)$/, '.js');
-      templates[target] = file;
-    });
-    grunt.config.set('handlebars.templates.files', templates);
-  });
-
-  grunt.registerTask('create-output-directories', function() {
-    grunt.file.mkdir('public/js');
-    grunt.file.mkdir('public/css');
-  });
-
-  grunt.registerTask('templates', [
-    'update-templates-list',
-    'handlebars:templates'
-  ]);
-
-  grunt.registerTask('styles', [
-    'copy:styles'<% if (includeBootstrap) { %>,
-    'copy:bootstrap'<% } %><% if (styleProcessor !== 'none') { %>,
-    <%= styleProcessor %><% } %>
-  ]);
-
-  grunt.registerTask('default', [
-    'ensure-installed',
-    'clean:output',
-    'create-output-directories',
-    'styles',
-    'templates',
-    'scripts:development',
-    // 'thorax:inspector', // shared port 35729 w/ livereload
-    'connect:development',
-    'open-browser',
-    'watch'
-  ]);
-
-  grunt.registerTask('production', [
-    'clean:output',
-    'create-output-directories',
-    'styles',
-    'templates',
-    'scripts:production',
-    'open-browser',
-    'connect:production'
-  ]);
 };

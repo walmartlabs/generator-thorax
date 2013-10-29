@@ -4,11 +4,12 @@
   "dependencies": {
     "requirejs": "~2.1",
     "thorax": "~2.0",
-    <% if (!useZepto) { %>"jquery": "1.9.0",<% } %>
-    <% if (useZepto) { %>"zepto": "1.0.0",<% } %>
     "underscore": "1.4.4",
     "handlebars": "1.0.0",
-    "backbone": "1.0.0"
+    "backbone": "1.0.0",
+    "almond": "~0.2.6"
+    <% if (!useZepto) { %>, "jquery": "1.9.0"<% } %>
+    <% if (useZepto) { %>, "zepto": "1.0.0"<% } %>
     <% if (includeBootstrap) { %>, "bootstrap": "~3.0"<% } %>
     <% if (includeCoffeeScript) { %>, "require-cs": "~0.4.4"<% } %>
   }

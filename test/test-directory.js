@@ -34,6 +34,7 @@ describe('thorax generator', function () {
         'js/views',
         'js/templates',
         'public',
+        'dist/index.html',
         '.jshintrc',
         '.editorconfig',
         '.bowerrc',
