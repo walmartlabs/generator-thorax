@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {
-    "grunt-contrib-connect": "0.1.1",
+    "grunt-contrib-connect": "0.3.0",
     "grunt": "~0.4",
     "thorax-inspector": "0.2.4",
     "open": "0.0.3",
@@ -13,10 +13,11 @@
     "grunt-contrib-clean": "~0.5.0",
     "matchdep": "~0.1.2",
     "grunt-cli": "~0.1.9",
-    "grunt-contrib-watch": "~0.5.1",
+    "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-handlebars": "~0.5.10",
+    "connect-livereload": "~0.3.0",
     <% if (styleProcessor === 'less') { %>"grunt-contrib-less": "~0.5.0",<% } %>
     <% if (styleProcessor === 'sass') { %>"grunt-contrib-sass": "~0.5.0",<% } %>
     <% if (styleProcessor === 'stylus') { %>"grunt-contrib-stylus": "~0.4.0",<% } %>

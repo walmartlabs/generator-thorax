@@ -19,7 +19,8 @@ describe('thorax generator', function () {
       'starterApp': "None",
       'styleProcessor': "none",
       'includeBootstrap': false,
-      'includeCoffeeScript': false
+      'includeCoffeeScript': false,
+      'useZepto': false
     });
 
     app.run([], function () {

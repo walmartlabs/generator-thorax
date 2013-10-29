@@ -37,6 +37,13 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 
   this.prompts.push({
+    type: 'confirm',
+    name: 'useZepto',
+    message: 'Would you like to use Zepto in place of jQuery (Zepto is best for mobile apps)',
+    default: false
+  });
+
+  this.prompts.push({
     type: 'list',
     name: 'starterApp',
     choices: ["Hello World", "Todo List", "None"],

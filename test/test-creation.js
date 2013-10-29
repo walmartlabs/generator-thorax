@@ -17,7 +17,8 @@ describe('thorax generator', function () {
         'starterApp': "None",
         'styleProcessor': "none",
         'includeBootstrap': false,
-        'includeCoffeeScript': false
+        'includeCoffeeScript': false,
+        'useZepto': false
       });
 
       this.app.run({}, done);
@@ -143,7 +144,8 @@ describe('thorax generator', function () {
           'starterApp': "None",
           'styleProcessor': "none",
           'includeBootstrap': false,
-          'includeCoffeeScript': true
+          'includeCoffeeScript': true,
+          'useZepto': false
         });
 
         this.app.run({}, done);
@@ -179,7 +181,8 @@ describe('thorax generator', function () {
           'starterApp': "Hello World",
           'styleProcessor': "none",
           'includeBootstrap': false,
-          'includeCoffeeScript': true
+          'includeCoffeeScript': true,
+          'useZepto': false
         });
 
         this.app.run({}, done);
@@ -217,7 +220,8 @@ describe('thorax generator', function () {
           'starterApp': "Todo List",
           'styleProcessor': "none",
           'includeBootstrap': false,
-          'includeCoffeeScript': true
+          'includeCoffeeScript': true,
+          'useZepto': false
         });
 
         this.app.run({}, done);
@@ -242,6 +246,65 @@ describe('thorax generator', function () {
     });
   });
 
+  describe('jQuery or Zepto option', function () {
+
+    beforeEach(function (done){
+      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+        if (err) { return done(err); }
+
+        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app.options['skip-install'] = true;
+
+        helpers.mockPrompt(this.app, {
+          'newDirectory': false,
+          'starterApp': "None",
+          'styleProcessor': "none",
+          'includeBootstrap': false,
+          'includeCoffeeScript': false,
+          'useZepto': this.useZeptoOption
+        });
+
+        this.app.run({}, done);
+      }.bind(this));
+    });
+
+    describe('jQuery', function () {
+      before(function () {
+        this.useZeptoOption = false;
+      });
+
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['bower.json', /jquery/],
+          ['js/main.js', /jquery/],
+          ['Gruntfile.js', /bower_components\/jquery\/jquery/],
+          ['Gruntfile.js', /deps: \['jquery', 'underscore'\]/],
+          ['Gruntfile.js', /deps: \['jquery'\]/]
+        ]);
+        done();
+      });
+    });
+
+    describe('Zepto', function () {
+      before(function () {
+        this.useZeptoOption = true;
+      });
+
+      it('is included when selected in the prompt', function (done) {
+        helpers.assertFiles([
+          ['bower.json', /zepto/],
+          ['js/main.js', /zepto/],
+          ['Gruntfile.js', /bower_components\/zepto\/zepto/],
+          ['Gruntfile.js', /deps: \['zepto', 'underscore'\]/],
+          ['Gruntfile.js', /deps: \['zepto'\]/],
+          ['Gruntfile.js', /exports: '\$'/]
+        ]);
+        done();
+      });
+    });
+
+  });
+
   describe('Style Processors', function(){
 
     beforeEach(function (done){
@@ -256,7 +319,8 @@ describe('thorax generator', function () {
           'starterApp': "None",
           'styleProcessor': this.styleOption,
           'includeBootstrap': false,
-          'includeCoffeeScript': false
+          'includeCoffeeScript': false,
+          'useZepto': false
         });
 
         this.app.run({}, done);

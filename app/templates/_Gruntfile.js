@@ -2,6 +2,7 @@ module.exports = function(grunt) {
   grunt.option('stack', true);
 
   var port = process.env.PORT || 8000,
+      liveReloadPort = 35729,
       hostname = 'localhost',
       templates = {},
       paths = {
@@ -78,7 +79,14 @@ module.exports = function(grunt) {
         options: {
           hostname: hostname,
           base: paths.public,
-          port: port
+          port: port,
+          middleware: function (connect, options) {
+            return [
+              require('connect-livereload')({port: liveReloadPort}),
+              connect['static'](options.base),
+              connect.directory(options.base)
+            ];
+          }
         }
       },
       production:  {
@@ -169,6 +177,10 @@ module.exports = function(grunt) {
       }
     },<% } %>
     watch: {
+      options: {
+        livereload: liveReloadPort,
+        files: ['public/**/*']
+      },
       handlebars: {
         files: [paths.templates + '/**/*.hbs'],
         tasks: ['templates']
@@ -201,7 +213,8 @@ module.exports = function(grunt) {
         }
       ],
       paths: {
-        'jquery': '../bower_components/jquery/jquery',
+        <% if (!useZepto) { %>'jquery': '../bower_components/jquery/jquery',<% } %>
+        <% if (useZepto) { %>'zepto': '../bower_components/zepto/zepto',<% } %>
         'underscore': '../bower_components/underscore/underscore',
         'handlebars': '../bower_components/handlebars/handlebars.runtime',
         'backbone': '../bower_components/backbone/backbone',
@@ -230,7 +243,8 @@ module.exports = function(grunt) {
         },
         'backbone': {
           exports: 'Backbone',
-          deps: ['jquery', 'underscore']
+        <% if (!useZepto) { %>deps: ['jquery', 'underscore']<% } %>
+        <% if (useZepto) { %>deps: ['zepto', 'underscore']<% } %>
         },
         'underscore': {
           exports: '_'
@@ -240,8 +254,15 @@ module.exports = function(grunt) {
           deps: ['handlebars', 'backbone']
         },
         'bootstrap': {
-          deps: ['jquery']
+        <% if (!useZepto) { %>deps: ['jquery']<% } %>
+        <% if (useZepto) { %>deps: ['zepto']<% } %>
         }
+        <% if (useZepto) { %>
+        ,
+        'zepto': {
+          exports: '$'
+        }
+        <% } %>
       }
     };
     if (env === 'production') {
@@ -307,7 +328,7 @@ module.exports = function(grunt) {
     'styles',
     'templates',
     'scripts:development',
-    'thorax:inspector',
+    // 'thorax:inspector', // shared port 35729 w/ livereload
     'connect:development',
     'open-browser',
     'watch'
