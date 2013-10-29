@@ -50,8 +50,20 @@ describe('thorax generator', function () {
       ['js/model.js', /Thorax.Model.extend\(\{/],
       ['js/collection.js', /Thorax.Collection.extend\(\{/],
       'public/index.html',
+      'dist/index.html',
       'css/base.css',
-      'tasks/ensure-installed.js'
+      'tasks/ensure-installed.js',
+      'tasks/open-browser.js',
+      'tasks/styles.js',
+      'tasks/templates.js',
+      'tasks/options/clean.js',
+      'tasks/options/connect.js',
+      'tasks/options/copy.js',
+      'tasks/options/cssmin.js',
+      'tasks/options/handlebars.js',
+      'tasks/options/requirejs.js',
+      'tasks/options/thorax.js',
+      'tasks/options/watch.js'
     ];
 
     helpers.assertFiles(expected);
@@ -192,6 +204,21 @@ describe('thorax generator', function () {
       ]);
       done();
     });
+
+    it('generates CoffeeScript grunt config file', function (done) {
+      helpers.assertFiles([
+        'tasks/options/coffee.js'
+      ]);
+      done();
+    });
+
+    it('integrates with requirejs via the require-cs package', function (done) {
+      helpers.assertFiles([
+        ['tasks/options/requirejs.js', /location: '..\/..\/bower_components\/require-cs'/]
+      ]);
+      done();
+    });
+
   });
 
   describe('CoffeeScript - HelloWorld', function () {
@@ -228,6 +255,13 @@ describe('thorax generator', function () {
         ['js/collection.coffee', /class Collection extends Thorax.Collection/],
         ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
         ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+      ]);
+      done();
+    });
+
+    it('generates CoffeeScript grunt config file', function (done) {
+      helpers.assertFiles([
+        'tasks/options/coffee.js'
       ]);
       done();
     });
@@ -270,6 +304,13 @@ describe('thorax generator', function () {
       ]);
       done();
     });
+
+    it('generates CoffeeScript grunt config files', function (done) {
+      helpers.assertFiles([
+        'tasks/options/coffee.js'
+      ]);
+      done();
+    });
   });
 
   describe('jQuery or Zepto option', function () {
@@ -303,9 +344,9 @@ describe('thorax generator', function () {
         helpers.assertFiles([
           ['bower.json', /jquery/],
           ['js/main.js', /jquery/],
-          ['Gruntfile.js', /bower_components\/jquery\/jquery/],
-          ['Gruntfile.js', /deps: \['jquery', 'underscore'\]/],
-          ['Gruntfile.js', /deps: \['jquery'\]/]
+          ['tasks/options/requirejs.js', /bower_components\/jquery\/jquery/],
+          ['tasks/options/requirejs.js', /deps: \['jquery', 'underscore'\]/],
+          ['tasks/options/requirejs.js', /deps: \['jquery'\]/]
         ]);
         done();
       });
@@ -320,10 +361,10 @@ describe('thorax generator', function () {
         helpers.assertFiles([
           ['bower.json', /zepto/],
           ['js/main.js', /zepto/],
-          ['Gruntfile.js', /bower_components\/zepto\/zepto/],
-          ['Gruntfile.js', /deps: \['zepto', 'underscore'\]/],
-          ['Gruntfile.js', /deps: \['zepto'\]/],
-          ['Gruntfile.js', /exports: '\$'/]
+          ['tasks/options/requirejs.js', /bower_components\/zepto\/zepto/],
+          ['tasks/options/requirejs.js', /deps: \['zepto', 'underscore'\]/],
+          ['tasks/options/requirejs.js', /deps: \['zepto'\]/],
+          ['tasks/options/requirejs.js', /exports: '\$'/]
         ]);
         done();
       });
@@ -360,7 +401,8 @@ describe('thorax generator', function () {
 
       it('is included when selected in the prompt', function (done) {
         helpers.assertFiles([
-          ['Gruntfile.js', /sass: \{/],
+          'tasks/options/sass.js',
+          ['tasks/styles.js', /'sass'/],
           ['package.json', /grunt-contrib-sass/]
         ]);
         done();
@@ -374,7 +416,8 @@ describe('thorax generator', function () {
 
       it('is included when selected in the prompt', function (done) {
         helpers.assertFiles([
-          ['Gruntfile.js', /less: \{/],
+          'tasks/options/less.js',
+          ['tasks/styles.js', /'less'/],
           ['package.json', /grunt-contrib-less/]
         ]);
         done();
@@ -388,11 +431,77 @@ describe('thorax generator', function () {
 
       it('is included when selected in the prompt', function (done) {
         helpers.assertFiles([
-          ['Gruntfile.js', /stylus: \{/],
+          'tasks/options/stylus.js',
+          ['tasks/styles.js', /'stylus'/],
           ['package.json', /grunt-contrib-stylus/]
         ]);
         done();
       });
     });
   });
+
+  describe('Bootstrap', function () {
+    beforeEach(function (done) {
+      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+        if (err) { return done(err); }
+
+        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app.options['skip-install'] = true;
+
+        helpers.mockPrompt(this.app, {
+          'newDirectory': true,
+          'starterApp': "None",
+          'styleProcessor': "none",
+          'includeBootstrap': true,
+          'includeCoffeeScript': false,
+          'useZepto': false
+        });
+
+        this.app.run({}, done);
+      }.bind(this));
+    });
+
+    it('generates Bootstrap grunt config file', function (done) {
+      helpers.assertFiles([
+        ['tasks/styles.js', /'copy:bootstrap'/],
+        ['tasks/options/copy.js', /bootstrap: \{/],
+        ['bower.json', /"bootstrap"/]
+      ]);
+      done();
+    });
+  });
+
+  describe('Production Build', function () {
+    describe('The happy path(all options false, normal css)', function () {
+      beforeEach(function (done) {
+        helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+          if (err) { return done(err); }
+
+          this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+          this.app.options['skip-install'] = true;
+
+          helpers.mockPrompt(this.app, {
+            'newDirectory': true,
+            'starterApp': "None",
+            'styleProcessor': "none",
+            'includeBootstrap': false,
+            'includeCoffeeScript': false,
+            'useZepto': false
+          });
+
+          this.app.run({}, done);
+        }.bind(this));
+      });
+
+      it('generates dist/index.html', function (done) {
+        helpers.assertFiles([
+          ['dist/index.html', /href="screen.css"/],
+          ['dist/index.html', /src="main.js"/]
+        ]);
+        done();
+      });
+
+    });
+  });
+
 });
