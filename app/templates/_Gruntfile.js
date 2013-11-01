@@ -40,7 +40,7 @@ module.exports = function(grunt) {
     'templates:public/js',
     'copy:requirejs',
     'requirejs:development',
-    // // 'thorax:inspector', // TODO: shared port 35729 w/ livereload
+    'thorax:inspector',
     'connect:development',
     'open-browser',
     'watch'
