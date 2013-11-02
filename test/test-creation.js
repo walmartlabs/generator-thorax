@@ -36,7 +36,7 @@ describe('thorax generator', function () {
     require('../view-helper');
   });
 
-  it('creates expected files', function (done) {
+  it('creates expected files', function () {
     var expected = [
       '.jshintrc',
       '.editorconfig',
@@ -67,7 +67,6 @@ describe('thorax generator', function () {
     ];
 
     helpers.assertFiles(expected);
-    done();
   });
 
   describe('Thorax Router', function () {
@@ -190,7 +189,7 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('generates CoffeeScript templates when requested', function (done) {
+    it('generates CoffeeScript templates when requested', function () {
       helpers.assertFiles([
         'js/views',
         'js/models',
@@ -202,21 +201,18 @@ describe('thorax generator', function () {
         ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
         ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
       ]);
-      done();
     });
 
-    it('generates CoffeeScript grunt config file', function (done) {
+    it('generates CoffeeScript grunt config file', function () {
       helpers.assertFiles([
         'tasks/options/coffee.js'
       ]);
-      done();
     });
 
-    it('integrates with requirejs via the require-cs package', function (done) {
+    it('integrates with requirejs via the require-cs package', function () {
       helpers.assertFiles([
         ['tasks/options/requirejs.js', /location: '..\/..\/bower_components\/require-cs'/]
       ]);
-      done();
     });
 
   });
@@ -242,7 +238,7 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('generates CoffeeScript templates when requested', function (done) {
+    it('generates CoffeeScript templates when requested', function () {
       helpers.assertFiles([
         'js/views',
         'js/models',
@@ -256,14 +252,12 @@ describe('thorax generator', function () {
         ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
         ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
       ]);
-      done();
     });
 
-    it('generates CoffeeScript grunt config file', function (done) {
+    it('generates CoffeeScript grunt config file', function () {
       helpers.assertFiles([
         'tasks/options/coffee.js'
       ]);
-      done();
     });
   });
 
@@ -288,7 +282,7 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('generates CoffeeScript templates when requested', function (done) {
+    it('generates CoffeeScript templates when requested', function () {
       helpers.assertFiles([
         'js/views',
         'js/models',
@@ -302,14 +296,12 @@ describe('thorax generator', function () {
         ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
         ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
       ]);
-      done();
     });
 
-    it('generates CoffeeScript grunt config files', function (done) {
+    it('generates CoffeeScript grunt config files', function () {
       helpers.assertFiles([
         'tasks/options/coffee.js'
       ]);
-      done();
     });
   });
 
@@ -340,7 +332,7 @@ describe('thorax generator', function () {
         this.useZeptoOption = false;
       });
 
-      it('is included when selected in the prompt', function (done) {
+      it('is included when selected in the prompt', function () {
         helpers.assertFiles([
           ['bower.json', /jquery/],
           ['js/main.js', /jquery/],
@@ -348,7 +340,6 @@ describe('thorax generator', function () {
           ['tasks/options/requirejs.js', /deps: \['jquery', 'underscore'\]/],
           ['tasks/options/requirejs.js', /deps: \['jquery'\]/]
         ]);
-        done();
       });
     });
 
@@ -357,7 +348,7 @@ describe('thorax generator', function () {
         this.useZeptoOption = true;
       });
 
-      it('is included when selected in the prompt', function (done) {
+      it('is included when selected in the prompt', function () {
         helpers.assertFiles([
           ['bower.json', /zepto/],
           ['js/main.js', /zepto/],
@@ -366,7 +357,6 @@ describe('thorax generator', function () {
           ['tasks/options/requirejs.js', /deps: \['zepto'\]/],
           ['tasks/options/requirejs.js', /exports: '\$'/]
         ]);
-        done();
       });
     });
 
@@ -399,13 +389,12 @@ describe('thorax generator', function () {
         this.styleOption = "sass";
       });
 
-      it('is included when selected in the prompt', function (done) {
+      it('is included when selected in the prompt', function () {
         helpers.assertFiles([
           'tasks/options/sass.js',
           ['tasks/styles.js', /'sass'/],
           ['package.json', /grunt-contrib-sass/]
         ]);
-        done();
       });
     });
 
@@ -414,13 +403,12 @@ describe('thorax generator', function () {
         this.styleOption = "less";
       });
 
-      it('is included when selected in the prompt', function (done) {
+      it('is included when selected in the prompt', function () {
         helpers.assertFiles([
           'tasks/options/less.js',
           ['tasks/styles.js', /'less'/],
           ['package.json', /grunt-contrib-less/]
         ]);
-        done();
       });
     });
 
@@ -429,13 +417,12 @@ describe('thorax generator', function () {
         this.styleOption = "stylus";
       });
 
-      it('is included when selected in the prompt', function (done) {
+      it('is included when selected in the prompt', function () {
         helpers.assertFiles([
           'tasks/options/stylus.js',
           ['tasks/styles.js', /'stylus'/],
           ['package.json', /grunt-contrib-stylus/]
         ]);
-        done();
       });
     });
   });
@@ -461,13 +448,12 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('generates Bootstrap grunt config file', function (done) {
+    it('generates Bootstrap grunt config file', function () {
       helpers.assertFiles([
         ['tasks/styles.js', /'copy:bootstrap'/],
         ['tasks/options/copy.js', /bootstrap: \{/],
         ['bower.json', /"bootstrap"/]
       ]);
-      done();
     });
   });
 
@@ -493,12 +479,11 @@ describe('thorax generator', function () {
         }.bind(this));
       });
 
-      it('generates dist/index.html', function (done) {
+      it('generates dist/index.html', function () {
         helpers.assertFiles([
           ['dist/index.html', /href="screen.css"/],
           ['dist/index.html', /src="main.js"/]
         ]);
-        done();
       });
 
     });

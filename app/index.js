@@ -139,13 +139,17 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/watch.js', 'tasks/options/watch.js');
 
   if (this.includeCoffeeScript) {
-    this.copy('seed/tasks/options/coffee.js', 'tasks/options/coffee.js'); }
+    this.copy('seed/tasks/options/coffee.js', 'tasks/options/coffee.js');
+  }
   if (this.styleProcessor === 'less') {
-    this.copy('seed/tasks/options/less.js', 'tasks/options/less.js'); }
+    this.copy('seed/tasks/options/less.js', 'tasks/options/less.js');
+  }
   if (this.styleProcessor === 'sass') {
-    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js'); }
+    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js');
+  }
   if (this.styleProcessor === 'stylus') {
-    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js'); }
+    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js');
+  }
 
   this.mkdir('js');
   this.mkdir('js/templates');
