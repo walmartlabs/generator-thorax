@@ -3,4 +3,9 @@ define(['handlebars'], function (Handlebars) {
   // Handlebars.registerHelper('helper', function () {
   //
   // });
+  //
+  // Register any view helpers you want available to Handlebars
+  // Handlebars.registerViewHelper('helper', function () {
+  //
+  // });
 });

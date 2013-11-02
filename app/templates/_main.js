@@ -5,8 +5,7 @@ require([
   '<% if (includeCoffeeScript) { %>cs!<% } %>views/root'<% if (starterApp === 'Hello World') { %>,
   '<% if (includeCoffeeScript) { %>cs!<% } %>routers/hello-world'<% } else if (starterApp === 'Todo List') { %>,
   '<% if (includeCoffeeScript) { %>cs!<% } %>routers/todo-list'<% } %>
-  'templates/helpers',
-  'views/view-helpers'
+  'helpers',
 ], function ($, Backbone, RootView<% if (starterApp === 'Hello World') { %>, HelloWorldRouter<% } else if (starterApp === 'Todo List') { %>, TodoListRouter <% } %>) {
 
   initialize(function(next) {
