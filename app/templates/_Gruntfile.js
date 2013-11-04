@@ -182,8 +182,8 @@ module.exports = function(grunt) {
         files: ['public/**/*']
       },
       handlebars: {
-        files: [paths.templates + '/**/*.hbs'],
-        tasks: ['templates']
+        files: [paths.templates + '/**/*.hbs', paths.templates + '/**/*.handlebars'],
+        tasks: ['templates', 'scripts:development']
       <% if (includeCoffeeScript) { %>},
       coffee: {
         files: paths.js + '/**/*.coffee',
