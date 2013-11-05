@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('production', [
     'clean:production',
-    'styles',
+    'styles:development',
     'cssmin',
     'templates:tmpDist',
     'copy:tmpDist',
