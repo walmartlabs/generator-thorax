@@ -6,7 +6,7 @@
   "devDependencies": {
     "grunt-contrib-connect": "0.3.0",
     "grunt": "~0.4",
-    "thorax-inspector": "0.2.4",
+    "thorax-inspector": "0.2.6",
     "open": "0.0.3",
     "bower": "~0.10",
     "grunt-contrib-concat": "~0.3.0",
