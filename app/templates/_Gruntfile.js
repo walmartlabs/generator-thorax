@@ -64,13 +64,22 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('thorax-inspector');
   grunt.loadTasks('tasks');
 
+  grunt.registerTask('scripts:development', [
+    'clean:scripts',
+    'copy:requirejs',
+    'templates:public/js',
+    'requirejs:development'
+  ]);
+
+  grunt.registerTask('styles:development', [
+    'clean:styles',
+    'styles'
+  ]);
+
   grunt.registerTask('default', [
     'ensure-installed',
-    'clean:development',
-    'styles',
-    'templates:public/js',
-    'copy:requirejs',
-    'requirejs:development',
+    'scripts:development',
+    'styles:development',
     'thorax:inspector',
     'connect:development',
     'open-browser',
