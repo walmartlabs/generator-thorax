@@ -1,3 +1,36 @@
+/**
+ *
+ * Configuration options are loaded from files in tasks/options
+ *
+ * Normally inside this file you'd see:
+ *
+ * clean: {
+ *   development: ['file-to-clean']
+ * }
+ *
+ * Instead the file at tasks/options/clean.js contains:
+ *
+ * module.exports = {
+ *   development: ['file-to-clean']
+ * }
+ *
+ * Sharing Configuration Options:
+ *
+ * Configuration options used across multiple modules are set in the following
+ * manner:
+ *
+ * `grunt.config('settings', settings);`
+ * `grunt.config('paths', settings.paths);`
+ *
+ *
+ * Furthermore, getting those options occurs in a similar fashion:
+ *
+ * `grunt.config('paths.output.js');` //=> public/js
+ *
+ * Using the conventional <%%= paths.output.js %> will NOT work
+ *
+ */
+
 module.exports = function(grunt) {
 
   var settings = {
@@ -28,7 +61,7 @@ module.exports = function(grunt) {
   grunt.config('settings', settings);
   grunt.config('paths', settings.paths);
 
-  grunt.loadNpmTasks('thorax-inspector'); // TODO: remove livereload issue
+  grunt.loadNpmTasks('thorax-inspector');
   grunt.loadTasks('tasks');
 
   grunt.registerTask('default', [
