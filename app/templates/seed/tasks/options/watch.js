@@ -6,17 +6,17 @@ module.exports = {
     files: ['public/**/*']
   },
   handlebars: {
-    files: [grunt.config('paths.templates') + '/**/*.hbs'],
-    tasks: ['templates']
+    files: [grunt.config('paths.templates') + '/**/*.{hbs,handlebars}'],
+    tasks: ['scripts:development']
   },
   scripts: {
     files: [
       grunt.config('paths.js') + '/**/*.{js,coffee}'
     ],
-    tasks: ['copy:requirejs', 'requirejs:development']
+    tasks: ['scripts:development']
   },
   styles: {
     files: [grunt.config('paths.css') + '/**/*.{css,sass,scss,less,styl}'],
-    tasks: ['styles']
+    tasks: ['styles:development']
   }
 };

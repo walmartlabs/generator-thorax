@@ -1,8 +1,10 @@
 var grunt = require('grunt');
 
 module.exports = {
-  development: [
-    grunt.config('paths.output.js'),
+  scripts: [
+    grunt.config('paths.output.js')
+  ],
+  styles: [
     grunt.config('paths.output.css')
   ],
   production: [
