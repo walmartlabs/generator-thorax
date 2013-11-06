@@ -38,7 +38,9 @@ describe('thorax generator', function () {
         '.jshintrc',
         '.editorconfig',
         '.bowerrc',
-        '.gitignore'
+        '.gitignore',
+        'server.js',
+        'Procfile'
       ]);
       done();
     });
