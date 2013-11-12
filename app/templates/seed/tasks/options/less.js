@@ -6,7 +6,7 @@ module.exports = {
     files: [{
       expand: true,
       cwd: grunt.config('paths.css'),
-      src: ['*.less'],
+      src: ['base.less'],
       dest: grunt.config('paths.output.css'),
       ext: '.css'
     }]

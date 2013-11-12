@@ -3,6 +3,34 @@ var path    = require('path');
 var chai = require('chai');
 var expect = chai.expect;
 var helpers = require('yeoman-generator').test;
+var fs = require('fs');
+
+var assert = chai.assert;
+
+helpers.assertNoFile = function (file, reg) {
+  var here = fs.existsSync(file);
+  assert.ok(!here, file + 'DOES exist, something is wrong');
+
+  if (!reg) {
+    return assert.ok(!here);
+  }
+
+  var body = fs.readFileSync(file, 'utf8');
+  assert.ok(!reg.test(body), file + ' DID MATCH, HOLD THE PHONE: match \'' + reg + '\'.');
+};
+
+
+helpers.assertNoFileContent = function(file, reg) {
+  var here = fs.existsSync(file);
+  assert.ok(here, file + ' does exist, we expected that');
+
+  if (!reg) {
+    return assert.fail('You must provide content via regex for this helper');
+  }
+
+  var body = fs.readFileSync(file, 'utf8');
+  assert.ok(!reg.test(body), file + ' DID MATCH, STAHP!, control flow the following content or fix the test: match \'' + reg + '\'.');
+}
 
 describe('thorax generator', function () {
   beforeEach(function (done) {
@@ -400,7 +428,7 @@ describe('thorax generator', function () {
     });
   });
 
-  describe('Bootstrap', function () {
+  describe('Bootstrap WITHOUT a Pre-Processor', function () {
     beforeEach(function (done) {
       helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
         if (err) { return done(err); }
@@ -427,6 +455,57 @@ describe('thorax generator', function () {
         ['tasks/options/copy.js', /bootstrap: \{/],
         ['bower.json', /"bootstrap"/]
       ]);
+    });
+  });
+
+  describe('Bootstrap WITH Less', function () {
+    beforeEach(function (done) {
+      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+        if (err) { return done(err); }
+
+        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app.options['skip-install'] = true;
+
+        helpers.mockPrompt(this.app, {
+          'newDirectory': true,
+          'starterApp': this.starterApp || "none",
+          'styleProcessor': "less",
+          'includeBootstrap': true,
+          'includeCoffeeScript': false,
+          'useZepto': false
+        });
+
+        this.app.run({}, done);
+      }.bind(this));
+    });
+
+    it('has the right content in the right files', function () {
+      helpers.assertFiles([
+        ['bower.json', /"bootstrap"/],
+        ['css/base.less', /@import "..\/bower_components\/bootstrap\/less\/bootstrap";/]
+      ]);
+    });
+
+    it('doesnt have uneccessary files or content in files', function () {
+      helpers.assertNoFileContent('tasks/styles.js', /'copy:bootstrap'/);
+      helpers.assertNoFileContent('tasks/options/copy.js', /bootstrap: \{/);
+      helpers.assertNoFile('css/base.css');
+    });
+
+    it('doesnt include hello-world.css within base.less by default', function () {
+      helpers.assertNoFileContent('css/base.less', /@import 'hello-world.css';/);
+    });
+
+    describe("generating the hello world app with less and bootstrap", function () {
+      before(function () {
+        this.starterApp = 'Hello World';
+      });
+
+      it('includes hello-world.css within base.less, but not index.html', function () {
+        helpers.assertFile('css/base.less', /@import 'hello-world.css';/);
+        helpers.assertNoFileContent('public/index.html', /@import 'hello-world.css';/);
+      });
+
     });
   });
 

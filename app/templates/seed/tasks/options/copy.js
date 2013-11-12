@@ -32,7 +32,7 @@ module.exports = {
         dest: grunt.config('paths.output.css')
       }
     ]
-  },
+  }<% if (includeBootstrap && styleProcessor !== 'less') { %>,
   bootstrap: {
     files: [
       {
@@ -43,15 +43,6 @@ module.exports = {
         src: ['bower_components/bootstrap/dist/css/bootstrap.css'],
         dest: grunt.config('paths.output.css') + '/bootstrap.css'
       }
-      // TODO: add font support for bootstrap.
-      // - Reference fonts in public/index.html
-      // - Copy fonts to dist/fonts during dist build
-      // - Reference fonts in dist/index.html
-      // {
-      //   expand: true,
-      //   src: ['bower_components/bootstrap/fonts/*'],
-      //   dest: 'public/fonts'
-      // }
     ]
-  }
+  }<% } %>
 };
