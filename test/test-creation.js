@@ -47,7 +47,7 @@ describe('thorax generator', function () {
       ['js/view.js', /Thorax.View.extend\(\{/],
       ['js/model.js', /Thorax.Model.extend\(\{/],
       ['js/collection.js', /Thorax.Collection.extend\(\{/],
-      ['js/helpers.js', /define\(\['handlebars'\]/],
+      ['js/helpers.js', /define\(\['handlebars', 'thorax'\]/],
       'public/index.html',
       'dist/index.html',
       'css/base.css',
