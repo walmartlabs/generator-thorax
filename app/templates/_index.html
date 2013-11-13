@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title><%= _.titleize(name) %></title>
-    <link rel="stylesheet" type="text/css" href="/css/base.css"><% if (starterApp === 'Hello World') { %>
-    <link rel="stylesheet" type="text/css" href="/css/hello-world.css"><% } else if (starterApp === 'Todo List') { %>
+    <link rel="stylesheet" type="text/css" href="/css/base.css"><% if (starterApp === 'Hello World' && styleProcessor === 'none') { %>
+    <link rel="stylesheet" type="text/css" href="/css/hello-world.css"><% } else if (starterApp === 'Todo List' && styleProcessor === 'none') { %>
     <link rel="stylesheet" type="text/css" href="/css/todo-list.css"><% } %>
   </head>
   <body>

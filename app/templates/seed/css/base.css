@@ -1,0 +1,7 @@
+<% if (includeBootstrap) { %><% if (styleProcessor === 'less') { %>
+@import "../bower_components/bootstrap/less/bootstrap";<% } %><% if (styleProcessor === 'sass') { %>
+@import '../bower_components/sass-bootstrap/lib/bootstrap';<% } %><% } %><% if (starterApp === 'Hello World' && styleProcessor === 'less') { %>
+@import 'hello-world.css';<% } %><% if (starterApp === 'Todo List' && styleProcessor === 'less') { %>
+@import 'todo-list.css';<% } %><% if (starterApp === 'Hello World' && styleProcessor === 'sass') { %>
+@import 'hello-world';<% } %><% if (starterApp === 'Todo List' && styleProcessor === 'sass') { %>
+@import 'todo-list';<% } %>
