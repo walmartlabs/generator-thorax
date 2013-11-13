@@ -119,20 +119,19 @@ ThoraxGenerator.prototype.app = function () {
   // css
   this.mkdir('css');
 
+
   if (this.styleProcessor === 'less') {
     this.copy('seed/tasks/options/less.js', 'tasks/options/less.js');
-    this.copy('seed/css/base.less', 'css/base.less');
+    this.copy('seed/css/base.css', 'css/base.less');
+  } else if (this.styleProcessor === 'sass') {
+    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js');
+    this.copy('seed/css/base.css', 'css/base.scss');
+  } else if (this.styleProcessor === 'stylus') {
+    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js');
   } else {
     this.copy('seed/css/base.css', 'css/base.css');
   }
 
-  if (this.styleProcessor === 'sass') {
-    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js');
-  }
-
-  if (this.styleProcessor === 'stylus') {
-    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js');
-  }
 
   if (this.includeCoffeeScript) {
     this.copy('seed/tasks/options/coffee.js', 'tasks/options/coffee.js');
@@ -198,7 +197,13 @@ ThoraxGenerator.prototype.helloWorld = function() {
     this.copy('seed/js/views/hello-world/index' + scriptExt, 'js/views/hello-world/index' + scriptExt);
     this.copy('seed/js/templates/hello-world/index.hbs', 'js/templates/hello-world/index.hbs');
     this.copy('seed/js/routers/hello-world' + scriptExt, 'js/routers/hello-world' + scriptExt);
-    this.copy('seed/css/hello-world.css', 'css/hello-world.css');
+
+    if (this.styleProcessor === 'sass') {
+      this.copy('seed/css/hello-world.css', 'css/hello-world.scss');
+    } else {
+      this.copy('seed/css/hello-world.css', 'css/hello-world.css');
+    }
+
   }
 };
 
@@ -211,7 +216,11 @@ ThoraxGenerator.prototype.todoList = function() {
     this.copy('seed/js/views/todo-list/index' + scriptExt, 'js/views/todo-list/index' + scriptExt);
     this.copy('seed/js/templates/todo-list/index.hbs', 'js/templates/todo-list/index.hbs');
     this.copy('seed/js/routers/todo-list' + scriptExt, 'js/routers/todo-list' + scriptExt);
-    this.copy('seed/css/todo-list.css', 'css/todo-list.css');
+    if (this.styleProcessor === 'sass') {
+      this.copy('seed/css/todo-list.css', 'css/todo-list.scss');
+    } else {
+      this.copy('seed/css/todo-list.css', 'css/todo-list.css');
+    }
   }
 };
 

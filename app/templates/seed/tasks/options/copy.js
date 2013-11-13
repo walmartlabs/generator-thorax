@@ -32,7 +32,7 @@ module.exports = {
         dest: grunt.config('paths.output.css')
       }
     ]
-  }<% if (includeBootstrap && styleProcessor !== 'less') { %>,
+  }<% if (includeBootstrap && styleProcessor === 'none') { %>,
   bootstrap: {
     files: [
       {

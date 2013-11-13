@@ -5,7 +5,7 @@ module.exports = {
     files: [{
       expand: true,
       cwd: grunt.config('paths.css'),
-      src: ['*.{sass,scss}'],
+      src: ['base.{sass,scss}'],
       dest: grunt.config('paths.output.css'),
       ext: '.css'
     }]

@@ -4,6 +4,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var helpers = require('yeoman-generator').test;
 var fs = require('fs');
+var sharedExamples = require('./shared-examples');
 
 var assert = chai.assert;
 
@@ -428,7 +429,20 @@ describe('thorax generator', function () {
     });
   });
 
-  describe('Bootstrap WITHOUT a Pre-Processor', function () {
+  describe('Bootstrap', function () {
+
+    sharedExamples.create('include base.css in index.html', function() {
+      it('includes /css/base.css within public/index.html', function () {
+        helpers.assertFile('public/index.html', /href="\/css\/base.css"/);
+      });
+    });
+
+    sharedExamples.create('generate base.css', function() {
+      it('generates /css/base.css', function () {
+        helpers.assertFile('css/base.css');
+      });
+    });
+
     beforeEach(function (done) {
       helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
         if (err) { return done(err); }
@@ -436,10 +450,22 @@ describe('thorax generator', function () {
         this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
         this.app.options['skip-install'] = true;
 
+        function checkStarterAppProvided(self) {
+          var type = self.starterApp;
+          if (typeof type === "undefined") { throw new Error("You forgot to provide the starter app. Make sure it's inside a before block, not beforeEach"); }
+          return type;
+        }
+
+        function checkStyleProcessorProvided(self) {
+          var type = self.styleProcessor;
+          if (typeof type == "undefined") { throw new Error("You forgot to provide style processor. Make sure it's inside a before block, not beforeEach"); }
+          return type;
+        }
+
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
-          'starterApp': "None",
-          'styleProcessor': "none",
+          'starterApp': checkStarterAppProvided(this),
+          'styleProcessor': checkStyleProcessorProvided(this),
           'includeBootstrap': true,
           'includeCoffeeScript': false,
           'useZepto': false
@@ -449,64 +475,174 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('generates Bootstrap grunt config file', function () {
-      helpers.assertFiles([
-        ['tasks/styles.js', /'copy:bootstrap'/],
-        ['tasks/options/copy.js', /bootstrap: \{/],
-        ['bower.json', /"bootstrap"/]
-      ]);
-    });
-  });
-
-  describe('Bootstrap WITH Less', function () {
-    beforeEach(function (done) {
-      helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-        if (err) { return done(err); }
-
-        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
-        this.app.options['skip-install'] = true;
-
-        helpers.mockPrompt(this.app, {
-          'newDirectory': true,
-          'starterApp': this.starterApp || "none",
-          'styleProcessor': "less",
-          'includeBootstrap': true,
-          'includeCoffeeScript': false,
-          'useZepto': false
-        });
-
-        this.app.run({}, done);
-      }.bind(this));
-    });
-
-    it('has the right content in the right files', function () {
-      helpers.assertFiles([
-        ['bower.json', /"bootstrap"/],
-        ['css/base.less', /@import "..\/bower_components\/bootstrap\/less\/bootstrap";/]
-      ]);
-    });
-
-    it('doesnt have uneccessary files or content in files', function () {
-      helpers.assertNoFileContent('tasks/styles.js', /'copy:bootstrap'/);
-      helpers.assertNoFileContent('tasks/options/copy.js', /bootstrap: \{/);
-      helpers.assertNoFile('css/base.css');
-    });
-
-    it('doesnt include hello-world.css within base.less by default', function () {
-      helpers.assertNoFileContent('css/base.less', /@import 'hello-world.css';/);
-    });
-
-    describe("generating the hello world app with less and bootstrap", function () {
+    describe('Bootstrap with normal CSS', function () {
       before(function () {
-        this.starterApp = 'Hello World';
+        this.styleProcessor = 'none';
+      });
+      describe('create empty app', function () {
+        before(function () {
+          this.starterApp = 'none';
+        });
+        sharedExamples.invoke('include base.css in index.html');
+        sharedExamples.invoke('generate base.css');
+        it('sets up grunt and bower correctly', function () {
+          helpers.assertFiles([
+            ['tasks/styles.js', /'copy:bootstrap'/],
+            ['tasks/options/copy.js', /bootstrap: \{/],
+            ['bower.json', /"bootstrap"/]
+          ]);
+        });
       });
 
-      it('includes hello-world.css within base.less, but not index.html', function () {
-        helpers.assertFile('css/base.less', /@import 'hello-world.css';/);
-        helpers.assertNoFileContent('public/index.html', /@import 'hello-world.css';/);
+      describe('create hello world', function () {
+        before(function () {
+          this.starterApp = "Hello World";
+        });
+        sharedExamples.invoke('include base.css in index.html');
+        sharedExamples.invoke('generate base.css');
       });
 
+      describe('create TODO app', function () {
+        before(function () {
+          this.starterApp = "Todo List";
+        });
+        sharedExamples.invoke('include base.css in index.html');
+        sharedExamples.invoke('generate base.css');
+      });
     });
+
+    sharedExamples.create('common style preprocessor bootstrap setup', function() {
+      it('doesnt include hello-world or todo-list css within index.html', function () {
+        helpers.assertNoFileContent('public/index.html', /href="\/css\/hello-world.css"/);
+        helpers.assertNoFileContent('public/index.html', /href="\/css\/todo-list.css"/);
+      });
+      it('it doesnt need to the normal bootstrap css pipeline', function () {
+        helpers.assertNoFileContent('tasks/styles.js', /'copy:bootstrap'/);
+        helpers.assertNoFileContent('tasks/options/copy.js', /bootstrap: \{/);
+        helpers.assertNoFile('css/base.css');
+      });
+      sharedExamples.invoke('include base.css in index.html');
+    });
+
+    describe('Bootstrap and Less', function () {
+
+      sharedExamples.create('normal bootstrap with less setup', function() {
+        it('generates the standard less/bootstrap setup', function () {
+          helpers.assertFiles([
+            ['bower.json', /"bootstrap"/],
+            ['css/base.less', /@import "..\/bower_components\/bootstrap\/less\/bootstrap";/]
+          ]);
+        });
+        sharedExamples.invoke('common style preprocessor bootstrap setup');
+      });
+
+      before(function () {
+        this.styleProcessor = 'less';
+      });
+
+      describe('starterApp: none', function () {
+        before(function () {
+          this.starterApp = "none";
+        });
+        sharedExamples.invoke('normal bootstrap with less setup');
+      });
+
+      describe('starterApp: Hello World', function () {
+        before(function () {
+          this.starterApp = "Hello World";
+        });
+        sharedExamples.invoke('normal bootstrap with less setup');
+        it('ONLY includes hello-world.css within base.less', function () {
+          helpers.assertFile('css/base.less', /@import 'hello-world.css';/);
+          helpers.assertNoFileContent('css/base.less', /@import 'todo-list.css';/);
+        });
+
+        it('generates css/hello-world.css', function () {
+          helpers.assertFile('css/hello-world.css');
+        });
+      });
+
+      describe('starterApp: Todo List', function () {
+        before(function () {
+          this.starterApp = "Todo List";
+        });
+        sharedExamples.invoke('normal bootstrap with less setup');
+        it('includes ONLY todo-list.css within base.less', function () {
+          helpers.assertFile('css/base.less', /@import 'todo-list.css';/);
+          helpers.assertNoFileContent('css/base.less', /@import 'hello-world.css';/);
+        });
+        it('generates css/todo-list.css', function () {
+          helpers.assertFile('css/todo-list.css');
+        });
+      });
+    });
+
+
+    describe('Bootstrap and SASS', function () {
+
+      sharedExamples.create('normal bootstrap with sass setup', function() {
+        it('it generates the scss base file', function () {
+          helpers.assertFile('css/base.scss', /@import '..\/bower_components\/sass-bootstrap\/lib\/bootstrap';/);
+        });
+        it('bower is told to use sass-bootstrap instead of bootstrap', function () {
+          helpers.assertNoFileContent('bower.json', /"bootstrap"/);
+          helpers.assertFile('bower.json', /"sass-bootstrap"/);
+        });
+        it('generates the sass grunt task', function () {
+          helpers.assertFile('tasks/options/sass.js');
+        });
+        sharedExamples.invoke('common style preprocessor bootstrap setup');
+      });
+
+      before(function () {
+        this.styleProcessor = "sass";
+      });
+
+      describe('starterApp: none', function () {
+        before(function () {
+          this.starterApp = "none";
+        });
+        sharedExamples.invoke('normal bootstrap with sass setup');
+        it('doesnt import hello world or todo-list styles', function () {
+          helpers.assertNoFileContent('css/base.scss', /@import 'hello-world';/);
+          helpers.assertNoFileContent('css/base.scss', /@import 'todo-list';/);
+          helpers.assertNoFile('css/todo-list.css');
+          helpers.assertNoFile('css/hello-world.css');
+        });
+      });
+
+      describe('starterApp: Hello World', function () {
+        before(function () {
+          this.starterApp = "Hello World";
+        });
+        sharedExamples.invoke('normal bootstrap with sass setup');
+        it('does not import todo list scss', function () {
+          helpers.assertNoFileContent('css/base.scss', /@import 'todo-list';/);
+        });
+        it('generates hello-world.scss and imports it instead of the css version', function () {
+          helpers.assertFile('css/hello-world.scss');
+          helpers.assertFile('css/base.scss', /@import 'hello-world';/);
+          helpers.assertNoFile('css/hello-world.css');
+        });
+      });
+
+      describe('starterApp: Todo List', function () {
+        beforeEach(function () {
+          this.starterApp = "Todo List";
+        });
+        sharedExamples.invoke('normal bootstrap with sass setup');
+        it('imports todo-list.scss', function () {
+          helpers.assertNoFileContent('css/base.scss', /@import 'hello-world';/);
+        });
+        it('generates todo-list.scss and imports it instead of the css version', function () {
+          helpers.assertFile('css/todo-list.scss');
+          helpers.assertFile('css/base.scss', /@import 'todo-list';/);
+          helpers.assertNoFile('css/todo-list.css');
+        });
+      });
+    });
+
+
   });
 
   describe('Production Build', function () {
