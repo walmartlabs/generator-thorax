@@ -8,7 +8,7 @@
   "devDependencies": {
     "grunt-contrib-connect": "0.3.0",
     "grunt": "~0.4",
-    "thorax-inspector": "0.2.6",
+    "thorax-inspector": "eastridge/thorax-inspector-backend",
     "open": "0.0.3",
     "bower": "~0.10",
     "grunt-contrib-concat": "~0.3.0",
@@ -22,11 +22,19 @@
     "connect-livereload": "~0.3.0",
     "grunt-contrib-cssmin": "~0.6.2",
     "load-grunt-config": "~0.6.0",
-    <% if (styleProcessor === 'less') { %>"grunt-contrib-less": "~0.5.0",<% } %>
-    <% if (styleProcessor === 'sass') { %>"grunt-contrib-sass": "~0.5.0",<% } %>
-    <% if (styleProcessor === 'stylus') { %>"grunt-contrib-stylus": "~0.4.0",<% } %>
-    "require-handlebars-plugin": "git://github.com/SlexAxton/require-handlebars-plugin.git"
-    <% if (includeCoffeeScript) { %>, "grunt-contrib-coffee": "~0.7.0"<% } %>
+    "karma": "~0.10.4",
+    "karma-mocha": "~0.1.0",
+    "karma-growl-reporter": "~0.1.1",
+    "grunt-karma": "~0.6.2",
+    "mocha-phantomjs": "~3.1.6",
+    "phantomjs": "~1.9.2-2",
+    "grunt-mocha-phantomjs": "~0.3.1",
+    "grunt-contrib-jshint": "~0.7.1",
+    "karma-safari-launcher": "~0.1.1"<% if (styleProcessor === 'less') { %>,
+    "grunt-contrib-less": "~0.5.0"<% } %><% if (styleProcessor === 'sass') { %>,
+    "grunt-contrib-sass": "~0.5.0"<% } %><% if (styleProcessor === 'stylus') { %>,
+    "grunt-contrib-stylus": "~0.4.0"<% } %><% if (includeCoffeeScript) { %>,
+    "grunt-contrib-coffee": "~0.7.0"<% } %>
   },
   "scripts": {
     "start": "node ./server.js",

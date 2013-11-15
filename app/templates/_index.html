@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/todo-list.css"><% } %>
   </head>
   <body>
-    <script data-main="js/main" src="/js/require.js"></script>
+    <script>
+      var require = {
+        baseUrl: '../js'
+      }
+    </script>
+
+    <script data-main="../main" src="../bower_components/requirejs/require.js"></script>
   </body>
 </html>

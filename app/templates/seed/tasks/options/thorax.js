@@ -11,4 +11,4 @@ module.exports = {
       templates: grunt.config('paths.templates')
     }
   }
-}
+};

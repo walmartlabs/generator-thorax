@@ -19,4 +19,4 @@ define([
       RootView.getInstance().setView(view);
     }
   });
-}); 
+});

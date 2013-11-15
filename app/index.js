@@ -138,9 +138,6 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/thorax.js', 'tasks/options/thorax.js');
   this.copy('seed/tasks/options/watch.js', 'tasks/options/watch.js');
 
-  if (this.includeCoffeeScript) {
-    this.copy('seed/tasks/options/coffee.js', 'tasks/options/coffee.js');
-  }
   if (this.styleProcessor === 'less') {
     this.copy('seed/tasks/options/less.js', 'tasks/options/less.js');
   }
@@ -163,6 +160,42 @@ ThoraxGenerator.prototype.app = function () {
 
   this.copy('_server.js', 'server.js');
   this.copy('_Procfile', 'Procfile');
+
+  this.copy('karma.conf.js');
+  this.copy('seed/tasks/options/karma.js', 'tasks/options/karma.js');
+  this.copy('seed/tasks/options/mocha_phantomjs.js', 'tasks/options/mocha_phantomjs.js');
+
+  this.copy('seed/tasks/options/jshint.js', 'tasks/options/jshint.js');
+
+  this.copy('seed/test/index.html', 'test/index.html');
+  this.copy('seed/test/app.spec.js', 'test/app.spec.js');
+  this.copy('seed/test/main.js', 'test/main.js');
+  this.copy('seed/test/main.karma.js', 'test/main.karma.js');
+  this.copy('seed/test/test-setup-all.js', 'test/test-setup-all.js');
+  this.copy('seed/test/test-setup-browser.js', 'test/test-setup-browser.js');
+  this.copy('seed/test/collections/.gitkeep', 'test/collections/.gitkeep');
+  this.copy('seed/test/fixtures/.gitkeep', 'test/fixtures/.gitkeep');
+  this.copy('seed/test/helpers/.gitkeep', 'test/helpers/.gitkeep');
+  this.copy('seed/test/models/.gitkeep', 'test/models/.gitkeep');
+  this.copy('seed/test/routers/.gitkeep', 'test/routers/.gitkeep');
+  this.copy('seed/test/utils/.gitkeep', 'test/utils/.gitkeep');
+  this.copy('seed/test/views/.gitkeep', 'test/views/.gitkeep');
+
+  this.copy('seed/test/views/root.spec.js', 'test/views/root.spec.js');
+
+  // TODO: cs support provided by default
+  this.copy('seed/test/views/root-coffee.spec.coffee', 'test/views/root-coffee.spec.coffee');
+
+  this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
+  this.copy('seed/test/fixtures/example.hbs', 'test/fixtures/example.hbs');
+  this.copy('seed/test/fixtures/example2.html', 'test/fixtures/example2.html');
+  this.copy('seed/test/fixtures/example3.handlebars', 'test/fixtures/example3.handlebars');
+  this.copy('seed/test/fixtures/get-excited.hbs', 'test/fixtures/get-excited.hbs');
+  this.copy('seed/test/helpers/helpers.spec.js', 'test/helpers/helpers.spec.js');
+  this.copy('seed/test/helpers/view-helpers.spec.js', 'test/helpers/view-helpers.spec.js');
+
+  this.copy('main.js');
+  this.copy('_travis.yml', '.travis.yml');
 };
 
 ThoraxGenerator.prototype.scripts = function () {

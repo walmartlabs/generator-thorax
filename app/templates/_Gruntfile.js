@@ -34,14 +34,15 @@
 module.exports = function(grunt) {
 
   var settings = {
-    liveReloadPort: 35729 || process.env.LRPort,
+    liveReloadPort: process.env.LRPort || 35729,
     port: process.env.PORT || 8000,
+    mochaPhantomPort: process.env.MOCHA_PHANTOM_PORT || 8001,
     hostname: 'localhost',
     templates: {},
     paths: {
       'public': 'public',
       dist: 'dist',
-      tmpDist: 'tmpDist',
+      tmp: 'tmp',
       distOutput: {
         js: 'dist/main.js',
       },
@@ -64,37 +65,52 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('thorax-inspector');
   grunt.loadTasks('tasks');
 
-  grunt.registerTask('scripts:development', [
-    'clean:scripts',
-    'copy:requirejs',
-    'templates:public/js',
-    'requirejs:development'
-  ]);
-
   grunt.registerTask('styles:development', [
     'clean:styles',
     'styles'
   ]);
 
-  grunt.registerTask('default', [
+  grunt.registerTask('build', [
     'ensure-installed',
-    'scripts:development',
+    'jshint:all',
+    'templates:tmp'
+  ]);
+
+  grunt.registerTask('default', [
+    'build',
     'styles:development',
     'thorax:inspector',
+    'karma:server',
     'connect:development',
-    'open-browser',
+    'open-browser:dev',
     'watch'
   ]);
 
   grunt.registerTask('production', [
     'clean:production',
+    'build',
     'styles:development',
     'cssmin',
-    'templates:tmpDist',
-    'copy:tmpDist',
+    'copy:baseUrl',
     'requirejs:production',
-    'open-browser',
+    'open-browser:dist',
     'connect:production'
+  ]);
+
+  grunt.registerTask('test', [
+    'build',
+    'karma:ci'
+  ]);
+
+  grunt.registerTask('testDeploy', [
+    'build',
+    'karma:deploy'
+  ]);
+
+  grunt.registerTask('phtest', [
+    'build',
+    'connect:CIServer',
+    'mocha_phantomjs'
   ]);
 
   require('load-grunt-config')(grunt, {
