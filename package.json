@@ -38,7 +38,8 @@
     "grunt-mocha": "~0.4.0",
     "grunt-contrib-copy": "~0.4.1",
     "mocha": "~1.10.0",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "marked": "~0.2.10"
   },
   "engines": {
     "node": ">=0.8.0"
