@@ -3,6 +3,35 @@ var path    = require('path');
 var chai = require('chai');
 var expect = chai.expect;
 var helpers = require('yeoman-generator').test;
+var fs = require('fs');
+var sharedExamples = require('./shared-examples');
+
+var assert = chai.assert;
+
+helpers.assertNoFile = function (file, reg) {
+  var here = fs.existsSync(file);
+  assert.ok(!here, file + 'DOES exist, something is wrong');
+
+  if (!reg) {
+    return assert.ok(!here);
+  }
+
+  var body = fs.readFileSync(file, 'utf8');
+  assert.ok(!reg.test(body), file + ' DID MATCH, HOLD THE PHONE: match \'' + reg + '\'.');
+};
+
+
+helpers.assertFileHasNoContent = function(file, reg) {
+  var here = fs.existsSync(file);
+  assert.ok(here, file + ' does exist, we expected that');
+
+  if (!reg) {
+    return assert.fail('You must provide content via regex for this helper');
+  }
+
+  var body = fs.readFileSync(file, 'utf8');
+  assert.ok(!reg.test(body), file + ' DID MATCH, STAHP!, control flow the following content or fix the test: match \'' + reg + '\'.');
+}
 
 describe('thorax generator', function () {
   beforeEach(function (done) {
@@ -29,11 +58,9 @@ describe('thorax generator', function () {
     require('../app');
     require('../collection');
     require('../collection-view');
-    require('../helper');
     require('../model');
     require('../router');
     require('../view');
-    require('../view-helper');
   });
 
   it('creates expected files', function () {
@@ -49,6 +76,7 @@ describe('thorax generator', function () {
       ['js/view.js', /Thorax.View.extend\(\{/],
       ['js/model.js', /Thorax.Model.extend\(\{/],
       ['js/collection.js', /Thorax.Collection.extend\(\{/],
+      ['js/helpers.js', /define\(\['handlebars', 'thorax'\]/],
       'public/index.html',
       'dist/index.html',
       'css/base.css',
@@ -136,32 +164,6 @@ describe('thorax generator', function () {
           'js/templates/foo-bar.handlebars',
           'js/templates/foo-bar-item.handlebars',
           'js/templates/foo-bar-empty.handlebars'
-        ]);
-        done();
-      });
-    });
-  });
-
-  describe('Thorax Helper', function () {
-    it('generates a Handlebars helper', function (done) {
-      var helper = helpers.createGenerator('thorax:helper', ['../../helper'], ['foo']);
-
-      helper.run([], function () {
-        helpers.assertFiles([
-          ['js/templates/helpers/foo.js', /Handlebars.registerHelper\('foo', foo/]
-        ]);
-        done();
-      });
-    });
-  });
-
-  describe('Thorax View Helper', function () {
-    it('generates a Handlebars view helper', function (done) {
-      var viewHelper = helpers.createGenerator('thorax:view-helper', ['../../view-helper'], ['foo']);
-
-      viewHelper.run([], function () {
-        helpers.assertFiles([
-          ['js/helpers/foo.js', /Handlebars.registerViewHelper\('foo', function/]
         ]);
         done();
       });

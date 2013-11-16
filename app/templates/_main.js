@@ -2,9 +2,10 @@ require([
   <% if (!useZepto) { %>'jquery',<% } %>
   <% if (useZepto) { %>'zepto',<% } %>
   'backbone',
-  '<% if (includeCoffeeScript) { %>cs!<% } %>views/root'<% if (starterApp === 'Hello World') { %>,
-  '<% if (includeCoffeeScript) { %>cs!<% } %>routers/hello-world'<% } else if (starterApp === 'Todo List') { %>,
-  '<% if (includeCoffeeScript) { %>cs!<% } %>routers/todo-list'<% } %>
+  '<% if (includeCoffeeScript) { %>cs!<% } %>views/root',<% if (starterApp === 'Hello World') { %>
+  '<% if (includeCoffeeScript) { %>cs!<% } %>routers/hello-world',<% } else if (starterApp === 'Todo List') { %>
+  '<% if (includeCoffeeScript) { %>cs!<% } %>routers/todo-list',<% } %>
+  'helpers',
 ], function ($, Backbone, RootView<% if (starterApp === 'Hello World') { %>, HelloWorldRouter<% } else if (starterApp === 'Todo List') { %>, TodoListRouter <% } %>) {
 
   initialize(function(next) {
