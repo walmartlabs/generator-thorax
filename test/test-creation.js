@@ -10,7 +10,7 @@ var assert = chai.assert;
 
 helpers.assertNoFile = function (file, reg) {
   var here = fs.existsSync(file);
-  assert.ok(!here, file + 'DOES exist, something is wrong');
+  assert.ok(!here, file + ' DOES exist, something is wrong');
 
   if (!reg) {
     return assert.ok(!here);
@@ -315,9 +315,6 @@ describe('thorax generator', function () {
           ['js/main.js', /jquery/],
           ['tasks/options/requirejs.js', /bower_components\/jquery\/jquery/],
           ['tasks/options/requirejs.js', /deps: \['jquery', 'underscore'\]/],
-          // TODO: this test should be tested when bootstrap is installed
-          // if we want to support that which we don't IMO
-          // ['tasks/options/requirejs.js', /deps: \['jquery'\]/]
         ]);
       });
     });
@@ -333,8 +330,6 @@ describe('thorax generator', function () {
           ['js/main.js', /zepto/],
           ['tasks/options/requirejs.js', /bower_components\/zepto\/zepto/],
           ['tasks/options/requirejs.js', /deps: \['zepto', 'underscore'\]/],
-          // TODO: only for bootstrap, removing for now
-          // ['tasks/options/requirejs.js', /deps: \['zepto'\]/],
           ['tasks/options/requirejs.js', /exports: '\$'/]
         ]);
       });
@@ -343,6 +338,10 @@ describe('thorax generator', function () {
   });
 
   describe('Style Processors', function(){
+
+    sharedExamples.create('should not generate css/base.css', function () {
+      helpers.assertNoFile('css/base.css');
+    });
 
     beforeEach(function (done){
       helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
@@ -369,6 +368,10 @@ describe('thorax generator', function () {
         this.styleOption = "sass";
       });
 
+      sharedExamples.invoke('should not generate css/base.css');
+      it('should generate css/base.scss', function () {
+        helpers.assertFile('css/base.scss');
+      });
       it('is included when selected in the prompt', function () {
         helpers.assertFiles([
           'tasks/options/sass.js',
@@ -376,9 +379,10 @@ describe('thorax generator', function () {
           ['package.json', /grunt-contrib-sass/]
         ]);
       });
+
     });
 
-    describe('LESS', function () {
+    describe('LESS(comes with bootstrap by default)', function () {
       before(function () {
         this.styleOption = "less";
       });
@@ -387,14 +391,24 @@ describe('thorax generator', function () {
         helpers.assertFiles([
           'tasks/options/less.js',
           ['tasks/styles.js', /'less'/],
-          ['package.json', /grunt-contrib-less/]
+          ['package.json', /grunt-contrib-less/],
+          ['bower.json', /"bootstrap"/]
         ]);
+      });
+      it('generates css/base.less instead of css/base.css', function () {
+        helpers.assertFile('css/base.less', /import "..\/bower_components\/bootstrap\/less\/bootstrap";/);
+
       });
     });
 
     describe('Stylus', function () {
       before(function () {
         this.styleOption = "stylus";
+      });
+
+      sharedExamples.invoke('should not generate css/base.css');
+      it('should generate css/base.scss', function () {
+        helpers.assertFile('css/base.styl');
       });
 
       it('is included when selected in the prompt', function () {
@@ -406,37 +420,6 @@ describe('thorax generator', function () {
       });
     });
   });
-
-  // Only provide bootrstrap option when choosing LESS pre-compiler??
-  // describe('Bootstrap', function () {
-  //   beforeEach(function (done) {
-  //     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-  //       if (err) { return done(err); }
-
-  //       this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
-  //       this.app.options['skip-install'] = true;
-
-  //       helpers.mockPrompt(this.app, {
-  //         'newDirectory': true,
-  //         'starterApp': "None",
-  //         'styleProcessor': "none",
-  //         'includeBootstrap': true,
-  //         'includeCoffeeScript': false,
-  //         'useZepto': false
-  //       });
-
-  //       this.app.run({}, done);
-  //     }.bind(this));
-  //   });
-
-  //   it('generates Bootstrap grunt config file', function () {
-  //     helpers.assertFiles([
-  //       ['tasks/styles.js', /'copy:bootstrap'/],
-  //       ['tasks/options/copy.js', /bootstrap: \{/],
-  //       ['bower.json', /"bootstrap"/]
-  //     ]);
-  //   });
-  // });
 
   describe('Testing', function () {
 

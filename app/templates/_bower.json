@@ -13,8 +13,9 @@
     "chai": "1.x",
     "sinon": "http://sinonjs.org/releases/sinon-1.7.3.js",
     "sinon-chai": "2.x",
-    "require-cs": "~0.4.4"
-    <% if (!useZepto) { %>, "jquery": "1.9.0"<% } %>
-    <% if (useZepto) { %>, "zepto": "1.0.0"<% } %>
+    "require-cs": "~0.4.4"<% if (!useZepto) { %>,
+    "jquery": "1.9.0"<% } %><% if (useZepto) { %>,
+    "zepto": "1.0.0"<% } %><% if (styleProcessor === 'less') { %>,
+    "bootstrap": "3.x"<% } %>
   }
 }

@@ -17,16 +17,12 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   this.prompts.push({
     type: 'list',
     name: 'styleProcessor',
-    choices: ['none', 'less', 'sass', 'stylus'],
-    message: 'Would you like to set up your project with a style preprocessor (choose "none" for plain css)',
-    default: 'none'
-  });
-
-  this.prompts.push({
-    type: 'confirm',
-    name: 'includeBootstrap',
-    message: 'Would you like to include Bootstrap?',
-    default: true
+    choices: ['less', 'sass', 'stylus', 'none'],
+    message: "Choose a css pre-processor\n" +
+              "Notes:\n" +
+                "* 'less' will include bootstrap by default\n" +
+                "* 'none' means plain css",
+    default: 'less'
   });
 
   this.prompts.push({
@@ -113,11 +109,24 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('public');
   this.mkdir('public/img');
   this.mkdir('public/fonts');
-  this.mkdir('public/js');
-  this.mkdir('public/css');
 
   this.mkdir('css');
-  this.copy('seed/css/base.css', 'css/base.css');
+  if (this.styleProcessor === 'none') {
+    this.copy('seed/css/base.css', 'css/base.css');
+  }
+
+  if (this.styleProcessor === 'less') {
+    this.copy('seed/tasks/options/less.js', 'tasks/options/less.js');
+    this.copy('seed/css/base.css', 'css/base.less');
+  }
+  if (this.styleProcessor === 'sass') {
+    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js');
+    this.copy('seed/css/base.css', 'css/base.scss');
+  }
+  if (this.styleProcessor === 'stylus') {
+    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js');
+    this.copy('seed/css/base.css', 'css/base.styl');
+  }
 
   this.mkdir('dist');
   this.copy('seed/dist/index.html', 'dist/index.html');
@@ -137,16 +146,6 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/requirejs.js', 'tasks/options/requirejs.js');
   this.copy('seed/tasks/options/thorax.js', 'tasks/options/thorax.js');
   this.copy('seed/tasks/options/watch.js', 'tasks/options/watch.js');
-
-  if (this.styleProcessor === 'less') {
-    this.copy('seed/tasks/options/less.js', 'tasks/options/less.js');
-  }
-  if (this.styleProcessor === 'sass') {
-    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js');
-  }
-  if (this.styleProcessor === 'stylus') {
-    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js');
-  }
 
   this.mkdir('js');
   this.mkdir('js/templates');
