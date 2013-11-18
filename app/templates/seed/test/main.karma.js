@@ -1,10 +1,15 @@
 /**
  *
- * When using the Karma test runner this is the initial starting point for
- * require js configuration lookup. Note the use of /base, which is the root
- * for files hosted by karma. Thus, the next stop in the lookup path for karma
- * after this file is /base/test/main.js, which will provide the next more
- * generalized set of configurations options shared by all tests.
+ * This file is only read by the karma test runner. It is equivalent to what
+ * is found in test/index.html. However, instead of setting the base path
+ * to '../test' as test/index.html does, we set it to the root of karma's built
+ * in server, which provides faster caching and watching of only those files
+ * which have changed when using the autowatch option.
+ *
+ * Similar to test/index.html, requirejs will look inside of /base/test for a
+ * file named main.js, which will further augment the requirejs configuration.
+ *
+ * View test/main.js for more the next set of requirejs configuration options.
  *
  */
 

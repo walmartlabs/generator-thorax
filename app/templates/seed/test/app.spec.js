@@ -5,15 +5,15 @@ describe('tests work', function () {
   });
 });
 
+
 describe('Global variable we want in our tests', function () {
   it('should declare global libraries', function () {
-    assert.ok(Handlebars, "Handlebars is global");
-    assert.ok(Handlebars.compile, "Handlebars.compile is global");
-    assert.ok(Backbone, "Backbone is global");
-    assert.ok(Thorax, "Thorax is global");
-    assert.ok(fixtures, "fixtures is global");
-    assert.ok(sinon, "sinon is global");
-    // TODO: throws error, 1/20 times
-    // assert.ok(sinon.stub, "sinon.stub is global");
+    expect(Handlebars, "Handlebars is global").to.be.ok;
+    expect(Handlebars.compile, "Handlebars.compile is global").to.be.ok;
+    expect(Backbone, "Backbone is global").to.be.ok;
+    expect(Thorax, "Thorax is global").to.be.ok;
+    expect(fixtures, "fixtures is global").to.be.ok;
+    expect(sinon, "sinon is global").to.be.ok;
+    expect(sinon.stub, "sinon.stub is global").to.be.ok;
   });
 });

@@ -15,9 +15,19 @@ module.exports = function(config) {
       'requirejs'
     ],
 
-
-    // list of files / patterns to serve, but not include in page
-    // TODO: DRY require.js paths/shims
+    /**
+     * The following matched files are served by karma at /base. (feel free
+     * to verify that in your browser).
+     *
+     * Use included: false for all files but the initial require.js data-main
+     * file which is test/main.karma.js when tests are run with karma.
+     *
+     * Included false prevents karma from loading the script
+     * inline within its HTML runner page, preventing async loading issues,
+     * delegating full control of proper module loading to require.js.
+     *
+     * See test/main.karma.js for more information
+     */
     files: [
       {pattern: 'js/**/*.{js,coffee}', included: false},
       {pattern: 'tmp/templates/**/*.js', included: false},
