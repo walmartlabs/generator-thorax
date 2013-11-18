@@ -448,7 +448,6 @@ describe('thorax generator', function () {
         'tasks/options/karma.js',
         ['package.json', /"karma"/],
         ['package.json', /"karma-mocha"/],
-        ['package.json', /"karma-growl-reporter"/],
         ['package.json', /"grunt-karma"/],
         ['package.json', /"karma-safari-launcher"/]
       ]);

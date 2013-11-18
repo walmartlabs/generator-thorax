@@ -52,10 +52,9 @@ module.exports = function(config) {
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
     reporters: [
       'progress',
-      // TODO(growl-reporter): mac only, depenency on growl,
-      //                       make generator or ditch it(it's awesome though)
-      //                       grab out of package.json too
-      'growl'
+      // enable growl support via: karma-growl-reporter --save-dev
+      // and uncommenting the line below
+      // 'growl'
     ],
 
 
