@@ -6,10 +6,6 @@ module.exports = {
     debounceDelay: 0,
     interval: 20
   },
-  handlebars: { // compile templates to tmp/templates when js/templates change
-    files: [grunt.config('paths.templates') + '/**/*.{hbs,handlebars}'],
-    tasks: ['templates:tmp']
-  },
   styles: { // watch all styles and rebuild when change
     files: [grunt.config('paths.css') + '/**/*.{css,sass,scss,less,styl}'],
     tasks: ['styles:development']
@@ -17,8 +13,7 @@ module.exports = {
   scripts: { // any js/cs files change? lint + run karma
     files: [
       grunt.config('paths.js') + '/**/*.{js,coffee}',
-      '!' + grunt.config('paths.js') + '!js/templates/**/*.{hbs,handlebars}',
-      'tmp/templates/**/*.js', // make paths.--
+      grunt.config('paths.templates') + '/**/*.{hbs,handlebars}',
       'test/**/*',
       'main.js'
     ],

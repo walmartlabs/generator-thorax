@@ -11,7 +11,7 @@ module.exports = {
   },
   // copy baseUrl(js/) to tmp before building with r.js optimzer
   // templates are not raw copied, they are pre-processed to tmp/templates
-  baseUrl: {
+  prepareBuild: {
     files: [
       { // copy js to tmp/ before compiling
         expand: true,

@@ -1,9 +1,6 @@
 var grunt = require('grunt');
 
 module.exports = {
-  templates: [
-    'tmp/templates'
-  ],
   styles: [
     grunt.config('paths.output.css')
   ],

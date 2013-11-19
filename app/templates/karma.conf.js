@@ -30,7 +30,7 @@ module.exports = function(config) {
      */
     files: [
       {pattern: 'js/**/*.{js,coffee}', included: false},
-      {pattern: 'tmp/templates/**/*.js', included: false},
+      {pattern: 'js/templates/**/*.{hbs,handlebars}', included: false},
       {pattern: 'bower_components/**/*.js', included: false},
       {pattern: 'test/**/*.spec.{js,coffee}', included: false},
       {pattern: 'test/fixtures/**/*.{html,hbs,handlebars}', included: false},
@@ -51,12 +51,25 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
     reporters: [
-      'progress',
+      'dots',
+      'coverage'
       // enable growl support via: karma-growl-reporter --save-dev
       // and uncommenting the line below
       // 'growl'
     ],
 
+    preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      'js/**/*.{js,coffee}': ['coverage']
+    },
+
+    // optionally, configure the reporter
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
 
     // web server port
     port: 9876,
@@ -72,7 +85,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:
