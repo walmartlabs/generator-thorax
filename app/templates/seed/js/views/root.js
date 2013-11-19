@@ -1,6 +1,6 @@
 define([
   'layout-view',
-  'templates/root'
+  'hbs!templates/root'
 ], function(LayoutView, rootTemplate) {
   var RootView = LayoutView.extend({
     name: 'root',

@@ -1,6 +1,6 @@
 define [
   'cs!layout-view',
-  'templates/root'
+  'hbs!templates/root'
 ], (LayoutView, rootTemplate) ->
   class RootView extends LayoutView
     name: 'root'

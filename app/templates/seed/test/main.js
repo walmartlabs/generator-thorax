@@ -73,28 +73,11 @@ require.config({
   deps: configDeps(),
   callback: configCallback(),
   paths: {
-    'handlebars': pathPrefix + 'bower_components/handlebars/handlebars',
     'mocha': pathPrefix + 'bower_components/mocha/mocha',
     'sinon': pathPrefix + 'bower_components/sinon/index',
     'sinon-chai': pathPrefix + 'bower_components/sinon-chai/lib/sinon-chai',
     'chai': pathPrefix + 'bower_components/chai/chai',
     'fixtures': pathPrefix + 'bower_components/fixtures/fixtures'
-  },
-  shim: {
-    'handlebars': {
-      exports: 'Handlebars'
-    },
-    'backbone': {
-      exports: 'Backbone',
-      deps: ['jquery', 'underscore']
-    },
-    'underscore': {
-      exports: '_'
-    },
-    'thorax': {
-      exports: 'Thorax',
-      deps: ['handlebars', 'backbone']
-    },
   },
   urlArgs: configUrlArgs()
 });

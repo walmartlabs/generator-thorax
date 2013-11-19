@@ -569,6 +569,10 @@ describe('thorax generator', function () {
     it('should generate a base main.js file for development use', function () {
       helpers.assertFile('main.js');
     });
+    it('uses requirejs-hbs JIT handlebars compiler(tagged version)', function () {
+      helpers.assertFile('bower.json', /"text"/);
+      helpers.assertFile('bower.json', /"requirejs-hbs": "trombom\/requirejs-hbs#v0.1"/);
+    });
   });
 
   describe('Production Build', function () {

@@ -44,13 +44,15 @@ require.config({
   paths: {
     'jquery': pathPrefix + 'bower_components/jquery/jquery',
     'underscore': pathPrefix + 'bower_components/underscore/underscore',
-    'handlebars': pathPrefix + 'bower_components/handlebars/handlebars.runtime', // test/main.js will override with .runtime version
+    'handlebars': pathPrefix + 'bower_components/handlebars/handlebars',
     'backbone': pathPrefix + 'bower_components/backbone/backbone',
     'thorax': pathPrefix + 'bower_components/thorax/thorax',
     'coffee-script': pathPrefix + 'bower_components/coffee-script/index',
     'cs': pathPrefix + 'bower_components/require-cs/cs',
+    'text': pathPrefix + 'bower_components/text/text',
+    'hbs': pathPrefix + 'bower_components/requirejs-hbs/hbs',
     // not required for production build
-    'templates': pathPrefix + 'tmp/templates'
+    // 'templates': pathPrefix + 'tmp/templates'
   },
   shim: {
     'handlebars': {

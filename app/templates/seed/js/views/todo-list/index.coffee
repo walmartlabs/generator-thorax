@@ -1,6 +1,6 @@
 define [
   'cs!view'
-  'templates/todo-list/index'
+  'hbs!templates/todo-list/index'
 ], (View, template) ->
   View.extend
     name: "todo-list/index"

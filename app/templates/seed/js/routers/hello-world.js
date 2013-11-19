@@ -8,7 +8,7 @@ define([
       "": "index"
     },
     index: function() {
-      var view = new IndexView;
+      var view = new IndexView();
       RootView.getInstance().setView(view);
     }
   });
