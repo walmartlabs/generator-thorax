@@ -18,7 +18,6 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-contrib-handlebars": "~0.5.10",
     "connect-livereload": "~0.3.0",
     "grunt-contrib-cssmin": "~0.6.2",
     "load-grunt-config": "~0.6.0",

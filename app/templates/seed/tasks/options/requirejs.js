@@ -15,11 +15,13 @@ module.exports = {
         'jquery': '../bower_components/jquery/jquery',<% } %><% if (useZepto) { %>
         'zepto': '../bower_components/zepto/zepto',<% } %>
         'underscore': '../bower_components/underscore/underscore',
-        'handlebars': '../bower_components/handlebars/handlebars.runtime',
+        'handlebars': '../bower_components/handlebars/handlebars',
         'backbone': '../bower_components/backbone/backbone',
         'thorax': '../bower_components/thorax/thorax',
         'coffee-script': '../bower_components/coffee-script/index',
-        'cs': '../bower_components/require-cs/cs'
+        'cs': '../bower_components/require-cs/cs',
+        'text': '../bower_components/text/text',
+        'hbs': '../bower_components/requirejs-hbs/hbs'
       },
       shim: {
         'handlebars': {

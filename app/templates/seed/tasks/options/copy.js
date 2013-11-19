@@ -16,7 +16,7 @@ module.exports = {
       { // copy js to tmp/ before compiling
         expand: true,
         cwd: grunt.config('paths.js'),
-        src: ['**', '!templates/**'],
+        src: ['**'],
         dest: grunt.config('paths.tmp')
       }
     ]

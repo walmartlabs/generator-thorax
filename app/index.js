@@ -135,14 +135,12 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
   this.copy('seed/tasks/open-browser.js', 'tasks/open-browser.js');
   this.copy('seed/tasks/styles.js', 'tasks/styles.js');
-  this.copy('seed/tasks/templates.js', 'tasks/templates.js');
 
   this.mkdir('tasks/options');
   this.copy('seed/tasks/options/clean.js', 'tasks/options/clean.js');
   this.copy('seed/tasks/options/connect.js', 'tasks/options/connect.js');
   this.copy('seed/tasks/options/copy.js', 'tasks/options/copy.js');
   this.copy('seed/tasks/options/cssmin.js', 'tasks/options/cssmin.js');
-  this.copy('seed/tasks/options/handlebars.js', 'tasks/options/handlebars.js');
   this.copy('seed/tasks/options/requirejs.js', 'tasks/options/requirejs.js');
   this.copy('seed/tasks/options/thorax.js', 'tasks/options/thorax.js');
   this.copy('seed/tasks/options/watch.js', 'tasks/options/watch.js');

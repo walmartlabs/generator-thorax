@@ -83,12 +83,10 @@ describe('thorax generator', function () {
       'tasks/ensure-installed.js',
       'tasks/open-browser.js',
       'tasks/styles.js',
-      'tasks/templates.js',
       'tasks/options/clean.js',
       'tasks/options/connect.js',
       'tasks/options/copy.js',
       'tasks/options/cssmin.js',
-      'tasks/options/handlebars.js',
       'tasks/options/requirejs.js',
       'tasks/options/thorax.js',
       'tasks/options/watch.js'
