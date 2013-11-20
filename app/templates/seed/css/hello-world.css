@@ -32,6 +32,29 @@ a:hover {
   text-decoration: underline;
 }
 
+ul, ul ul  {
+  list-style-type: disc;
+}
+
+code, samp, kbd {
+  font-family: "Courier New", Courier, monospace, sans-serif;
+  text-align: left;
+  color: #555;
+}
+
+code {
+  line-height: 1.6em;
+  font-size: 1em;
+}
+
+pre {
+  padding: 0.1em 0.5em 0.3em 0.7em;
+  border-left: 11px solid #ccc;
+  margin: 1.7em 0 1.7em 0.3em;
+  overflow: auto;
+  width: 93%;
+}
+
 .header {
   position: absolute;
   top: 0;
@@ -58,54 +81,23 @@ a:hover {
 
 .thorax-wrapper {
   position: relative;
-  padding-top: 75px;
+  padding: 75px 0px 25px 0px;
   min-height: 100%;
 }
 
 .thorax-primary {
   width: 62.5%;
-  font-size: 1.125em;
+  font-size: 0.9em;
+  line-height: 1.6em;
 }
 
-.thorax-steps {
-  margin: 1.8em 0 1.8em 2.5em;
-  padding: 0;
-  font-size: 0.8em;
-  list-style: none;
-}
-
-.thorax-steps li {
-  position: relative;
-  margin: 1em 0;
-}
-
-.thorax-steps li:before {
-  content: "1";
-  position: absolute;
-  top: 0;
-  left: -2.5em;
-  width: 28px;
-  height: 28px;
-  color: #fafafa;
-  background: #1a75cf;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 28px;
-  font-weight: bold;
-}
-
-.thorax-steps li:first-child + li:before {
-  content: "2";
-}
-
-.thorax-steps li:first-child + li + li:before {
-  content: "3";
-}
-
-.thorax-steps h3 {
-  margin: 0 0 0.5em;
-  font-size: 1.3em;
-  line-height: 28px;
+.thorax-primary ul li code,
+.thorax-primary p code {
+  margin: 0 2px;
+  padding: 0px 5px;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  border-radius: 3px;
 }
 
 .thorax-secondary {
@@ -138,4 +130,22 @@ a:hover {
 
 .thorax-secondary li {
   margin: 0.5em 0;
+}
+
+.thorax-footer {
+  padding: 0.4em 0;
+  border-top: 6px solid #1a75cf;
+  background: #22394f;
+  text-align: center;
+}
+
+.thorax-footer ul li {
+  list-style-type: none;
+  display: inline;
+  margin: 0px 5px;
+}
+
+.thorax-footer ul li a {
+  color: white;
+  font-size: 0.9em;
 }

@@ -70,6 +70,7 @@ describe('thorax generator', function () {
       ['bower.json', /"name": "test"/g],
       ['package.json', /"name": "test"/g],
       'Gruntfile.js',
+      'README.md',
       'js/views',
       'js/models',
       'js/collections',
