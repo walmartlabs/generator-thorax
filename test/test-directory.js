@@ -29,6 +29,7 @@ describe('thorax generator', function () {
         'bower.json',
         'package.json',
         'Gruntfile.js',
+        'README.md',
         'js',
         'css',
         'js/views',

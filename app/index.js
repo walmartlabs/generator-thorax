@@ -2,6 +2,7 @@ var fs   = require('fs');
 var path = require('path');
 var util = require('util');
 var path = require('path');
+var marked = require('marked');
 var Base = require('../lib/base');
 
 var ThoraxGenerator = module.exports = function (args, options, config) {
@@ -66,6 +67,12 @@ ThoraxGenerator.prototype.directory = function () {
   if (!this.newDirectory) { return; }
 
   this._checkAndCreateDirectory(this._.dasherize(this.name), this.async());
+};
+
+ThoraxGenerator.prototype.processReadme = function () {
+  var markedFile = fs.readFileSync(path.join(__dirname, '../README.md')).toString();
+  var processedMarkedFile = marked(markedFile);
+  return processedMarkedFile.replace(/{/g, '&#123;').replace(/}/g, '&#125;');
 };
 
 ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
@@ -193,6 +200,7 @@ ThoraxGenerator.prototype.app = function () {
 
   this.copy('main.js');
   this.copy('_travis.yml', '.travis.yml');
+  this.copy(path.join(__dirname, '../README.md'), 'README.md');
 };
 
 ThoraxGenerator.prototype.scripts = function () {
@@ -217,10 +225,11 @@ ThoraxGenerator.prototype.helloWorld = function() {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   if (this.starterApp === 'Hello World') {
+    this.readmeContent = this.processReadme();
     this.mkdir('js/views/hello-world');
     this.mkdir('js/templates/hello-world');
     this.copy('seed/js/views/hello-world/index' + scriptExt, 'js/views/hello-world/index' + scriptExt);
-    this.copy('seed/js/templates/hello-world/index.hbs', 'js/templates/hello-world/index.hbs');
+    this.template('seed/js/templates/hello-world/index.hbs', 'js/templates/hello-world/index.hbs');
     this.copy('seed/js/routers/hello-world' + scriptExt, 'js/routers/hello-world' + scriptExt);
     this.copy('seed/css/hello-world.css', 'css/hello-world.css');
   }
