@@ -34,14 +34,15 @@
 module.exports = function(grunt) {
 
   var settings = {
-    liveReloadPort: 35729 || process.env.LRPort,
+    liveReloadPort: process.env.LRPort || 35729,
     port: process.env.PORT || 8000,
+    mochaPhantomPort: process.env.MOCHA_PHANTOM_PORT || 8001,
     hostname: 'localhost',
     templates: {},
     paths: {
       'public': 'public',
       dist: 'dist',
-      tmpDist: 'tmpDist',
+      tmp: 'tmp',
       distOutput: {
         js: 'dist/main.js',
       },
@@ -64,37 +65,77 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('thorax-inspector');
   grunt.loadTasks('tasks');
 
-  grunt.registerTask('scripts:development', [
-    'clean:scripts',
-    'copy:requirejs',
-    'templates:public/js',
-    'requirejs:development'
-  ]);
-
   grunt.registerTask('styles:development', [
     'clean:styles',
     'styles'
   ]);
 
-  grunt.registerTask('default', [
+  grunt.registerTask('build', [
     'ensure-installed',
-    'scripts:development',
+    'jshint:all'
+  ]);
+
+  /**
+   * livereload tests + app + jshint when saving a file
+   */
+  grunt.registerTask('default', [
+    'build',
     'styles:development',
     'thorax:inspector',
     'connect:development',
-    'open-browser',
+    'open-browser:dev',
     'watch'
   ]);
 
+  /**
+   * same as default `grunt` but also runs karma tests on file save
+   *
+   * a faster approach is to actually run the default task and in a seperate
+   * terminal run `karma start` which will bypass grunt's slow file watching,
+   * shaving off about a second on autoreload, however, you'll need to deal
+   * with having to restart two different windows in the event of something
+   * drastic.
+   */
+  grunt.registerTask('autotest', [
+    'build',
+    'styles:development',
+    'thorax:inspector',
+    'karma:server',
+    'connect:development',
+    'open-browser:dev',
+    'watch'
+  ]);
+
+  // compile production ready assets to dist/
   grunt.registerTask('production', [
     'clean:production',
+    'build',
     'styles:development',
     'cssmin',
-    'templates:tmpDist',
-    'copy:tmpDist',
+    'copy:prepareBuild',
     'requirejs:production',
-    'open-browser',
+    'open-browser:dist',
     'connect:production'
+  ]);
+
+  // aliased as npm test, and therefore used by travis ci
+  grunt.registerTask('test', [
+    'build',
+    'karma:ci'
+  ]);
+
+  // run tests one time in chrome, firefox, safari
+  grunt.registerTask('test-deploy', [
+    'build',
+    'karma:deploy'
+  ]);
+
+  // manually run grunt within a terminal window, provides nicer UI output
+  // than karma
+  grunt.registerTask('test-mocha-phantomjs', [
+    'build',
+    'connect:CIServer',
+    'mocha_phantomjs'
   ]);
 
   require('load-grunt-config')(grunt, {

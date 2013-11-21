@@ -3,11 +3,37 @@
   <head>
     <meta charset="utf-8">
     <title><%= _.titleize(name) %></title>
-    <link rel="stylesheet" type="text/css" href="/css/base.css"><% if (starterApp === 'Hello World') { %>
-    <link rel="stylesheet" type="text/css" href="/css/hello-world.css"><% } else if (starterApp === 'Todo List') { %>
-    <link rel="stylesheet" type="text/css" href="/css/todo-list.css"><% } %>
+    <link rel="stylesheet" type="text/css" href="css/base.css"><% if (starterApp === 'Hello World') { %>
+    <link rel="stylesheet" type="text/css" href="css/hello-world.css"><% } else if (starterApp === 'Todo List') { %>
+    <link rel="stylesheet" type="text/css" href="css/todo-list.css"><% } %>
   </head>
   <body>
-    <script data-main="js/main" src="/js/require.js"></script>
+
+    <!--
+        JavaScript files you'd normally include here should instead be loaded by
+        requirejs,   do not add `<script src="some-file.js"></script>` tags to
+        this file lest   you want to lose hours of your life debugging(this is
+        especially  important when deploying)
+
+         Instead, this project uses requirejs:
+         - During development, your-app/main.js is used in conjunction with
+           your-app/js/main.js to bootstrap your application and the module
+           dependency chain.
+         - During testing, your-app/test/main.js and your-app/main.karma.js are
+           also used to configure requirejs with your test files before booting
+           your application in your-app/js/main.js
+         - To deploy your application run `grunt production` from your terminal.
+           This task will read the same your-app/main.js and your-app/js/main.js
+           configuration files used during development and furthermore pre-process
+           coffeescript files you've required using the cs!./someModule syntax
+    -->
+
+    <script>
+      var require = {
+        baseUrl: '../js'
+      }
+    </script>
+
+    <script data-main="../main" src="../bower_components/requirejs/require.js"></script>
   </body>
 </html>

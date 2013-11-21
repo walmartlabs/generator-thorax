@@ -18,16 +18,12 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   this.prompts.push({
     type: 'list',
     name: 'styleProcessor',
-    choices: ['none', 'less', 'sass', 'stylus'],
-    message: 'Would you like to set up your project with a style preprocessor (choose "none" for plain css)',
-    default: 'none'
-  });
-
-  this.prompts.push({
-    type: 'confirm',
-    name: 'includeBootstrap',
-    message: 'Would you like to include Bootstrap?',
-    default: true
+    choices: ['less', 'sass', 'stylus', 'none'],
+    message: "Choose a css pre-processor\n" +
+              "Notes:\n" +
+                "* 'less' will include bootstrap by default\n" +
+                "* 'none' means plain css",
+    default: 'less'
   });
 
   this.prompts.push({
@@ -120,11 +116,24 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('public');
   this.mkdir('public/img');
   this.mkdir('public/fonts');
-  this.mkdir('public/js');
-  this.mkdir('public/css');
 
   this.mkdir('css');
-  this.copy('seed/css/base.css', 'css/base.css');
+  if (this.styleProcessor === 'none') {
+    this.copy('seed/css/base.css', 'css/base.css');
+  }
+
+  if (this.styleProcessor === 'less') {
+    this.copy('seed/tasks/options/less.js', 'tasks/options/less.js');
+    this.copy('seed/css/base.css', 'css/base.less');
+  }
+  if (this.styleProcessor === 'sass') {
+    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js');
+    this.copy('seed/css/base.css', 'css/base.scss');
+  }
+  if (this.styleProcessor === 'stylus') {
+    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js');
+    this.copy('seed/css/base.css', 'css/base.styl');
+  }
 
   this.mkdir('dist');
   this.copy('seed/dist/index.html', 'dist/index.html');
@@ -133,30 +142,15 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
   this.copy('seed/tasks/open-browser.js', 'tasks/open-browser.js');
   this.copy('seed/tasks/styles.js', 'tasks/styles.js');
-  this.copy('seed/tasks/templates.js', 'tasks/templates.js');
 
   this.mkdir('tasks/options');
   this.copy('seed/tasks/options/clean.js', 'tasks/options/clean.js');
   this.copy('seed/tasks/options/connect.js', 'tasks/options/connect.js');
   this.copy('seed/tasks/options/copy.js', 'tasks/options/copy.js');
   this.copy('seed/tasks/options/cssmin.js', 'tasks/options/cssmin.js');
-  this.copy('seed/tasks/options/handlebars.js', 'tasks/options/handlebars.js');
   this.copy('seed/tasks/options/requirejs.js', 'tasks/options/requirejs.js');
   this.copy('seed/tasks/options/thorax.js', 'tasks/options/thorax.js');
   this.copy('seed/tasks/options/watch.js', 'tasks/options/watch.js');
-
-  if (this.includeCoffeeScript) {
-    this.copy('seed/tasks/options/coffee.js', 'tasks/options/coffee.js');
-  }
-  if (this.styleProcessor === 'less') {
-    this.copy('seed/tasks/options/less.js', 'tasks/options/less.js');
-  }
-  if (this.styleProcessor === 'sass') {
-    this.copy('seed/tasks/options/sass.js', 'tasks/options/sass.js');
-  }
-  if (this.styleProcessor === 'stylus') {
-    this.copy('seed/tasks/options/stylus.js', 'tasks/options/stylus.js');
-  }
 
   this.mkdir('js');
   this.mkdir('js/templates');
@@ -170,6 +164,42 @@ ThoraxGenerator.prototype.app = function () {
 
   this.copy('_server.js', 'server.js');
   this.copy('_Procfile', 'Procfile');
+
+  this.copy('karma.conf.js');
+  this.copy('seed/tasks/options/karma.js', 'tasks/options/karma.js');
+  this.copy('seed/tasks/options/mocha_phantomjs.js', 'tasks/options/mocha_phantomjs.js');
+
+  this.copy('seed/tasks/options/jshint.js', 'tasks/options/jshint.js');
+
+  this.copy('seed/test/index.html', 'test/index.html');
+  this.copy('seed/test/app.spec.js', 'test/app.spec.js');
+  this.copy('seed/test/main.js', 'test/main.js');
+  this.copy('seed/test/main.karma.js', 'test/main.karma.js');
+  this.copy('seed/test/test-setup-all.js', 'test/test-setup-all.js');
+  this.copy('seed/test/test-setup-browser.js', 'test/test-setup-browser.js');
+  this.copy('seed/test/collections/.gitkeep', 'test/collections/.gitkeep');
+  this.copy('seed/test/fixtures/.gitkeep', 'test/fixtures/.gitkeep');
+  this.copy('seed/test/helpers/.gitkeep', 'test/helpers/.gitkeep');
+  this.copy('seed/test/models/.gitkeep', 'test/models/.gitkeep');
+  this.copy('seed/test/routers/.gitkeep', 'test/routers/.gitkeep');
+  this.copy('seed/test/utils/.gitkeep', 'test/utils/.gitkeep');
+  this.copy('seed/test/views/.gitkeep', 'test/views/.gitkeep');
+
+  this.copy('seed/test/views/root.spec.js', 'test/views/root.spec.js');
+
+  // TODO: cs support provided by default
+  this.copy('seed/test/views/root-coffee.spec.coffee', 'test/views/root-coffee.spec.coffee');
+
+  this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
+  this.copy('seed/test/fixtures/example.hbs', 'test/fixtures/example.hbs');
+  this.copy('seed/test/fixtures/example2.html', 'test/fixtures/example2.html');
+  this.copy('seed/test/fixtures/example3.handlebars', 'test/fixtures/example3.handlebars');
+  this.copy('seed/test/fixtures/get-excited.hbs', 'test/fixtures/get-excited.hbs');
+  this.copy('seed/test/helpers/helpers.spec.js', 'test/helpers/helpers.spec.js');
+  this.copy('seed/test/helpers/view-helpers.spec.js', 'test/helpers/view-helpers.spec.js');
+
+  this.copy('main.js');
+  this.copy('_travis.yml', '.travis.yml');
   this.copy(path.join(__dirname, '../README.md'), 'README.md');
 };
 

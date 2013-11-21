@@ -1,6 +1,6 @@
-require([
-  <% if (!useZepto) { %>'jquery',<% } %>
-  <% if (useZepto) { %>'zepto',<% } %>
+require([<% if (!useZepto) { %>
+  'jquery',<% } %><% if (useZepto) { %>
+  'zepto',<% } %>
   'backbone',
   '<% if (includeCoffeeScript) { %>cs!<% } %>views/root',<% if (starterApp === 'Hello World') { %>
   '<% if (includeCoffeeScript) { %>cs!<% } %>routers/hello-world',<% } else if (starterApp === 'Todo List') { %>
@@ -13,7 +13,7 @@ require([
     // and initialize all routers here, the callback
     // `next` is provided in case the operations
     // needed are aysynchronous
-    <% if (starterApp === 'Hello World') { %>new HelloWorldRouter;<% } else if (starterApp === 'Todo List') { %>new TodoListRouter;<% } %>
+    <% if (starterApp === 'Hello World') { %>new HelloWorldRouter();<% } else if (starterApp === 'Todo List') { %>new TodoListRouter();<% } %>
 
     next();
   });
