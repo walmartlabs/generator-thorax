@@ -16,6 +16,7 @@ describe('thorax generator', function () {
 
     helpers.mockPrompt(app, {
       'newDirectory': true,
+      "moduleLoaderChoice": 'rjs',
       'starterApp': "None",
       'styleProcessor': "none",
       'includeBootstrap': false,

@@ -7,6 +7,59 @@ var Base = require('../lib/base');
 var ThoraxGenerator = module.exports = function (args, options, config) {
   Base.apply(this, arguments);
 
+  this.on('end', function () {
+    this._sanitizeBowerJSON();
+    this._sanitizePackageJSON();
+
+    this.installDependencies({
+      skipInstall: options['skip-install']
+    });
+  });
+};
+
+util.inherits(ThoraxGenerator, Base);
+
+ThoraxGenerator.prototype._name  = 'application';
+ThoraxGenerator.prototype.askFor = Base.prototype._askFor;
+
+ThoraxGenerator.prototype.directory = function () {
+  if (!this.newDirectory) { return; }
+
+  this._checkAndCreateDirectory(this._.dasherize(this.name), this.async());
+};
+
+ThoraxGenerator.prototype.askForModuleLoader = function () {
+  var cb = this.async();
+
+  var prompts = [{
+    type: 'list',
+    name: 'moduleLoaderChoice',
+    message: "Which module loader would you like to use?",
+    choices: [{
+      name: "Lumbar",
+      value: 'lumbar'
+    }, {
+      name: 'Require JS',
+      value: 'rjs'
+    }],
+    default: 'rjs'
+  }];
+
+  this.prompt(prompts, function (props) {
+
+    var choices = props.moduleLoaderChoice;
+
+    if (choices.indexOf('lumbar') !== -1) {
+      this.isLumbar = true;
+    } else {
+      this.isRJS = true;
+    }
+
+    cb();
+  }.bind(this));
+};
+
+ThoraxGenerator.prototype.isRJSFeatures = function () {
   this.prompts.push({
     type: 'confirm',
     name: 'newDirectory',
@@ -47,25 +100,6 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
     default: "Hello World"
   });
 
-  this.on('end', function () {
-    this._sanitizeBowerJSON();
-    this._sanitizePackageJSON();
-
-    this.installDependencies({
-      skipInstall: options['skip-install']
-    });
-  });
-};
-
-util.inherits(ThoraxGenerator, Base);
-
-ThoraxGenerator.prototype._name  = 'application';
-ThoraxGenerator.prototype.askFor = Base.prototype._askFor;
-
-ThoraxGenerator.prototype.directory = function () {
-  if (!this.newDirectory) { return; }
-
-  this._checkAndCreateDirectory(this._.dasherize(this.name), this.async());
 };
 
 ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
