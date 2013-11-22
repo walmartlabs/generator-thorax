@@ -8,9 +8,9 @@
 
 - Add changelog - f912402
 - README WIP - a6d721c
-- - Adding tests for README creation - f219174
-- - Added footer & supporting styles - 6d18b58
-- - Adding marked dependency - Requiring marked - Copying README - Processing README - Inserting README into HelloWorld index - 4fa5545
+- Adding tests for README creation - f219174
+- Added footer & supporting styles - 6d18b58
+- Adding marked dependency - Requiring marked - Copying README - Processing README - Inserting README into HelloWorld index - 4fa5545
 - add testing package - f871d8f
 - additional test helpers - 558e2fa
 - add example usage - 10d0b7d
