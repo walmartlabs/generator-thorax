@@ -264,6 +264,8 @@ define([
 <p> Arrrr! I'm a pirate with a handlebar mustache. </p>
 ```
 
+Lastly, instantiate the router in `main.js`.
+
 At this point, we'll run the command `$ npm start` to build the project. You might try having two windows - your terminal and your text editor - open at the same time when you do this. In your text editor, make sure the contents of the `public` folder are visible (should be empty). When you run the command, your files will be copied into the `public` folder, which is what goes over the wire. It will also open up your browser to the project. During build, Require is going to make sure your scripts are loaded correctly - because so long as they've been written as a module (as above) they are aware of their dependencies. Unfortunately, many third-party libraries such as JQuery are not written as Require modules, must have their dependencies explicitely defined in `grunfile.js` in the `shim` section of the require configuration and manually declare the dependencies of those libraries, following the example of those already there.
 
 What about RootView? (FILL IN). Now that we have something on screen, let's get some data on the screen and finish the rest of our todo list.
