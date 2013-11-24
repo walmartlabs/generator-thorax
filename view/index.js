@@ -13,5 +13,5 @@ ViewGenerator.prototype.askFor = Generator.prototype.askFor;
 
 ViewGenerator.prototype.createView = function () {
   this._renderTemplate('js/views');
-  this.write('js/templates/' + this._.dasherize(this.name) + '.handlebars', '');
+  this.write('js/templates/' + this._.dasherize(this.name) + '.hbs', '');
 };
