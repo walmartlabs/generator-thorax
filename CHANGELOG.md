@@ -2,7 +2,19 @@
 
 ## Development
 
-[Commits](https://github.com/walmartlabs/generator-thorax/compare/v0.0.5...master)
+[Commits](https://github.com/walmartlabs/generator-thorax/compare/v0.0.6...master)
+
+## v0.0.6 - November 25th, 2013
+
+- [#83](https://github.com/walmartlabs/generator-thorax/pull/83) - fix #78 ([@trombom](https://api.github.com/users/trombom))
+- [#82](https://github.com/walmartlabs/generator-thorax/pull/82) - require templates using hbs! ([@trombom](https://api.github.com/users/trombom))
+- [#76](https://github.com/walmartlabs/generator-thorax/issues/76) - Marked dependency was missing after upgrade
+- [#64](https://github.com/walmartlabs/generator-thorax/issues/64) - CollectionView templates
+- [#77](https://github.com/walmartlabs/generator-thorax/issues/77) - Helpers command not found?
+
+- fix list formatting in CHANGELOG.md - 740ebd7
+
+[Commits](https://github.com/walmartlabs/generator-thorax/compare/v0.0.5...v0.0.6)
 
 ## v0.0.5 - November 21st, 2013
 
