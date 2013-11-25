@@ -13,30 +13,46 @@ For a snazzier development environment, it's recommended that you install the [T
 
 ## Stack
 
-TODO
+- Thorax, a framework for building better Backbone applications
+- Handlebars, a framework that works out of the box with Thorax for writing dynamic JavaScript views in HTML, variables are inserted using the `{{ handlebars }}` syntax
+- Grunt, a framework for declaratively defining CLI tasks, e.g., for running tests, compiling stylesheets, creating a production build of your app.
+- Bower, a package manager for the browser making it easy to pull in 3rd party libraries
+- Your choice of LESS/Stylus/SASS for more productive stylesheets
+- Automated JavaScript testing stack:
+  - Mocha w/ Chai - for BDD style tests
+  - Karma, a framework for piping test results to the command line for a rapid testing feedback loop
+  - Built in support for Travis CI
+- Require JS, a framework for working with modules in the browser
+  - `hbs!` Require JS plugin for 'just in time' compiling of Handlebars templates for rapid feedback during development. Templates will be pre-compiled when creating a production build via the r.js optimizer provided as a grunt task
+  - `cs!` Require JS plugin for 'just in time' compiling of CoffeeScript files, allowing you to mix CoffeeScript and JavaScript files at will, enjoy rapid feedback during development, including fast tests. CoffeeScript will be pre-compiled to JavaScript when creating a production build via the r.js optimizer provided as a grunt task
+- Yoeman Generators
+  - generating a new application
+  - generate a new router, view, model, collection or helper with an example test written in Mocha + Chai
+- Live Reload, for automated browser reloading during development
+- Built in deployment strategies for Heroku and Nodejitsu, for quick and efficient deployment of your app to the cloud.
 
 ## Directory Structure
 
-- `bower_components` Installed third party libraries. Managed by [Bower](http://bower.io/), do not modify directly.
-- `css` Regardless of whether you are using a CSS superset (LESS / Stylus / SASS) or plain CSS, this is where your CSS should live. This will get copied or compiled to `public/css` when running `grunt build`
-- `js`
-  - `collections`
-  - `models`
-  - `routers`
-  - `templates`
-  - `views`
-  - `collection-view.js`
-  - `collection.js`
-  - `layout-view.js`
-  - `main.js`
-  - `model.js`
-  - `view.js`
+- `bower_components` Installed third party libraries. Managed by [Bower](http://bower.io/), do not modify directly, instead use `bower install package-name --save`
+- `css` Regardless of whether you are using a CSS superset (LESS / Stylus / SASS) or plain CSS, this is where your CSS should live. This will get copied or compiled to `public/css` when running `grunt`
+- `js` Require JS baseUrl, files here are 'live' in development for easy debugging
+    - `collections`
+    - `models`
+    - `routers`
+    - `templates`
+    - `views`
+    - `collection-view.js`
+    - `collection.js`
+    - `layout-view.js`
+    - `main.js` Require JS data-main entry point
+    - `model.js`
+    - `view.js`
 - `node_modules`
 - `public` The connect server will serve this directory at `/public`
   - `css` Generated or copied CSS from the `css` directory, do not modify.
   - `fonts` Any web fonts for your application, safe to modify.
   - `img` Any images, safe to modify
-  - `index.html` Do not modify, add scripts to `/main.js`
+  - `index.html` Do not modify, instead, add paths/shims to `/main.js`
 - `tasks` Put your custom grunt tasks in here
   - `options` Installed grunt options are looked up here, by file name
 - `bower.json` Third party library management via [Bower](http://bower.io/)
@@ -50,7 +66,7 @@ Every generated application comes fully loaded with an amazing development and t
 
 ### Development
 
-##### tl;dr - Run `grunt` from the command line
+**Run `grunt`**
 
 The best way to get up and running in development is to run `grunt` from the command line. This will boot a connect server and open up a browser to `http://localhost:8000/test` where you'll see the mocha test runner. This is to encourage testing, although it's not required. 
 
@@ -60,33 +76,35 @@ At this point you'll have two tabs open in your browser, both of them synced via
 
 ### Testing
 
-##### tl;dr - Run `grunt autotest`
+**Run `grunt autotest`**
 
 The easiest way to run your tests is perhaps just to stick with the test runner page provided when running the default `grunt` task discussed above.
 
-However, every application also comes with [karma](https://github.com/karma-runner/karma) setup to your mocha tests inside your terminal window out of the box.
+However, every application also comes with [karma](https://github.com/karma-runner/karma) setup to run your mocha tests inside your terminal window out of the box.
 
-To try this out run `grunt autotest` from the command line. By default karma is setup to run tests in Chrome which is the most reliable and fast way to gain rapid feedback from a real browser during development.
+To try this out run `grunt autotest` from the command line. By default karma is setup to run tests in Chrome which is the most reliable and fastest way to gain rapid feedback from a real browser during development.
 
-##### Advanced Testing
+### Advanced Testing
+
+**Run `grunt` in one window and `karma start` in a second**
 
 Another option for running your tests is too skip grunt altogether and simply run `karma start` from your terminal window. This option will provide the fastest feedback loop during development and is recommended once your comfortable running your tests completely on the command line. 
 
 You still may want to run `grunt` in a second terminal window to hook up livereload to your application when adjusting styles or manually clicking through your app, but running `karma start` will shave roughly a second off of each test run making for a very tight feedback loop.
 
-##### Debugging Karma
+#### Debugging Karma
 
 To gain access to the console and debugging tools provided by Chrome, click on the `Debug` button at the top of the window booted by karma. Within here you'll have full access to your Thorax application, even though the page itself is white.
 
 ### Production
 
-##### tl;dr - Run `grunt production`
+**Run `grunt production`**
 
 When your ready to build concatenated and minified versions of your css and JavaScript source run `grunt production`. The output can be found in `dist/` and a browser window will be booted so you can play with the production version of your application before deployment.
 
-##### Test Your Production Build in Multiple Browsers
+#### Test Your Production Build in Multiple Browsers
 
-##### tl;dr - Run `grunt deploy`
+**Run `grunt deploy`**
 
 Before deploying your application run `grunt deploy` to run your tests against the built version of your application inside the following browsers:
 
@@ -97,16 +115,16 @@ Before deploying your application run `grunt deploy` to run your tests against t
 
 To test your application in IE you'll need a Windows box. Run `npm install karma-ie-launcher --save-dev` and add `IE` to the array of browsers within the deploy task inside `tasks/options/karma.js`. However, using [Sauce Labs](https://saucelabs.com/) in conjunction with the [Karma Sauce Launcher](https://github.com/karma-runner/karma-sauce-launcher) is the recommended and effective solution to this common problem.
 
-### Phantom JS with Karma or Mocha-PhantomJS
+#### Phantom JS with Karma or Mocha-PhantomJS
 
 If you prefer to manually run your tests via the command line during development every generated app also provides to ways to accomplish this:
 
 - `grunt test` will run your tests with Phantom JS via karma
 - `grunt test-mocha-phantomjs` will run your tests with [Mocha PhantomJS](https://github.com/metaskills/mocha-phantomjs), which also outputs to your terminal but provides a nicer UI than Karma in a format that reads like documentation, similar to what you'll find in the browser window when running `grunt` or when running mocha tests in node js.
 
-### Continuous Integration with Travis CI
+#### Continuous Integration with Travis CI
 
-##### tl;dr - Use github, flip Travis CI switch
+**Use github, flip on Travis CI switch**
 
 If you host your application as a repo on github(public or private), you can optionally turn on Travis CI support. Every application is generated with a `.travis.yml` file, so once the switch has been turned on, it'll work out of the box.
 
@@ -114,7 +132,7 @@ If you host your application as a repo on github(public or private), you can opt
 
 Every generated application comes setup ready to deploy to either Heroku and/or nodejitsu.
 
-##### To deploy to heroku:
+**To deploy to heroku:**
 
 1. Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed and you have logged into your account via `heroku login`.
 2. Build your app: `grunt production`. This will output a minified version of your app to `dist/` which heroku will serve up.
@@ -127,7 +145,7 @@ Every generated application comes setup ready to deploy to either Heroku and/or 
 
 Note: During deployment run `foreman start` to test your application. Open your browser to port `5000` to view your app.
 
-##### To deploy to nodejitsu:
+**To deploy to nodejitsu:**
 
 1. Install the tool: `npm install jitsu -g`
 2. Create an account: `jitsu signup`
@@ -137,16 +155,21 @@ Note: During deployment run `foreman start` to test your application. Open your 
 
 That's it. Your `package.json` file already has a `scripts` option named `start` that nodejitsu will use to boot the application.
 
-## Require JS
-
-WIP TODO
-
 ## Generators
 
-Available generators:
+### Application Generator:
+
+Generate a new Thorax Application using the software stack mentioned above:
 
 ```sh
-$ yo thorax name
+$ yo thorax app-name
+```
+
+### Sub Generators:
+
+Use these within an existing Thorax application:
+
+```sh
 $ yo thorax:router name
 $ yo thorax:view name
 $ yo thorax:model name
@@ -163,45 +186,73 @@ $ yo thorax:router todo-list
 $ yo thorax:view todo-list/index
 ```
 
+### CoffeeScript Support
+
+Out of the box all generators will optionally output CoffeeScript. When generating a new application, the generator will simply ask you if you want CoffeeScript or JavaScript and act accordingly.
+
+When running a sub-generator(explained below) 
+
 ## From Zero to Todos
 
-If you haven't yet already, make sure the generator is installed:
+### Install the generator
 
 ```sh
 $ npm install -g yo generator-thorax
 ```
 
- Now create your app, (later you'll replace 'todo-list' with your own project name)...
+### Generate your application
 
 ```sh
 $ yo thorax todo-list
 [?] Would you like to generate the app in a new directory? Yes
-[?] Choose a css pre-processor, less with bootstrap is the default
+[?] Choose a css pre-processor: (Use arrow keys)
+    ❯ Less with bootstrap (default choice) 
+      Sass 
+      Stylus 
+      Plain CSS
+[?] Would you like to use CoffeeScript? No
+[?] Would you like to use Zepto in place of jQuery (Zepto is best for mobile apps)
 [?] Would you like to setup your project with a sample application? (Use arrow keys)
       Hello World
       Todo List
     ❯ None
 ```
 
-...and then `$ cd todo-list`. Notice that both [npm](http://npmjs.org) and [bower](http://bower.io/) pulled down their dependencies during the creation of the application. To generate the completed version of the todo app we're about to create, select `Todo List` in the options listed above. We'll generate the needed files first, then start editing them. To get started, let's generate our first view:
+...and then `$ cd todo-list`. 
+
+Note that had you chosen `Todo List` for the sample application above, you would have generated the completed version of the app we're about to build. You may want to do this when we're finished to check your work.
+
+### Sub Generators
+
+**Note on CoffeeScript**
+
+Running a sub generator will look for the presence of at least one `.coffee` file within `js/` and choose whether to output CoffeeScript or JavaScript accordingly. 
+
+To force CoffeeScript output, append `--coffee` to any of the following commands.
+
+To force JavaScript output, append `--js` to any of the following commands.
+
+By default your application is setup to work with both JavaScript and CoffeeScript out of the box, just remember to prefix any CoffeeScript files you require with `cs!some-module`. See the section on [require js](#require-js) for more detail.
+
+##### Generate a View:
 
 ```sh
 $ yo thorax:view todo-list/index
 ```
 
-This generated two new files, a view and a matching template...
+This generates two new files, a view and a matching template:
 
 ```sh
 create js/views/todo-list/index.js
-create js/templates/todo-list/index.handlebars
+create js/templates/todo-list/index.hbs
 ```
 
-...and inserted the following code into `views/todo-list/index.js`:
+`views/todo-list/index.js` should contain the following code:
 
 ```js
 define([  //dependencies array
  'view',
- 'hbs!templates/todo-list/index'
+ 'hbs!templates/todo-list/index' // use the require js hbs plugin to parse the .hbs file
 ], function (View, template) {  //callback
  return View.extend({
    name: 'todo-list/index',
@@ -210,9 +261,21 @@ define([  //dependencies array
 });
 ```
 
-Those familiar with RequireJS will be thrilled to see that define() call, and those who aren't should read the [API](http://requirejs.org/docs/api.html). In short, RequireJS is going to make the code found in the files `view` and `templates/todos/index` available inside of the callback as `View` and `template`, respectively. We'll come back to these. You can leave the `.js` off when adding dependencies to a module in RequireJS; it's expecting a script. All file paths are relative to the directory set by the `baseUrl` which is `/js`.
+Had we been using CoffeeScript in our application the output would instead look like:
 
-Next, we'll create our first router:
+```cs
+define [
+  'cs!view', # IMPORTANT, use cs! when requiring a module written in CS
+  'hbs!templates/todo-list/index'
+], (View, template) ->
+  View.extend
+    name: 'todo-list/index'
+    template: template
+```
+
+Those familiar with RequireJS will be thrilled to see the define() call above, and those who aren't should read the section about [require js](#requirejs) at the end of the README for short summary.
+
+##### Generate a Router:
 
 ```sh
 $ yo thorax:router todo-list
@@ -228,9 +291,9 @@ create js/routers/todo-list.js
 
 ```js
 define([
-  'views/root',
   'backbone'
-], function (RootView, Backbone) {
+  'views/root',
+], function (Backbone, RootView) {
   return Backbone.Router.extend({  //plain Backbone. Thorax doesn't touch the router.
     routes: {
     }
@@ -245,13 +308,13 @@ define([
   'backbone',  //included because we're calling the Backbone object below. While Backbone depends on Underscore, we wouldn't pass that in unless we were going to use "_" inside of our callback.
   'views/root',  //this is what's going to get attached to the DOM. More on that soon.
   'views/todo-list/index'  //this is the view class we're going to instantiate below...
-], function (RootView, Backbone, TodoListIndexView) {  //...but to make it available we're going to need to add it and pass it into our callback, here we've named it TodoListIndexView
+], function (Backbone, RootView, TodoListIndexView) {  //...but to make it available we're going to need to add it and pass it into our callback, here we've named it TodoListIndexView
   return Backbone.Router.extend({
     routes: {
-      "": "index" //add an index route hereabouts.
+      "": "index" //add an index route
     },
     index: function(){
-      var view = new TodoListIndexView({})  //Hey! I'm a view getting instantiated! My template will be rendered. Purr.
+      var view = new TodoListIndexView({})  //Hey! I'm a view getting instantiated! My template will be rendered
       RootView.getInstance().setView(view)  //Nuke whatever was in the {{layout-element}} element in root.hbs (and do memory management), replace it with the template rendered by the line above.
     }
   });
@@ -264,18 +327,39 @@ define([
 <p> Arrrr! I'm a pirate with a handlebar mustache. </p>
 ```
 
-At this point, we'll run the command `$ npm start` to build the project. You might try having two windows - your terminal and your text editor - open at the same time when you do this. In your text editor, make sure the contents of the `public` folder are visible (should be empty). When you run the command, your files will be copied into the `public` folder, which is what goes over the wire. It will also open up your browser to the project. During build, Require is going to make sure your scripts are loaded correctly - because so long as they've been written as a module (as above) they are aware of their dependencies. Unfortunately, many third-party libraries such as JQuery are not written as Require modules, must have their dependencies explicitely defined in `grunfile.js` in the `shim` section of the require configuration and manually declare the dependencies of those libraries, following the example of those already there.
+Finally, edit `js/main.js`. To the list of dependencies required by this module, add `'routers/todo-list'`. Add it before `'helpers'`. Also make sure to inject the dependency into the module as an argument to the factory function. Then instantiate the router inside the initialize function, before calling `next();`.
 
-What about RootView? (FILL IN). Now that we have something on screen, let's get some data on the screen and finish the rest of our todo list.
+The final changes should look like:
 
-Rendering a Collection
-----------------------
+```javascript
+  require([
+    'jquery',
+    'backbone',
+    'views/root',
+    'routers/todo-list', // ADDED
+    'helpers',
+  ], function ($, Backbone, RootView, TodoListRouter) { // MODIFIED
+
+    initialize(function(next) {
+      new TodoListRouter(); // ADDED
+      next();
+    });
+
+    ...snip...
+```
+
+##### Run `grunt` to build and view your application
+
+Now that we have something on screen, let's get some data on the screen and finish the rest of our todo list.
+
+##### Render a Collection
+
 To implement a todo list, we need to create a collection and set it on the view. Unlike a `Backbone.View` instance, a `Thorax.View` instance does not have an `options` object. All properties passed to the constructor are set on the instance and also become available inside of the handlebars template. We'll now update `js/routers/todo-list.js`...
 
 ```js
 define([
   'backbone',
-  'collection',  //we add the 'collection' module here in the dependencies array
+  'collection',  // ADDED
   'views/root',
   'views/todo-list/index'
 ], function(Backbone, Collection, RootView, TodoListIndexView) {  //and also add the 'Collection' arg here
@@ -297,7 +381,7 @@ define([
 });
 ```
 
-To display the collection we will edit `templates/todo-list/index.handlebars` and use the `collection` handlebars helper, which functions as a `forEach` and will
+To display the collection we will edit `templates/todo-list/index.hbs` and use the `collection` handlebars helper to loop through each model in the collection:
 
 ```html
 {{#collection}}
@@ -315,7 +399,7 @@ Beautifully, all of the properties of the associated model are available in the 
 {{/collection}}
 ```
 
-Since we want to be able to mark our todos as done and add new ones, we will add a checkbox to each item in the collection and a form to make new items at the bottom. Our `templates/todo-list/index.handlebars` should now look like:
+Since we want to be able to mark our todos as done and add new ones, we will add a checkbox to each item in the collection and a form to make new items at the bottom. Our `templates/todo-list/index.hbs` should now look like:
 
 ```html
 {{#collection tag="ul"}}
@@ -392,4 +476,6 @@ define([
 
 And that's a finished non-persistent todo list application! For more complex examples and tutorials using the thorax framework, see the [tutorials on the Thorax homepage](http://thoraxjs.org)
 
+## Require JS
 
+TODO
