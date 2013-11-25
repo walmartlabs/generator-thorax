@@ -13,6 +13,6 @@ CollectionViewGenerator.prototype.askFor = ViewGenerator.prototype.askFor;
 
 CollectionViewGenerator.prototype.createCollectionView = function () {
   this.createView();
-  this.write('js/templates/' + this._.dasherize(this.name) + '-item.handlebars', '');
-  this.write('js/templates/' + this._.dasherize(this.name) + '-empty.handlebars', '');
+  this.write('js/templates/' + this._.dasherize(this.name) + '-item.hbs', '');
+  this.write('js/templates/' + this._.dasherize(this.name) + '-empty.hbs', '');
 };
