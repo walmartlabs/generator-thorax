@@ -28,9 +28,9 @@ module.exports = {
           exports: 'Handlebars'
         },
         'backbone': {
-        exports: 'Backbone',<% if (!useZepto) { %>
-        deps: ['jquery', 'underscore']<% } %><% if (useZepto) { %>
-        deps: ['zepto', 'underscore']<% } %>
+          exports: 'Backbone',<% if (useZepto) { %>
+          deps: ['zepto', 'underscore']<% } else { %>
+          deps: ['jquery', 'underscore']<% } %>
         },
         'underscore': {
           exports: '_'

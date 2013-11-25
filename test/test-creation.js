@@ -314,6 +314,8 @@ describe('thorax generator', function () {
           ['js/main.js', /jquery/],
           ['tasks/options/requirejs.js', /bower_components\/jquery\/jquery/],
           ['tasks/options/requirejs.js', /deps: \['jquery', 'underscore'\]/],
+          ['main.js', /bower_components\/jquery\/jquery/],
+          ['main.js', /deps: \['jquery', 'underscore'\]/]
         ]);
       });
     });
@@ -329,7 +331,10 @@ describe('thorax generator', function () {
           ['js/main.js', /zepto/],
           ['tasks/options/requirejs.js', /bower_components\/zepto\/zepto/],
           ['tasks/options/requirejs.js', /deps: \['zepto', 'underscore'\]/],
-          ['tasks/options/requirejs.js', /exports: '\$'/]
+          ['tasks/options/requirejs.js', /exports: '\$'/],
+          ['main.js', /'bower_components\/zepto\/zepto'/],
+          ['main.js', /deps: \['zepto', 'underscore'\]/],
+          ['main.js', /exports: '\$'/],
         ]);
       });
     });
