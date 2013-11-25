@@ -14,16 +14,24 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
     message: 'Would you like to generate the app in a new directory?',
     default: true
   });
-
   this.prompts.push({
     type: 'list',
     name: 'styleProcessor',
-    choices: ['less', 'sass', 'stylus', 'none'],
-    message: "Choose a css pre-processor\n" +
-              "Notes:\n" +
-                "* 'less' will include bootstrap by default\n" +
-                "* 'none' means plain css",
-    default: 'less'
+    message: "Choose a css pre-processor",
+    default: 'less',
+    choices: [{
+      name: 'Less with bootstrap (default choice)',
+      value: 'less'
+    }, {
+      name: 'Sass',
+      value: 'sass'
+    }, {
+      name: 'Stylus',
+      value: 'stylus'
+    }, {
+      name: 'Plain CSS',
+      value: 'none'
+    }]
   });
 
   this.prompts.push({
