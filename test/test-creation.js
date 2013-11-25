@@ -117,7 +117,7 @@ describe('thorax generator', function () {
         helpers.assertFiles([
           ['js/views/foo.js', /View.extend\(\{/],
           ['js/views/foo.js', /name: 'foo'/],
-          'js/templates/foo.handlebars'
+          'js/templates/foo.hbs'
         ]);
         done();
       });
@@ -160,9 +160,9 @@ describe('thorax generator', function () {
         helpers.assertFiles([
           ['js/views/foo-bar.js', /CollectionView.extend\(\{/],
           ['js/views/foo-bar.js', /name: 'fooBar'/],
-          'js/templates/foo-bar.handlebars',
-          'js/templates/foo-bar-item.handlebars',
-          'js/templates/foo-bar-empty.handlebars'
+          'js/templates/foo-bar.hbs',
+          'js/templates/foo-bar-item.hbs',
+          'js/templates/foo-bar-empty.hbs'
         ]);
         done();
       });
@@ -490,7 +490,7 @@ describe('thorax generator', function () {
           'test/fixtures/adding-machine.hbs',
           'test/fixtures/example.hbs',
           'test/fixtures/example2.html',
-          'test/fixtures/example3.handlebars',
+          'test/fixtures/example3.hbs',
           'test/fixtures/get-excited.hbs',
           'test/helpers/helpers.spec.js',
           'test/helpers/view-helpers.spec.js',
