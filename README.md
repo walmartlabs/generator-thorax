@@ -155,6 +155,46 @@ Note: During deployment run `foreman start` to test your application. Open your 
 
 That's it. Your `package.json` file already has a `scripts` option named `start` that nodejitsu will use to boot the application.
 
+### CoffeeScript Support
+
+Out of the box all generators can optionally output CoffeeScript. 
+
+When generating a new application, the generator will simply ask you if you want CoffeeScript or JavaScript and act accordingly by outputting the generated application with the files of the chosen format.
+
+Running a sub generator, like `yo thorax:router`, will look for the presence of at least one `.coffee` file within `js/` and choose whether to output CoffeeScript or JavaScript accordingly. 
+
+To force CoffeeScript output, append `--coffee` to any of the following commands.
+
+To force JavaScript output, append `--js` to any of the following commands.
+
+##### Requiring a CoffeeScript Module
+
+Regardless of what a generator outputs, `.coffee` files are always supported out of the box. 
+
+To require a CoffeeScript module instead of a JavaScript module simply prefix the module name with `cs!`. For example: (inside a JavaScript module or CoffeeScript module)
+
+```js
+  require(['cs!my-module'], function(myModule) { ... })
+```
+
+Prefixing a module name with `cs!` will compile the CoffeeScript file on the fly removing the need for pre-compilation during development.
+
+When creating a production build with `grunt production` however, the r.js optimizer will pre-compile the CoffeeScript files to JavaScript before doing concatenation and minification.
+
+### Handlebars Support
+
+Similar to how CoffeeScript files are compiled on the fly using the `cs!` Require JS plugin, Handlebars files ending in `.hbs` also benefit from not having to run through a compile phase.
+
+To require a handlebars template for use in a view, prefix the name of the module with `hbs!`. For example, inside a view or collection view:
+
+```js
+  require(['hbs!my-template'], function(template) { ... })
+```
+
+Handlebars files will be treated as JavaScript templates therefore leave off the trailing `.hbs` when requiring a template within a view or collection-view.
+
+One current caveat with this approach is that the `template` option within a view or collection-view will always need to be manually set.
+
 ## Generators
 
 ### Application Generator:
@@ -175,8 +215,6 @@ $ yo thorax:view name
 $ yo thorax:model name
 $ yo thorax:collection name
 $ yo thorax:collection-view name
-$ yo thorax:helper name
-$ yo thorax:view-helper name
 ```
 
 The `name` argument may include a directory path, such as `todo-list/index`:
@@ -185,12 +223,6 @@ The `name` argument may include a directory path, such as `todo-list/index`:
 $ yo thorax:router todo-list
 $ yo thorax:view todo-list/index
 ```
-
-### CoffeeScript Support
-
-Out of the box all generators will optionally output CoffeeScript. When generating a new application, the generator will simply ask you if you want CoffeeScript or JavaScript and act accordingly.
-
-When running a sub-generator(explained below) 
 
 ## From Zero to Todos
 
@@ -222,17 +254,9 @@ $ yo thorax todo-list
 
 Note that had you chosen `Todo List` for the sample application above, you would have generated the completed version of the app we're about to build. You may want to do this when we're finished to check your work.
 
+For more information on what is included in a blank generated application, e.g., when choosing `None`, see [what are all these files](#default-application).
+
 ### Sub Generators
-
-**Note on CoffeeScript**
-
-Running a sub generator will look for the presence of at least one `.coffee` file within `js/` and choose whether to output CoffeeScript or JavaScript accordingly. 
-
-To force CoffeeScript output, append `--coffee` to any of the following commands.
-
-To force JavaScript output, append `--js` to any of the following commands.
-
-By default your application is setup to work with both JavaScript and CoffeeScript out of the box, just remember to prefix any CoffeeScript files you require with `cs!some-module`. See the section on [require js](#require-js) for more detail.
 
 ##### Generate a View:
 
@@ -250,13 +274,13 @@ create js/templates/todo-list/index.hbs
 `views/todo-list/index.js` should contain the following code:
 
 ```js
-define([  //dependencies array
+define([
  'view',
- 'hbs!templates/todo-list/index' // use the require js hbs plugin to parse the .hbs file
-], function (View, template) {  //callback
+ 'hbs!templates/todo-list/index' // IMPORTANT, prefix with hbs! when requiring a template
+], function (View, template) {
  return View.extend({
    name: 'todo-list/index',
-   template: template  //templates/todo-list/index.js is passed in as the arg 'template' above, then assigned as a property of the view
+   template: template  // passed as `template` arg above, must be set
   });
 });
 ```
@@ -265,7 +289,7 @@ Had we been using CoffeeScript in our application the output would instead look 
 
 ```cs
 define [
-  'cs!view', # IMPORTANT, use cs! when requiring a module written in CS
+  'cs!view', # IMPORTANT, prefix with cs! when requiring a module written in CS
   'hbs!templates/todo-list/index'
 ], (View, template) ->
   View.extend
@@ -479,3 +503,59 @@ And that's a finished non-persistent todo list application! For more complex exa
 ## Require JS
 
 TODO
+
+## Default Application
+
+TODO: explain what the files and directories inside of /js when generating a default application are for
+
+### `js/main.js`
+
+This is the main entry point into your application. The following modules are required for this module to do it's job:
+
+- `jquery` - used to run body of initialize function when document is 'ready'
+- `backbone` - a shim for this is made in `/main.js` so it is in fact a module. Used to call `Backbone.history.start` inside the jQuery ready callback.
+- `views/root` - the root view, we'll talk more about this below
+- `helpers` - doesn't return anything used inside of `js/main.js` but it does 'resolve' the module contained within `js/helpers.js` thereby registering Handlebars helpers and Thorax View Helpers declared inside the factory function, making them globally available for use within any `.hbs` file within our app.
+
+Given a solid understanding of modules and dependency injection, let's take a look at the logic contained within the `main` module:
+
+```js
+initialize(function(next) {
+  // Load any data that your app requires to boot
+  // and initialize all routers here, the callback
+  // `next` is provided in case the operations
+  // needed are aysynchronous
+  console.log('second'); // ADDED
+  next();
+});
+
+function initialize(complete) {
+  $(function() {
+    console.log('first'); // ADDED
+    Backbone.history.start({
+      pushState: false,
+      root: '/',
+      silent: true
+    });
+
+    // RootView may use link or url helpers which
+    // depend on Backbone history being setup
+    // so need to wait to loadUrl() (which will)
+    // actually execute the route
+    RootView.getInstance(document.body);
+
+    complete(function() {
+      console.log('third'); // ADDED
+      Backbone.history.loadUrl();
+    });
+  });
+}
+```
+
+Note we've added `console.log` statements to clarify the order of execution. Find them quickly by looking for `// ADDED` in the code above.
+
+Once the page is ready, the function inside of `$()` is run. The order of execution thereafter follows the console.log statements, summarized as follows:
+
+- First, Backbone.history.start is called. 
+- Next, `RootView.getInstance(document.body)` is called. This actually calls a one off method defined within `RootView` view. `RootView` inherits from `LayoutView` which is a specialized subclass of a normal Thorax View that can be instantiated with or without a template. In this case a template is provided, which although informative in how to instantiate multiple 'root' level views, is nonetheless not required. Try playing around with the final todo list app built above by removing the this Root View and see what happens. 
+- Finally, the initialize function is run and provided a `complete` callback function. 
