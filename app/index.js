@@ -195,7 +195,6 @@ ThoraxGenerator.prototype.app = function () {
 
   this.copy('seed/test/views/root.spec.js', 'test/views/root.spec.js');
 
-  this.copy('seed/test/views/root-coffee.spec.coffee', 'test/views/root-coffee.spec.coffee');
 
   this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
   this.copy('seed/test/fixtures/example.hbs', 'test/fixtures/example.hbs');
@@ -208,6 +207,9 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('main.js');
   this.copy('_travis.yml', '.travis.yml');
   this.copy(path.join(__dirname, '../README.md'), 'README.md');
+
+  this.copy('seed/test/views/root-coffee.spec.coffee', 'test/views/root.spec.coffee');
+
 };
 
 ThoraxGenerator.prototype.scripts = function () {

@@ -545,78 +545,41 @@ describe('Style Processors', function(){
 
 describe('Testing', function () {
 
-  beforeEach(function (done){
-    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-      if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
-      this.app.options['skip-install'] = true;
 
-      helpers.mockPrompt(this.app, {
-        'newDirectory': false,
-        'starterApp': "None",
-        'styleProcessor': "none",
-        'includeBootstrap': false,
-        'includeCoffeeScript': false,
-        'useZepto': false
-      });
-
-      this.app.run({}, done);
-    }.bind(this));
-  });
-  it('generates an app that supports testing with karma', function () {
-    helpers.assertFiles([
-      'karma.conf.js',
-      'tasks/options/karma.js',
-      ['package.json', /"karma"/],
-      ['package.json', /"karma-mocha"/],
-      ['package.json', /"grunt-karma"/],
-      ['package.json', /"karma-safari-launcher"/]
-    ]);
-  });
-  it('generates an app that supports testing with phantomjs', function () {
-    helpers.assertFiles([
-      'tasks/options/mocha_phantomjs.js',
-      ['package.json', /"mocha-phantomjs"/],
-      ['package.json', /"phantomjs"/],
-      ['package.json', /"grunt-mocha-phantomjs"/]
-    ]);
-  });
-  it('generates a test directory setup with requirejs', function () {
-    helpers.assertFiles([
-      'test/index.html',
-      'test/app.spec.js', // branch for cs version?
-      'test/main.js',
-      'test/main.karma.js',
-      'test/test-setup-all.js',
-      'test/test-setup-browser.js',
-      'test/collections/.gitkeep',
-      'test/fixtures/.gitkeep',
-      'test/helpers/.gitkeep',
-      'test/models/.gitkeep',
-      'test/routers/.gitkeep',
-      'test/utils/.gitkeep',
-      'test/views/.gitkeep',
-    ]);
-    it('generates some example tests to help when getting started', function () {
-      // TODO: how deep should we go into this?
-      // - will it matter which app we generated(perhaps).
-      // - which directories are the most important? helpers and views?
-      // - provide js and cs versions? or just always support cs(current way)
+  sharedExamples.create('files included with js or cs apps', function () {
+    it('generates an app that supports testing with karma', function () {
       helpers.assertFiles([
-        'test/views/root.spec.js',
-        'test/views/root-coffee.spec.coffee', // TODO: cs support? right now it's just default
+        'karma.conf.js',
+        'tasks/options/karma.js',
+        ['package.json', /"karma"/],
+        ['package.json', /"karma-mocha"/],
+        ['package.json', /"grunt-karma"/],
+        ['package.json', /"karma-safari-launcher"/]
       ]);
     });
-    it('shows examples of how to use helpers with fixtures', function () {
+    it('generates an app that supports testing with phantomjs', function () {
       helpers.assertFiles([
-        'test/fixtures/adding-machine.hbs',
-        'test/fixtures/example.hbs',
-        'test/fixtures/example2.html',
-        'test/fixtures/example3.hbs',
-        'test/fixtures/get-excited.hbs',
-        'test/helpers/helpers.spec.js',
-        'test/helpers/view-helpers.spec.js',
+        'tasks/options/mocha_phantomjs.js',
+        ['package.json', /"mocha-phantomjs"/],
+        ['package.json', /"phantomjs"/],
+        ['package.json', /"grunt-mocha-phantomjs"/]
+      ]);
+    });
+    it('generates a test directory setup with requirejs', function () {
+      helpers.assertFiles([
+        'test/index.html',
+        'test/main.js',
+        'test/main.karma.js',
+        'test/test-setup-all.js',
+        'test/test-setup-browser.js',
+        'test/collections/.gitkeep',
+        'test/fixtures/.gitkeep',
+        'test/helpers/.gitkeep',
+        'test/models/.gitkeep',
+        'test/routers/.gitkeep',
+        'test/utils/.gitkeep',
+        'test/views/.gitkeep'
       ]);
     });
     it('generates bower with right dependencies', function () {
@@ -632,7 +595,63 @@ describe('Testing', function () {
       helpers.assertFile('.travis.yml');
     });
   });
+
+  beforeEach(function (done){
+    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+      if (err) { return done(err); }
+
+      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app.options['skip-install'] = true;
+
+      helpers.mockPrompt(this.app, {
+        'newDirectory': false,
+        'starterApp': "None",
+        'styleProcessor': "none",
+        'includeBootstrap': false,
+        'includeCoffeeScript': requireOption(this.includeCoffeeScript, "Forgot includeCoffeeScript"),
+        'useZepto': false
+      });
+
+      this.app.run({}, done);
+    }.bind(this));
+  });
+
+  describe('when choosing javascript', function () {
+    before(function() { this.includeCoffeeScript = false; });
+    sharedExamples.invoke('files included with js or cs apps');
+
+    it('generates some example tests to help when getting started', function () {
+      helpers.assertFiles([
+        'test/app.spec.js', // branch for cs version?
+        'test/views/root.spec.js',
+      ]);
+    });
+    it('shows examples of how to use helpers with fixtures', function () {
+      helpers.assertFiles([
+        'test/fixtures/adding-machine.hbs',
+        'test/fixtures/example.hbs',
+        'test/fixtures/example2.html',
+        'test/fixtures/example3.handlebars',
+        'test/fixtures/get-excited.hbs',
+        'test/helpers/helpers.spec.js',
+        'test/helpers/view-helpers.spec.js',
+      ]);
+    });
+  });
+
+  describe('when choosing CS', function () {
+    before(function() { this.includeCoffeeScript = true; });
+    sharedExamples.invoke('files included with js or cs apps');
+
+    it('generates example tests to help when getting started', function () {
+      helpers.assertFiles([
+        'test/views/root.spec.coffee'
+      ]);
+    });
+  });
 });
+
+
 
 describe('JSHint support', function () {
   beforeEach(function (done) {
