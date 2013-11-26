@@ -1,6 +1,6 @@
 define [
-  "model"
+  'model'
 ], (Model) ->
   Model.extend
-    name: "<%= name %>"
+    name: '<%= name %>'
 

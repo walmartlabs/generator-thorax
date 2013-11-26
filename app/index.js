@@ -217,7 +217,7 @@ ThoraxGenerator.prototype.scripts = function () {
     var name = script + scriptExt;
     this.template('_' + name, 'js/' + name);
   }, this);
-  this.template('_main.js', 'js/main.js');
+  this.template('_main' + scriptExt, 'js/main' + scriptExt);
   this.template('_index.html', 'public/index.html');
 };
 

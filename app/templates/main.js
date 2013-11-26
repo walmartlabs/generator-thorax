@@ -40,7 +40,7 @@ if (window.__karma__) {
 }
 
 require.config({
-  deps: ['main'],
+  deps: ['<% if (includeCoffeeScript) { %>cs!<% } %>main'],
   paths: {
     'jquery': pathPrefix + 'bower_components/jquery/jquery',
     'underscore': pathPrefix + 'bower_components/underscore/underscore',
@@ -50,9 +50,7 @@ require.config({
     'coffee-script': pathPrefix + 'bower_components/coffee-script/index',
     'cs': pathPrefix + 'bower_components/require-cs/cs',
     'text': pathPrefix + 'bower_components/text/text',
-    'hbs': pathPrefix + 'bower_components/requirejs-hbs/hbs',
-    // not required for production build
-    // 'templates': pathPrefix + 'tmp/templates'
+    'hbs': pathPrefix + 'bower_components/requirejs-hbs/hbs'
   },
   shim: {
     'handlebars': {
