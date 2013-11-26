@@ -166,8 +166,7 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/models');
   this.mkdir('js/collections');
 
-  this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
-  this.copy('seed/js/helpers' + scriptExt, 'js/helpers' + scriptExt);
+
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 
   this.copy('_server.js', 'server.js');
@@ -180,7 +179,6 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/jshint.js', 'tasks/options/jshint.js');
 
   this.copy('seed/test/index.html', 'test/index.html');
-  this.copy('seed/test/app.spec.js', 'test/app.spec.js');
   this.copy('seed/test/main.js', 'test/main.js');
   this.copy('seed/test/main.karma.js', 'test/main.karma.js');
   this.copy('seed/test/test-setup-all.js', 'test/test-setup-all.js');
@@ -193,22 +191,23 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/test/utils/.gitkeep', 'test/utils/.gitkeep');
   this.copy('seed/test/views/.gitkeep', 'test/views/.gitkeep');
 
-  this.copy('seed/test/views/root.spec.js', 'test/views/root.spec.js');
-
-
   this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
-  this.copy('seed/test/fixtures/example.hbs', 'test/fixtures/example.hbs');
-  this.copy('seed/test/fixtures/example2.html', 'test/fixtures/example2.html');
-  this.copy('seed/test/fixtures/example3.handlebars', 'test/fixtures/example3.handlebars');
   this.copy('seed/test/fixtures/get-excited.hbs', 'test/fixtures/get-excited.hbs');
-  this.copy('seed/test/helpers/helpers.spec.js', 'test/helpers/helpers.spec.js');
-  this.copy('seed/test/helpers/view-helpers.spec.js', 'test/helpers/view-helpers.spec.js');
 
   this.copy('main.js');
   this.copy('_travis.yml', '.travis.yml');
   this.copy(path.join(__dirname, '../README.md'), 'README.md');
 
-  this.copy('seed/test/views/root-coffee.spec.coffee', 'test/views/root.spec.coffee');
+
+  // js + cs versions of these files
+  this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
+  this.copy('seed/js/helpers' + scriptExt, 'js/helpers' + scriptExt);
+
+  // tests
+  this.copy('seed/test/views/root.spec' + scriptExt, 'test/views/root.spec' + scriptExt);
+  this.copy('seed/test/app.spec' + scriptExt, 'test/app.spec' + scriptExt);
+  this.copy('seed/test/helpers/helpers.spec' + scriptExt, 'test/helpers/helpers.spec' + scriptExt);
+  this.copy('seed/test/helpers/view-helpers.spec' + scriptExt, 'test/helpers/view-helpers.spec' + scriptExt);
 
 };
 

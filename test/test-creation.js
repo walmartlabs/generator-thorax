@@ -629,9 +629,6 @@ describe('Testing', function () {
     it('shows examples of how to use helpers with fixtures', function () {
       helpers.assertFiles([
         'test/fixtures/adding-machine.hbs',
-        'test/fixtures/example.hbs',
-        'test/fixtures/example2.html',
-        'test/fixtures/example3.handlebars',
         'test/fixtures/get-excited.hbs',
         'test/helpers/helpers.spec.js',
         'test/helpers/view-helpers.spec.js',
@@ -645,8 +642,17 @@ describe('Testing', function () {
 
     it('generates example tests to help when getting started', function () {
       helpers.assertFiles([
-        'test/views/root.spec.coffee'
+        'test/app.spec.coffee',
+        'test/views/root.spec.coffee',
+        'test/helpers/helpers.spec.coffee',
+        'test/helpers/view-helpers.spec.coffee',
       ]);
+    });
+    it('does not generate the following js versions of the files', function () {
+      helpers.assertNoFile('test/app.spec.js');
+      helpers.assertNoFile('test/views/root.spec.js');
+      helpers.assertNoFile('test/helpers/helpers.spec.js');
+      helpers.assertNoFile('test/helpers/view-helpers.spec.js');
     });
   });
 });
