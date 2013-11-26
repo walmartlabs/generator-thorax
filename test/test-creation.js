@@ -112,7 +112,8 @@ describe('thorax generator', function () {
   describe('Thorax Router', function () {
     describe('When app is JS based(not CS)', function () {
       before(function() { this.includeCoffeeScript = false; });
-      it('generates a Backbone router', function (done) {
+
+      it('generates a Backbone router in javascript', function (done) {
         var router = helpers.createGenerator('thorax:router', ['../../router'], ['foo']);
 
         router.run([], function () {
@@ -122,10 +123,37 @@ describe('thorax generator', function () {
           done();
         });
       });
+
+
     });
 
-    // it('should generate js files when no cs files are present')
-    // it('should generate cs files when one or more cs files are present')
+    describe('When app is CS based', function () {
+      before(function() { this.includeCoffeeScript = true; });
+
+      it('generates a backbone router in coffeescript', function (done) {
+        var router = helpers.createGenerator('thorax:router', ['../../router'], 'foo');
+
+        router.run([], function () {
+          helpers.assertFiles([
+            ['js/routers/foo.coffee', /Backbone.Router.extend/]
+          ]);
+          done();
+        });
+      });
+
+      // it('generates a backbone router in js when passed --js option', function (done) {
+      //   var router = helpers.createGenerator('thorax:router', ['../../router'], ['foo']);
+
+      //   router.run([], function () {
+      //     helpers.assertFiles([
+      //       ['js/routers/foo.js', /Backbone.Router.extend\(\{/]
+      //     ]);
+      //     done();
+      //   });
+      // });
+    });
+    // it('should generate js files when no cs files are present') √
+    // it('should generate cs files when one or more cs files are present') √
     // it('given one or more cs files are present, when passed --js, js files should be generated instead')
     // it('given no cs files are preseent, when passed --coffee, cs files should be generated instead')
   });
