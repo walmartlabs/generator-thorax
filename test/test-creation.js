@@ -169,6 +169,23 @@ describe('thorax generator', function () {
     });
   });
 
+  sharedExamples.create('generate default coffeescript templates', function () {
+    it('generates default coffeescript templates', function () {
+      helpers.assertFiles([
+        'js/views',
+        'js/models',
+        'js/collections',
+        'js/views/root.coffee',
+        // 'js/helpers.coffee',
+        ['js/view.coffee', /class View extends Thorax.View/],
+        ['js/model.coffee', /class Model extends Thorax.Model/],
+        ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+        ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+        ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+      ]);
+    });
+  })
+
   describe('CoffeeScript', function () {
     beforeEach(function (done) {
       helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
@@ -190,19 +207,8 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('generates CoffeeScript templates when requested', function () {
-      helpers.assertFiles([
-        'js/views',
-        'js/models',
-        'js/collections',
-        'js/views/root.coffee',
-        ['js/view.coffee', /class View extends Thorax.View/],
-        ['js/model.coffee', /class Model extends Thorax.Model/],
-        ['js/collection.coffee', /class Collection extends Thorax.Collection/],
-        ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
-        ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
-      ]);
-    });
+    sharedExamples.invoke('generate default coffeescript templates');
+
   });
 
   describe('CoffeeScript - HelloWorld', function () {
@@ -226,19 +232,12 @@ describe('thorax generator', function () {
       }.bind(this));
     });
 
-    it('generates CoffeeScript templates when requested', function () {
+    sharedExamples.invoke('generate default coffeescript templates');
+
+    it('generates hello world specific coffeescript templates', function () {
       helpers.assertFiles([
-        'js/views',
-        'js/models',
-        'js/collections',
-        'js/views/root.coffee',
         'js/routers/hello-world.coffee',
-        'js/views/hello-world/index.coffee',
-        ['js/view.coffee', /class View extends Thorax.View/],
-        ['js/model.coffee', /class Model extends Thorax.Model/],
-        ['js/collection.coffee', /class Collection extends Thorax.Collection/],
-        ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
-        ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/]
+        'js/views/hello-world/index.coffee'
       ]);
     });
   });
