@@ -167,7 +167,7 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/collections');
 
   this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
-  this.copy('seed/js/helpers.js', 'js/helpers.js');
+  this.copy('seed/js/helpers' + scriptExt, 'js/helpers' + scriptExt);
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 
   this.copy('_server.js', 'server.js');
@@ -195,7 +195,6 @@ ThoraxGenerator.prototype.app = function () {
 
   this.copy('seed/test/views/root.spec.js', 'test/views/root.spec.js');
 
-  // TODO: cs support provided by default
   this.copy('seed/test/views/root-coffee.spec.coffee', 'test/views/root-coffee.spec.coffee');
 
   this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');

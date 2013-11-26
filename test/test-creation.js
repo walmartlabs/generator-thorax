@@ -180,7 +180,7 @@ describe('thorax generator', function () {
           'js/models',
           'js/collections',
           'js/views/root.coffee',
-          // 'js/helpers.coffee',
+          ['js/helpers.coffee', /define \["handlebars", "thorax"\], \(Handlebars\) ->/],
           ['js/view.coffee', /class View extends Thorax.View/],
           ['js/model.coffee', /class Model extends Thorax.Model/],
           ['js/collection.coffee', /class Collection extends Thorax.Collection/],
