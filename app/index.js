@@ -179,10 +179,7 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/jshint.js', 'tasks/options/jshint.js');
 
   this.copy('seed/test/index.html', 'test/index.html');
-  this.copy('seed/test/main.js', 'test/main.js');
-  this.copy('seed/test/main.karma.js', 'test/main.karma.js');
-  this.copy('seed/test/test-setup-all.js', 'test/test-setup-all.js');
-  this.copy('seed/test/test-setup-browser.js', 'test/test-setup-browser.js');
+
   this.copy('seed/test/collections/.gitkeep', 'test/collections/.gitkeep');
   this.copy('seed/test/fixtures/.gitkeep', 'test/fixtures/.gitkeep');
   this.copy('seed/test/helpers/.gitkeep', 'test/helpers/.gitkeep');
@@ -204,6 +201,13 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/js/helpers' + scriptExt, 'js/helpers' + scriptExt);
 
   // tests
+  this.copy('seed/test/main.karma.js', 'test/main.karma.js');
+  this.copy('seed/test/main.js', 'test/main.js');
+
+  this.copy('seed/test/test-setup-all' + scriptExt, 'test/test-setup-all' + scriptExt);
+  this.copy('seed/test/test-setup-browser' + scriptExt, 'test/test-setup-browser' + scriptExt);
+
+
   this.copy('seed/test/views/root.spec' + scriptExt, 'test/views/root.spec' + scriptExt);
   this.copy('seed/test/app.spec' + scriptExt, 'test/app.spec' + scriptExt);
   this.copy('seed/test/helpers/helpers.spec' + scriptExt, 'test/helpers/helpers.spec' + scriptExt);

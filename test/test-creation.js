@@ -571,8 +571,6 @@ describe('Testing', function () {
         'test/index.html',
         'test/main.js',
         'test/main.karma.js',
-        'test/test-setup-all.js',
-        'test/test-setup-browser.js',
         'test/collections/.gitkeep',
         'test/fixtures/.gitkeep',
         'test/helpers/.gitkeep',
@@ -593,6 +591,12 @@ describe('Testing', function () {
     });
     it('provides support for travis ci out of the box', function () {
       helpers.assertFile('.travis.yml');
+    });
+    it('provides example fixtures', function () {
+      helpers.assertFiles([
+        'test/fixtures/adding-machine.hbs',
+        'test/fixtures/get-excited.hbs'
+      ]);
     });
   });
 
@@ -620,16 +624,21 @@ describe('Testing', function () {
     before(function() { this.includeCoffeeScript = false; });
     sharedExamples.invoke('files included with js or cs apps');
 
+    it('generates setup files', function () {
+      helpers.assertFiles([
+        'test/test-setup-all.js',
+        'test/test-setup-browser.js'
+      ]);
+    });
+
     it('generates some example tests to help when getting started', function () {
       helpers.assertFiles([
         'test/app.spec.js', // branch for cs version?
-        'test/views/root.spec.js',
+        'test/views/root.spec.js'
       ]);
     });
     it('shows examples of how to use helpers with fixtures', function () {
       helpers.assertFiles([
-        'test/fixtures/adding-machine.hbs',
-        'test/fixtures/get-excited.hbs',
         'test/helpers/helpers.spec.js',
         'test/helpers/view-helpers.spec.js',
       ]);
@@ -640,20 +649,27 @@ describe('Testing', function () {
     before(function() { this.includeCoffeeScript = true; });
     sharedExamples.invoke('files included with js or cs apps');
 
+    it('generates setup files', function () {
+      helpers.assertFiles([
+        'test/test-setup-all.coffee',
+        'test/test-setup-browser.coffee'
+      ]);
+    });
+
     it('generates example tests to help when getting started', function () {
       helpers.assertFiles([
         'test/app.spec.coffee',
         'test/views/root.spec.coffee',
+      ]);
+    });
+
+    it('generates examples of how to use helpers with fixures', function () {
+      helpers.assertFiles([
         'test/helpers/helpers.spec.coffee',
         'test/helpers/view-helpers.spec.coffee',
       ]);
     });
-    it('does not generate the following js versions of the files', function () {
-      helpers.assertNoFile('test/app.spec.js');
-      helpers.assertNoFile('test/views/root.spec.js');
-      helpers.assertNoFile('test/helpers/helpers.spec.js');
-      helpers.assertNoFile('test/helpers/view-helpers.spec.js');
-    });
+
   });
 });
 
