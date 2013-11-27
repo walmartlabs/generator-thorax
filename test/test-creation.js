@@ -43,6 +43,7 @@ describe('thorax generator', function () {
 
       helpers.mockPrompt(this.app, {
         'newDirectory': false,
+        'moduleLoaderChoice': 'rjs',
         'starterApp': "None",
         'styleProcessor': "none",
         'includeBootstrap': false,
@@ -179,6 +180,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "None",
           'styleProcessor': "none",
           'includeBootstrap': false,
@@ -215,6 +217,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "Hello World",
           'styleProcessor': "none",
           'includeBootstrap': false,
@@ -253,6 +256,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "Todo List",
           'styleProcessor': "none",
           'includeBootstrap': false,
@@ -292,6 +296,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': false,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "None",
           'styleProcessor': "none",
           'includeBootstrap': false,
@@ -356,6 +361,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': false,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "None",
           'styleProcessor': this.styleOption,
           'includeBootstrap': false,
@@ -436,6 +442,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': false,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "None",
           'styleProcessor': "none",
           'includeBootstrap': false,
@@ -526,6 +533,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "None",
           'styleProcessor': "none",
           'includeBootstrap': false,
@@ -557,6 +565,7 @@ describe('thorax generator', function () {
 
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
+          'moduleLoaderChoice': 'rjs',
           'starterApp': "None",
           'styleProcessor': "none",
           'includeBootstrap': false,
@@ -590,6 +599,7 @@ describe('thorax generator', function () {
 
           helpers.mockPrompt(this.app, {
             'newDirectory': true,
+            'moduleLoaderChoice': 'rjs',
             'starterApp': "None",
             'styleProcessor': "none",
             'includeBootstrap': false,
@@ -610,5 +620,6 @@ describe('thorax generator', function () {
 
     });
   });
+
 
 });
