@@ -7,6 +7,8 @@ module.exports = {
       // mainConfigFile: 'tmp/main.build.js', // wont work :/ see TODO: remove build duplication
       name: '../bower_components/almond/almond',
       include: ['main'],
+      exclude: ['coffee-script'],
+      stubModules: ['cs'],
       out: 'dist/main.js',
       removeCombined: true,
       findNestedDependencies: true,
