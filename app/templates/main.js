@@ -41,8 +41,9 @@ if (window.__karma__) {
 
 require.config({
   deps: ['main'],
-  paths: {
-    'jquery': pathPrefix + 'bower_components/jquery/jquery',
+  paths: {<% if (useZepto) { %>
+    'zepto': pathPrefix + 'bower_components/zepto/zepto',<% } else { %>
+    'jquery': pathPrefix + 'bower_components/jquery/jquery',<% } %>
     'underscore': pathPrefix + 'bower_components/underscore/underscore',
     'handlebars': pathPrefix + 'bower_components/handlebars/handlebars',
     'backbone': pathPrefix + 'bower_components/backbone/backbone',
@@ -50,17 +51,16 @@ require.config({
     'coffee-script': pathPrefix + 'bower_components/coffee-script/index',
     'cs': pathPrefix + 'bower_components/require-cs/cs',
     'text': pathPrefix + 'bower_components/text/text',
-    'hbs': pathPrefix + 'bower_components/requirejs-hbs/hbs',
-    // not required for production build
-    // 'templates': pathPrefix + 'tmp/templates'
+    'hbs': pathPrefix + 'bower_components/requirejs-hbs/hbs'
   },
   shim: {
     'handlebars': {
       exports: 'Handlebars'
     },
     'backbone': {
-      exports: 'Backbone',
-      deps: ['jquery', 'underscore']
+      exports: 'Backbone',<% if (useZepto) { %>
+      deps: ['zepto', 'underscore']<% } else { %>
+      deps: ['jquery', 'underscore']<% } %>
     },
     'underscore': {
       exports: '_'
@@ -68,6 +68,9 @@ require.config({
     'thorax': {
       exports: 'Thorax',
       deps: ['handlebars', 'backbone']
-    }
+    }<% if (useZepto) { %>,
+    'zepto': {
+      exports: '$'
+    }<% } %>
   }
 });
