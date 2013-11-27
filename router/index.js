@@ -5,6 +5,13 @@ var Generator = require('../lib/generator');
 
 var RouterGenerator = module.exports = function () {
   Generator.apply(this, arguments);
+
+  this.prompts.push({
+    type: 'confirm',
+    name: 'useStubMethods',
+    message: 'Would you like to include commonly stubbed methods (i.e. initialize, parse, etc.)?',
+    default: true
+  });
 };
 
 util.inherits(RouterGenerator, Generator);

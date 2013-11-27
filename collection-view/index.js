@@ -4,6 +4,13 @@ var ViewGenerator = require('../view');
 
 var CollectionViewGenerator = module.exports = function () {
   ViewGenerator.apply(this, arguments);
+
+  this.prompts.push({
+    type: 'confirm',
+    name: 'useStubMethods',
+    message: 'Would you like to include commonly stubbed methods (i.e. initialize, parse, etc.)?',
+    default: true
+  });
 };
 
 util.inherits(CollectionViewGenerator, ViewGenerator);
