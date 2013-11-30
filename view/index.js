@@ -1,17 +1,15 @@
-var util      = require('util');
-var path      = require('path');
-var Generator = require('../lib/generator');
+'use strict';
+var util = require('util');
+var ScriptBase = require('../script-base.js');
 
-var ViewGenerator = module.exports = function () {
-  Generator.apply(this, arguments);
+var Generator = module.exports = function Generator() {
+  ScriptBase.apply(this, arguments);
 };
 
-util.inherits(ViewGenerator, Generator);
+util.inherits(Generator, ScriptBase);
 
-ViewGenerator.prototype._name  = 'view';
-ViewGenerator.prototype.askFor = Generator.prototype.askFor;
-
-ViewGenerator.prototype.createView = function () {
-  this._renderTemplate('js/views');
+Generator.prototype.files = function files() {
+  this.appTemplate('view', 'views');
+  // write out blank template
   this.write('js/templates/' + this._.dasherize(this.name) + '.hbs', '');
 };

@@ -1,18 +1,13 @@
-var fs        = require('fs');
-var util      = require('util');
-var path      = require('path');
-var Generator = require('../lib/generator');
+'use strict';
+var util = require('util');
+var ScriptBase = require('../script-base.js');
 
-var RouterGenerator = module.exports = function () {
-  Generator.apply(this, arguments);
+var Generator = module.exports = function Generator() {
+  ScriptBase.apply(this, arguments);
 };
 
-util.inherits(RouterGenerator, Generator);
+util.inherits(Generator, ScriptBase);
 
-RouterGenerator.prototype._name  = 'router';
-RouterGenerator.prototype.askFor = Generator.prototype.askFor;
-
-RouterGenerator.prototype.createRouter = function () {
-  this._renderTemplate('js/routers');
+Generator.prototype.files = function files() {
+  this.appTemplate('router', 'routers');
 };
-

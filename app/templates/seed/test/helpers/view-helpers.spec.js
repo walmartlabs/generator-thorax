@@ -7,7 +7,7 @@ describe('A simple adding machine', function () {
     });
 
     var view = new Thorax.View({
-      template: hbsFixture('adding-machine.hbs'),
+      template: hbsFixture("adding-machine.hbs"),
       events: {
         incremented: function() {
           ++this.i;

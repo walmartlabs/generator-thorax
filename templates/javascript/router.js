@@ -1,7 +1,7 @@
 define([
   'backbone',
   'views/root'
-], function (RootView, Backbone) {
+], function (Backbone, RootView) {
   return Backbone.Router.extend({
     routes: {
 
