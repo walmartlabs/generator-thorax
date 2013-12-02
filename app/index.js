@@ -222,7 +222,7 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
   this.copy('seed/test/fixtures/hello-world.hbs', 'test/fixtures/hello-world.hbs');
 
-  this.copy('main.js');
+  this.copy('require-config.js');
   this.copy('_travis.yml', '.travis.yml');
   this.copy(path.join(__dirname, '../README.md'), 'README.md');
 

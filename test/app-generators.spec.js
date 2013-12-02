@@ -58,64 +58,6 @@ describe('App Generators', function () {
     }.bind(this));
   });
 
-  describe('when coffee script is chosen', function () {
-
-    sharedExamples.create('generate default coffeescript templates', function () {
-      it('generates default coffeescript templates', function () {
-        helpers.assertFiles([
-          'js/views',
-          'js/models',
-          'js/collections',
-          'js/views/root.coffee',
-          ['js/helpers.coffee', /define \["handlebars", "thorax"\], \(Handlebars\) ->/],
-          ['js/view.coffee', /class View extends Thorax.View/],
-          ['js/model.coffee', /class Model extends Thorax.Model/],
-          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
-          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
-          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/],
-          ['js/main.js', /'cs!helpers'/],
-          ['js/main.js', /'cs!views\/root'/],
-        ]);
-      });
-    });
-
-    before(function() { this.features = ['includeCoffeeScript']; });
-
-    describe('When starterApp is "None"', function () {
-      before(function () { this.starterApp = "None"; });
-
-      sharedExamples.invoke('generate default coffeescript templates');
-    });
-
-    describe('When starterApp is "Hello World"', function () {
-      before(function () { this.starterApp = "Hello World"; });
-
-      sharedExamples.invoke('generate default coffeescript templates');
-
-      it('generates hello world specific coffeescript templates', function () {
-        helpers.assertFiles([
-          'js/routers/hello-world.coffee',
-          ['js/views/hello-world/index.coffee', /cs!view/],
-          ['js/main.js', /'cs!routers\/hello-world'/],
-        ]);
-      });
-    });
-
-    describe('When starterApp is "Todo List"', function () {
-      before(function () { this.starterApp = "Todo List"; });
-
-      sharedExamples.invoke('generate default coffeescript templates');
-
-      it('generates todo-list app coffeescript templates', function () {
-        helpers.assertFiles([
-          'js/routers/todo-list.coffee',
-          ['js/views/todo-list/index.coffee', /cs!view/],
-          ['js/main.js', /'cs!routers\/todo-list'/],
-        ]);
-      });
-    });
-  });
-
   describe('When javascript is chosen(default)', function () {
 
     sharedExamples.create('generate default javascript templates', function () {
@@ -169,6 +111,64 @@ describe('App Generators', function () {
           'js/routers/todo-list.js',
           ['js/views/todo-list/index.js', /'view'/],
           ['js/main.js', /'routers\/todo-list'/],
+        ]);
+      });
+    });
+  });
+
+  describe('when coffee script is chosen', function () {
+
+    sharedExamples.create('generate default coffeescript templates', function () {
+      it('generates default coffeescript templates', function () {
+        helpers.assertFiles([
+          'js/views',
+          'js/models',
+          'js/collections',
+          'js/views/root.coffee',
+          ['js/helpers.coffee', /define \["handlebars", "thorax"\], \(Handlebars\) ->/],
+          ['js/view.coffee', /class View extends Thorax.View/],
+          ['js/model.coffee', /class Model extends Thorax.Model/],
+          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
+          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
+          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/],
+          ['js/main.js', /'cs!helpers'/],
+          ['js/main.js', /'cs!views\/root'/],
+        ]);
+      });
+    });
+
+    before(function() { this.features = ['includeCoffeeScript']; });
+
+    describe('When starterApp is "None"', function () {
+      before(function () { this.starterApp = "None"; });
+
+      sharedExamples.invoke('generate default coffeescript templates');
+    });
+
+    describe('When starterApp is "Hello World"', function () {
+      before(function () { this.starterApp = "Hello World"; });
+
+      sharedExamples.invoke('generate default coffeescript templates');
+
+      it('generates hello world specific coffeescript templates', function () {
+        helpers.assertFiles([
+          'js/routers/hello-world.coffee',
+          ['js/views/hello-world/index.coffee', /cs!view/],
+          ['js/main.js', /'cs!routers\/hello-world'/],
+        ]);
+      });
+    });
+
+    describe('When starterApp is "Todo List"', function () {
+      before(function () { this.starterApp = "Todo List"; });
+
+      sharedExamples.invoke('generate default coffeescript templates');
+
+      it('generates todo-list app coffeescript templates', function () {
+        helpers.assertFiles([
+          'js/routers/todo-list.coffee',
+          ['js/views/todo-list/index.coffee', /cs!view/],
+          ['js/main.js', /'cs!routers\/todo-list'/],
         ]);
       });
     });

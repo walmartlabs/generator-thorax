@@ -95,7 +95,7 @@ describe('Thorax Generator (yo thorax:app NAME)', function () {
       'tasks/options/requirejs.js',
       'tasks/options/thorax.js',
       'tasks/options/watch.js',
-      ['main.js', /deps: \['main'\]/],
+      ['require-config.js', /deps: \['main'\]/],
       'js',
       'css',
       'js/views',
@@ -136,8 +136,8 @@ describe('jQuery or Zepto option', function () {
         ['js/main.js', /jquery/],
         ['tasks/options/requirejs.js', /bower_components\/jquery\/jquery/],
         ['tasks/options/requirejs.js', /deps: \['jquery', 'underscore'\]/],
-        ['main.js', /bower_components\/jquery\/jquery/],
-        ['main.js', /deps: \['jquery', 'underscore'\]/]
+        ['require-config.js', /bower_components\/jquery\/jquery/],
+        ['require-config.js', /deps: \['jquery', 'underscore'\]/]
       ]);
     });
   });
@@ -153,9 +153,9 @@ describe('jQuery or Zepto option', function () {
         ['tasks/options/requirejs.js', /bower_components\/zepto\/zepto/],
         ['tasks/options/requirejs.js', /deps: \['zepto', 'underscore'\]/],
         ['tasks/options/requirejs.js', /exports: '\$'/],
-        ['main.js', /'bower_components\/zepto\/zepto'/],
-        ['main.js', /deps: \['zepto', 'underscore'\]/],
-        ['main.js', /exports: '\$'/],
+        ['require-config.js', /'bower_components\/zepto\/zepto'/],
+        ['require-config.js', /deps: \['zepto', 'underscore'\]/],
+        ['require-config.js', /exports: '\$'/],
       ]);
     });
   });
@@ -211,9 +211,14 @@ describe('Requirejs abstraction', function () {
   });
   it('public/index.html should provide first config during development', function () {
     helpers.assertFile('public/index.html', /baseUrl: '..\/js'/);
+    helpers.assertFile('public/index.html', /data-main="..\/require-config"/);
   });
-  it('should generate a base main.js file for development use', function () {
-    helpers.assertFile('main.js');
+  it('test/index.html should provide first config during development', function () {
+    helpers.assertFile('test/index.html', /baseUrl: '..\/test'/);
+    helpers.assertFile('test/index.html', /data-main="..\/require-config"/);
+  });
+  it('should generate a base require-config.js file for development use', function () {
+    helpers.assertFile('require-config.js');
   });
   it('uses requirejs-hbs JIT handlebars compiler', function () {
     helpers.assertFile('bower.json', /"text"/);
