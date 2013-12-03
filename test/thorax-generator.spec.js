@@ -37,14 +37,6 @@ function requireOption(option, message) {
   return option;
 };
 
-
-/**
- * Note: if you  get an `index of undefined error` it's likely because
- * the features prompt is missing. It should be set to an array in cases
- * where it's not used, aka, 'features': this.features || []
- */
-
-
 describe('Thorax Generator (yo thorax:app NAME)', function () {
   beforeEach(function (done) {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
@@ -181,8 +173,6 @@ describe('JSHint support', function () {
     }.bind(this));
   });
   it('supports js hint for every grunt tasks', function () {
-    // hard to test this, but the sentence above should always be true
-    // it should also run when watch sees any js file in the projcect change
     helpers.assertFiles([
       'tasks/options/jshint.js',
       '.jshintrc',

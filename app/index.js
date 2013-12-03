@@ -21,30 +21,137 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
 
 util.inherits(ThoraxGenerator, yeoman.generators.NamedBase);
 
-ThoraxGenerator.prototype.askFor = function askFor() {
+/**
+ * This prompt runs first. If chosen, it will bypass the remaining prompts
+ * unless the directory being generated already exists, in which case
+ * fixDirectoryNameCollision will directly afterward
+ */
+ThoraxGenerator.prototype.askForChefsChoice = function () {
   var cb = this.async();
 
   // welcome message
   if (!this.options['skip-welcome-message']) {
-    var thoraxWelcome =
-      chalk.yellow.bold("Welcome to Thorax!\n\n")
-    + chalk.yellow("Out of the box I provide a number of options\n" +
-                   "for building large scale web applications\n\n" +
-                   "However, If this is your first time I recommend hitting\n" +
-                   "enter all the way through the prompts for the ")
-    + chalk.red.bold("The Chef's Choice =) ") + chalk.yellow("which provides\n")
-    + chalk.yellow("the most power and ease of you use out of the box")
-
+    var thoraxWelcome = chalk.yellow.bold("Welcome to Thorax!\n\n");
     console.log(thoraxWelcome);
   }
 
   var prompts = [
     {
       type: 'confirm',
+      name: 'chefsChoice',
+      message: "If this is your first time with Thorax, we've put together the\n" +
+               "Chef's Choice. Would you like to try it?",
+      default: true
+    }
+  ];
+
+  this.prompt(prompts, function (answers) {
+    var features = answers.features;
+    this.chefsChoice = answers.chefsChoice;
+
+    if (this.chefsChoice) {
+      // chefs choice means we choose these without asking
+      this.newDirectory = true;
+      this.includeCoffeeScript = false;
+      this.useZepto = false;
+      this.starterApp = "Hello World";
+      this.styleProcessor = "less";
+    }
+
+    cb();
+  }.bind(this));
+
+};
+
+/**
+ * Runs after chefs choice, which chooses to make a new directory for
+ * your app by default
+ *
+ * Runs before other generators, and specifically before fixDirectoryNameCollision
+ * so directoryNameCollision can run before askForExtendedPrompt allowing user
+ * to bail before choosing a custom setup
+ *
+ * Note that all proto methods without an underscore are run in order by yoeman
+ * therefore the order these prototype methods are arranged have a ryhme/reason
+ */
+ThoraxGenerator.prototype.askForDirectory = function() {
+  if (typeof this.newDirectory !== 'undefined') { return; }
+
+  this._askForDirectory(this.async());
+};
+
+ThoraxGenerator.prototype._askForDirectory = function(cb) {
+  var prompts = [
+    {
+      type: 'confirm',
       name: 'newDirectory',
       message: 'Would you like to generate the app in a new directory?',
       default: true
-    },
+    }
+  ];
+
+  this.prompt(prompts, function (answers) {
+    var features = answers.features;
+    this.newDirectory = answers.newDirectory;
+
+    cb();
+  }.bind(this));
+};
+
+/**
+ * Runs after the choice to create a new directory has been made, but before
+ * extended prompts
+ *
+ * Prevents a new app being generated into a previously existing directory by
+ * asking for a new name
+ */
+ThoraxGenerator.prototype.fixDirectoryNameCollision = function () {
+  if (!this.newDirectory) { return; }
+
+  this._fixDirectoryNameCollision(this._.dasherize(this.name), this.async());
+};
+
+ThoraxGenerator.prototype._fixDirectoryNameCollision = function (directory, cb) {
+  var prompts = [{
+    type: 'input',
+    name: 'directoryName',
+    message: 'Directory already exists, enter a new name:'
+  }];
+
+  if (!directory) {
+    prompts[0].message = 'A directory name is required';
+
+    return this.prompt(prompts, function (props) {
+      this._fixDirectoryNameCollision(props.directoryName, cb);
+    }.bind(this));
+  }
+
+  fs.exists(path.join(this.destinationRoot(), directory), function (exists) {
+    // If the directory doesn't already exist, create a new directory and set
+    // the base destination path here
+    if (!exists) {
+      this.mkdir(directory);
+      this.destinationRoot(directory);
+      this.newDirectory = false;
+      return cb();
+    }
+
+    return this.prompt(prompts, function (props) {
+      this._fixDirectoryNameCollision(props.directoryName, cb);
+    }.bind(this));
+  }.bind(this));
+};
+
+ThoraxGenerator.prototype.askForExtendedPrompt = function() {
+  // checking for pre-defined prompt option and then calling a private
+  // method fixes async issues. Perhaps there is a better way, but
+  // until then that's why this convention is used
+  if (this.chefsChoice) { return; }
+  this._askForExtendedPrompt(this.async());
+};
+
+ThoraxGenerator.prototype._askForExtendedPrompt = function (cb) {
+  var prompts = [
     {
       type: 'list',
       name: 'styleProcessor',
@@ -99,43 +206,6 @@ ThoraxGenerator.prototype.askFor = function askFor() {
     this.newDirectory = answers.newDirectory;
 
     cb();
-  }.bind(this));
-};
-
-ThoraxGenerator.prototype.ensureDirectory = function () {
-  if (!this.newDirectory) { return; }
-
-  this._checkAndCreateDirectory(this._.dasherize(this.name), this.async());
-};
-
-ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
-  var prompts = [{
-    type: 'input',
-    name: 'directoryName',
-    message: 'Directory already exists, enter a new name:'
-  }];
-
-  if (!directory) {
-    prompts[0].message = 'A directory name is required';
-
-    return this.prompt(prompts, function (props) {
-      this._checkAndCreateDirectory(props.directoryName, cb);
-    }.bind(this));
-  }
-
-  fs.exists(path.join(this.destinationRoot(), directory), function (exists) {
-    // If the directory doesn't already exist, create a new directory and set
-    // the base destination path here
-    if (!exists) {
-      this.mkdir(directory);
-      this.destinationRoot(directory);
-      this.newDirectory = false;
-      return cb();
-    }
-
-    return this.prompt(prompts, function (props) {
-      this._checkAndCreateDirectory(props.directoryName, cb);
-    }.bind(this));
   }.bind(this));
 };
 
@@ -237,8 +307,6 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/test/helpers/view-helpers.spec' + scriptExt, 'test/helpers/view-helpers.spec' + scriptExt);
 
 };
-
-
 
 ThoraxGenerator.prototype.scripts = function () {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
