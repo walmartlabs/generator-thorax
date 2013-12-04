@@ -234,10 +234,8 @@ describe('Sub Generators', function () {
             ['js/views/foo-bar.js', /CollectionView.extend\(\{/],
             ['js/views/foo-bar.js', /name: 'foo-bar'/],
             ['js/views/foo-bar.js', /'collection-view'/],
-            ['js/views/foo-bar.js', /'hbs!templates\/foo-bar'/],
             ['js/views/foo-bar.js', /'hbs!templates\/foo-bar-item'/],
             ['js/views/foo-bar.js', /'hbs!templates\/foo-bar-empty'/],
-            'js/templates/foo-bar.hbs',
             'js/templates/foo-bar-item.hbs',
             'js/templates/foo-bar-empty.hbs',
             // tests
@@ -260,10 +258,8 @@ describe('Sub Generators', function () {
             ['js/views/foo-bar.coffee', /CollectionView.extend/],
             ['js/views/foo-bar.coffee', /name: 'foo-bar'/],
             ['js/views/foo-bar.coffee', /'cs!collection-view'/],
-            ['js/views/foo-bar.coffee', /'hbs!templates\/foo-bar'/],
             ['js/views/foo-bar.coffee', /'hbs!templates\/foo-bar-item'/],
             ['js/views/foo-bar.coffee', /'hbs!templates\/foo-bar-empty'/],
-            'js/templates/foo-bar.hbs',
             'js/templates/foo-bar-item.hbs',
             'js/templates/foo-bar-empty.hbs',
             // tests
