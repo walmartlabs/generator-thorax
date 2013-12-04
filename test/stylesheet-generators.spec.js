@@ -54,8 +54,9 @@ describe('Stylesheet Generators', function(){
       helpers.mockPrompt(this.app, {
         'newDirectory': false,
         'starterApp': "None",
-        'styleProcessor': this.styleOption,
-        'features': this.features || []
+        'styleProcessor': requireOption(this.styleOption, "Forgot this.styleOption"),
+        'includeCoffeeScript': false,
+        'useZepto': false
       });
 
       this.app.run({}, done);

@@ -113,7 +113,8 @@ describe('Spec Generators', function () {
         'newDirectory': false,
         'starterApp': "None",
         'styleProcessor': "none",
-        'features': this.features || [],
+        'includeCoffeeScript': requireOption(this.includeCoffeeScript, "Forgot this.includeCoffeeScript option"),
+        'useZepto': false
       });
 
       this.app.run({}, done);
@@ -121,7 +122,7 @@ describe('Spec Generators', function () {
   });
 
   describe('when choosing javascript', function () {
-    before(function() { this.features = []; });
+    before(function() { this.includeCoffeeScript = false; });
 
     sharedExamples.invoke('files included with js or cs apps');
 
@@ -153,7 +154,7 @@ describe('Spec Generators', function () {
   });
 
   describe('when choosing CS', function () {
-    before(function() { this.features = ['includeCoffeeScript']; });
+    before(function() { this.includeCoffeeScript = true; });
     sharedExamples.invoke('files included with js or cs apps');
 
     it('generates example tests to help when getting started', function () {

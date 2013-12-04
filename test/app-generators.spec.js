@@ -51,7 +51,8 @@ describe('App Generators', function () {
         'newDirectory': true,
         'starterApp': requireOption(this.starterApp, "Forgot to provide starterApp"),
         'styleProcessor': "none",
-        'features': this.features || [],
+        'includeCoffeeScript': requireOption(this.includeCoffeeScript, "Forgot this.includeCoffeeScript setting"),
+        'useZepto': false
       });
 
       this.app.run({}, done);
@@ -59,6 +60,8 @@ describe('App Generators', function () {
   });
 
   describe('When javascript is chosen(default)', function () {
+
+    before(function() { this.includeCoffeeScript = false; });
 
     sharedExamples.create('generate default javascript templates', function () {
       it('generates default javascript templates', function () {
@@ -78,8 +81,6 @@ describe('App Generators', function () {
         ]);
       });
     });
-
-    before(function() { this.features = []; });
 
     describe('When starterApp is "None"', function () {
       before(function () { this.starterApp = "None"; });
@@ -118,6 +119,8 @@ describe('App Generators', function () {
 
   describe('when coffee script is chosen', function () {
 
+    before(function() { this.includeCoffeeScript = true; });
+
     sharedExamples.create('generate default coffeescript templates', function () {
       it('generates default coffeescript templates', function () {
         helpers.assertFiles([
@@ -136,8 +139,6 @@ describe('App Generators', function () {
         ]);
       });
     });
-
-    before(function() { this.features = ['includeCoffeeScript']; });
 
     describe('When starterApp is "None"', function () {
       before(function () { this.starterApp = "None"; });

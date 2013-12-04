@@ -172,18 +172,16 @@ ThoraxGenerator.prototype._askForExtendedPrompt = function (cb) {
       }]
     },
     {
-      type: 'checkbox',
-      name: 'features',
-      message: 'Which extra features would you like?',
-      choices: [{
-        name: "CoffeeScript",
-        value: "includeCoffeeScript",
-        checked: false
-      }, {
-        name: "Zepto in place of jQuery (for mobile apps)",
-        value: "useZepto",
-        checked: false
-      }]
+      type: 'confirm',
+      name: 'includeCoffeeScript',
+      message: 'Would you like to use CoffeeScript?',
+      default: false
+    },
+    {
+      type: 'confirm',
+      name: 'useZepto',
+      message: 'Would you like to use Zepto in place of jQuery (Zepto is best for mobile apps)',
+      default: false
     },
     {
       type: 'list',
@@ -195,12 +193,8 @@ ThoraxGenerator.prototype._askForExtendedPrompt = function (cb) {
   ];
 
   this.prompt(prompts, function (answers) {
-    var features = answers.features;
-
-    function hasFeature(feat) { return features.indexOf(feat) !== -1; }
-
-    this.includeCoffeeScript = hasFeature('includeCoffeeScript');
-    this.useZepto = hasFeature('useZepto');
+    this.includeCoffeeScript = answers.includeCoffeeScript;
+    this.useZepto = answers.useZepto;
     this.starterApp = answers.starterApp;
     this.styleProcessor = answers.styleProcessor;
     this.newDirectory = answers.newDirectory;

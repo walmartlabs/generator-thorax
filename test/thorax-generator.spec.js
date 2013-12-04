@@ -49,7 +49,8 @@ describe('Thorax Generator (yo thorax:app NAME)', function () {
         'newDirectory': false,
         'starterApp': "None",
         'styleProcessor': "none",
-        'features': this.features || []
+        'includeCoffeeScript': false,
+        'useZepto': false
       });
 
       this.app.run({}, done);
@@ -113,7 +114,8 @@ describe('jQuery or Zepto option', function () {
         'newDirectory': false,
         'starterApp': "None",
         'styleProcessor': "none",
-        'features': this.features || []
+        'includeCoffeeScript': false,
+        'useZepto': requireOption(this.useZepto, "Forgot this.useZepto option")
       });
 
       this.app.run({}, done);
@@ -121,6 +123,8 @@ describe('jQuery or Zepto option', function () {
   });
 
   describe('jQuery', function () {
+    before(function() { this.useZepto = false; });
+
     it('is included by default', function () {
       helpers.assertFiles([
         ['bower.json', /jquery/],
@@ -134,8 +138,7 @@ describe('jQuery or Zepto option', function () {
   });
 
   describe('Zepto', function () {
-    before(function() { this.features = ['useZepto']; });
-
+    before(function() { this.useZepto = true; });
 
     it('is included when selected in the prompt', function () {
       helpers.assertFiles([
@@ -165,7 +168,8 @@ describe('JSHint support', function () {
         'newDirectory': true,
         'starterApp': "None",
         'styleProcessor': "none",
-        'features': this.features || []
+        'includeCoffeeScript': false,
+        'useZepto': false
       });
 
       this.app.run({}, done);
@@ -191,8 +195,8 @@ describe('Requirejs abstraction', function () {
       helpers.mockPrompt(this.app, {
         'newDirectory': true,
         'starterApp': "None",
-        'styleProcessor': "none",
-        'features': this.features || []
+        'includeCoffeeScript': false,
+        'useZepto': false
       });
 
       this.app.run({}, done);
@@ -227,8 +231,8 @@ describe('Production Build', function () {
         helpers.mockPrompt(this.app, {
           'newDirectory': true,
           'starterApp': "None",
-          'styleProcessor': "none",
-          'features': this.features || []
+          'includeCoffeeScript': false,
+          'useZepto': false
         });
 
         this.app.run({}, done);
