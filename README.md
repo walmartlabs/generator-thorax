@@ -33,26 +33,26 @@ For a snazzier development environment, it's recommended that you install the [T
 
 ## Directory Structure
 
-- `bower_components` Installed third party libraries. Managed by [Bower](http://bower.io/), do not modify directly, instead use `bower install package-name --save`
-- `css` Regardless of whether you are using a CSS superset (LESS / Stylus / SASS) or plain CSS, this is where your CSS should live. This will get copied or compiled to `public/css` when running `grunt`
-- `js` Require JS baseUrl, files here are 'live' in development for easy debugging
-    - `collections`
-    - `models`
-    - `routers`
-    - `templates`
-    - `views`
-    - `collection-view.js`
-    - `collection.js`
-    - `layout-view.js`
-    - `main.js` Require JS data-main entry point
-    - `model.js`
-    - `view.js`
+- `bower_components` Installed third party libraries. Managed by [Bower](http://bower.io/), do not modify directly.
+- `css` Regardless of whether you are using a CSS superset (LESS / Stylus / SASS) or plain CSS, this is where your CSS should live. This will get copied or compiled to `public/css` when running `grunt build`
+- `js`
+  - `collections`
+  - `models`
+  - `routers`
+  - `templates`
+  - `views`
+  - `collection-view.js`
+  - `collection.js`
+  - `layout-view.js`
+  - `require-config.js` **Require JS data-main entry point**
+  - `model.js`
+  - `view.js`
 - `node_modules`
 - `public` The connect server will serve this directory at `/public`
   - `css` Generated or copied CSS from the `css` directory, do not modify.
   - `fonts` Any web fonts for your application, safe to modify.
   - `img` Any images, safe to modify
-  - `index.html` Do not modify, instead, add paths/shims to `/main.js`
+  - `index.html` Do not modify, add add new libraries to `/require-config.js`
 - `tasks` Put your custom grunt tasks in here
   - `options` Installed grunt options are looked up here, by file name
 - `bower.json` Third party library management via [Bower](http://bower.io/)
@@ -66,17 +66,17 @@ Every generated application comes fully loaded with an amazing development and t
 
 ### Development
 
-**Run `grunt`**
+** Run `grunt`**
 
-The best way to get up and running in development is to run `grunt` from the command line. This will boot a connect server and open up a browser to `http://localhost:8000/test` where you'll see the mocha test runner. This is to encourage testing, although it's not required. 
+The best way to get up and running in development is to run `grunt` from the command line. This will boot a connect server and open up a browser to `http://localhost:8000/`.
 
-To view your application, click on the link in the upper left hand corner that says [view my application in a new tab](http://localhost:8000/test), this will take you to `public/index.html`, the entry point for your app.
+Connect will also serve your tests at `http://localhost:8000/test`.
 
-At this point you'll have two tabs open in your browser, both of them synced via livereload to your application. Changing any file within your application will reload both pages so your code and your browser are never out of sync.
+LiveReload will reload both `/` and `/test` when changes are made to any file within your directory while `grunt` is running in the background.
 
 ### Testing
 
-**Run `grunt autotest`**
+** Run `grunt autotest`**
 
 The easiest way to run your tests is perhaps just to stick with the test runner page provided when running the default `grunt` task discussed above.
 
@@ -86,7 +86,7 @@ To try this out run `grunt autotest` from the command line. By default karma is 
 
 ### Advanced Testing
 
-**Run `grunt` in one window and `karma start` in a second**
+** Run `grunt` in one window and `karma start` in a second**
 
 Another option for running your tests is too skip grunt altogether and simply run `karma start` from your terminal window. This option will provide the fastest feedback loop during development and is recommended once your comfortable running your tests completely on the command line. 
 
@@ -98,13 +98,13 @@ To gain access to the console and debugging tools provided by Chrome, click on t
 
 ### Production
 
-**Run `grunt production`**
+** Run `grunt production`**
 
 When your ready to build concatenated and minified versions of your css and JavaScript source run `grunt production`. The output can be found in `dist/` and a browser window will be booted so you can play with the production version of your application before deployment.
 
 #### Test Your Production Build in Multiple Browsers
 
-**Run `grunt deploy`**
+** Run `grunt deploy`**
 
 Before deploying your application run `grunt deploy` to run your tests against the built version of your application inside the following browsers:
 
@@ -254,9 +254,13 @@ $ yo thorax todo-list
 
 Note that had you chosen `Todo List` for the sample application above, you would have generated the completed version of the app we're about to build. You may want to do this when we're finished to check your work.
 
-For more information on what is included in a blank generated application, e.g., when choosing `None`, see [what are all these files](#default-application).
-
 ### Sub Generators
+
+A sub-generator is a generator that you use within your app, after it has been initially created.
+
+Both application and test files are output from all sub-generators and CoffeeScript files will be output in place of JS files if one or more CoffeeScript files are present within your application. To override this settings pass `--js` or `--coffee` at the end any sub-generator command.
+
+In the following section, we'll build a Todo App using sub-generators. Note that test files will be omitted for brevity.
 
 ##### Generate a View:
 
@@ -297,7 +301,7 @@ define [
     template: template
 ```
 
-Those familiar with RequireJS will be thrilled to see the define() call above, and those who aren't should read the section about [require js](#requirejs) at the end of the README for short summary.
+Those familiar with RequireJS will be thrilled to see the define() call above, and those who aren't should read the [section about require js](#require-js)for short summary.
 
 ##### Generate a Router:
 
@@ -502,60 +506,14 @@ And that's a finished non-persistent todo list application! For more complex exa
 
 ## Require JS
 
-TODO
+Instead of compiling requiring script tags in your HTML, Require JS is used to load AMD modules instead of plain JavaScript files.
 
-## Default Application
+### Adding a New Dependency to Your App
 
-TODO: explain what the files and directories inside of /js when generating a default application are for
+To add a new library to your app. Here are the steps:
 
-### `js/main.js`
+1. Install the library via bower by running `bower install library-name --save-dev`. If the library is not updated regularly from bower try pointing the version to a github tag, for example: `"library-name": "some-github-profile/library-name#v0.1"` inside of your `bower.json` file.
+2. Open `require-config.js` at the root of your application and add a `path` that points the the AMD module version of the library installed by bower. If the library does not have an AMD module version(many don't) you'll need to setup a `shim` settings, which tells Require JS to wrap a normal JS file as a module you can require. Also make sure to set the `deps` array for any libraries the library depends on. For an example, take a look at how Thorax itself is setup within `require-config.js`.
+3. Inside an existing or new module, require the library by adding an item to the array of required modules - the name you'll use here is the name of the `path` you setup in step 2 above. Then, pass a new argument into the callback function, name the argument whatever you'd like, but remember that uppercase names should be reserved for modules that export constructor functions. When all the modules that this module depends on resolve, the callback function will be called and the argument representing the exported object from the module will be available for use inside.
 
-This is the main entry point into your application. The following modules are required for this module to do it's job:
-
-- `jquery` - used to run body of initialize function when document is 'ready'
-- `backbone` - a shim for this is made in `/main.js` so it is in fact a module. Used to call `Backbone.history.start` inside the jQuery ready callback.
-- `views/root` - the root view, we'll talk more about this below
-- `helpers` - doesn't return anything used inside of `js/main.js` but it does 'resolve' the module contained within `js/helpers.js` thereby registering Handlebars helpers and Thorax View Helpers declared inside the factory function, making them globally available for use within any `.hbs` file within our app.
-
-Given a solid understanding of modules and dependency injection, let's take a look at the logic contained within the `main` module:
-
-```js
-initialize(function(next) {
-  // Load any data that your app requires to boot
-  // and initialize all routers here, the callback
-  // `next` is provided in case the operations
-  // needed are aysynchronous
-  console.log('second'); // ADDED
-  next();
-});
-
-function initialize(complete) {
-  $(function() {
-    console.log('first'); // ADDED
-    Backbone.history.start({
-      pushState: false,
-      root: '/',
-      silent: true
-    });
-
-    // RootView may use link or url helpers which
-    // depend on Backbone history being setup
-    // so need to wait to loadUrl() (which will)
-    // actually execute the route
-    RootView.getInstance(document.body);
-
-    complete(function() {
-      console.log('third'); // ADDED
-      Backbone.history.loadUrl();
-    });
-  });
-}
-```
-
-Note we've added `console.log` statements to clarify the order of execution. Find them quickly by looking for `// ADDED` in the code above.
-
-Once the page is ready, the function inside of `$()` is run. The order of execution thereafter follows the console.log statements, summarized as follows:
-
-- First, Backbone.history.start is called. 
-- Next, `RootView.getInstance(document.body)` is called. This actually calls a one off method defined within `RootView` view. `RootView` inherits from `LayoutView` which is a specialized subclass of a normal Thorax View that can be instantiated with or without a template. In this case a template is provided, which although informative in how to instantiate multiple 'root' level views, is nonetheless not required. Try playing around with the final todo list app built above by removing the this Root View and see what happens. 
-- Finally, the initialize function is run and provided a `complete` callback function. 
+For in depth information on Require JS make sure to check out [http://requirejs.org/](http://requirejs.org/).
