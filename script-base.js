@@ -9,6 +9,8 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
+
 
 var Generator = module.exports = function Generator() {
   yeoman.generators.NamedBase.apply(this, arguments);
@@ -19,7 +21,7 @@ var Generator = module.exports = function Generator() {
    *   <%= classedName %>
    *   <%= dasherizedName %>
    */
-  this.classedName = this._.classify(this.name);
+  this.classedName = this._.classify(this._.dasherize(this.name));
   this.dasherizedName = this._.dasherize(this.name);
 
   /**
@@ -90,6 +92,25 @@ Generator.prototype.testTemplate = function (src, dest) {
     path.join(this.env.options.testPath, abstractDest) + this.scriptSuffix
     // -> 'test/collections/my-todos.{js,coffee}'
   ]);
+
+  /**
+   * console.log a message to the user to add the generated test file to
+   * test/test-setup-browser until #66 lands
+   */
+  // when module is coffeescript, require module using cs!./test-module-name
+  var csBang;
+  if (this.scriptSuffix == '.coffee') { csBang = 'cs!' } else { csBang = '' }
+  var copyPastable = csBang + './' + abstractDest;
+
+  var testModuleMsg = '\n\n' +
+                      chalk.yellow.bold("For browser testing, add the following line:") +
+                      '\n\n' +
+                      chalk.red.bold("'" + copyPastable + "',") +
+                      '\n\n' +
+                      chalk.yellow.bold("to test/test-setup-browser.js") +
+                      '\n\n';
+
+  console.log(testModuleMsg);
 };
 
 /**

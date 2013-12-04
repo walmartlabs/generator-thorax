@@ -1,5 +1,5 @@
 define [
-  'collection'
+  'cs!collection'
 ], (Collection) ->
   Collection.extend
-    name: '<%= name %>'
+    name: '<%= dasherizedName %>'

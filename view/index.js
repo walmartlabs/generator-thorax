@@ -9,7 +9,7 @@ var Generator = module.exports = function Generator() {
 util.inherits(Generator, ScriptBase);
 
 Generator.prototype.files = function files() {
-  this.appTemplate('view', 'views');
+  this.generateSourceAndTest('view', 'spec/view.spec', 'views');
   // write out blank template
   this.write('js/templates/' + this._.dasherize(this.name) + '.hbs', '');
 };

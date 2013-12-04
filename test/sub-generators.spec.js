@@ -61,20 +61,19 @@ describe('Sub Generators', function () {
     describe('When app is JS based(not CS)', function () {
       before(function() { this.features = ['']; });
 
-
       it('generates a Backbone router in javascript', function (done) {
-      var router = helpers.createGenerator('thorax:router', ['../../router'], ['foo']);
+        var router = helpers.createGenerator('thorax:router', ['../../router'], ['foo']);
 
-      router.run([], function () {
-        helpers.assertFiles([
-          ['js/routers/foo.js', /Backbone.Router.extend\(\{/],
-          ['js/routers/foo.js', /function \(Backbone, RootView\)/]
-        ]);
-        done();
+        router.run([], function () {
+          helpers.assertFiles([
+            ['js/routers/foo.js', /Backbone.Router.extend\(\{/],
+            ['js/routers/foo.js', /function \(Backbone, RootView\)/],
+            ['test/routers/foo.spec.js', /define\(\['routers\/foo'\], function \(FooRouter\)/],
+            ['test/routers/foo.spec.js', /expect\(FooRouter\)/]
+          ]);
+          done();
+        });
       });
-    });
-
-
     });
 
     describe('When app is CS based', function () {
@@ -86,7 +85,9 @@ describe('Sub Generators', function () {
         router.run([], function () {
           helpers.assertFiles([
             ['js/routers/foo.coffee', /Backbone.Router.extend/],
-            ['js/routers/foo.coffee', /\(Backbone, RootView\) ->/]
+            ['js/routers/foo.coffee', /\(Backbone, RootView\) ->/],
+            ['test/routers/foo.spec.coffee', /define \["cs!routers\/foo"\], \(FooRouter\)/],
+            ['test/routers/foo.spec.coffee', /expect\(FooRouter\)/]
           ]);
           done();
         });
@@ -95,19 +96,21 @@ describe('Sub Generators', function () {
     });
   });
 
-  describe('yo thorax:view foo', function () {
+  describe('yo thorax:view foo/index', function () {
     describe('when app is JS based(not CS)', function () {
 
       before(function() { this.features = []; });
 
       it('generates a Thorax view', function (done) {
-        var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo']);
+        var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo/index']);
 
         view.run([], function () {
           helpers.assertFiles([
-            ['js/views/foo.js', /View.extend\(\{/],
-            ['js/views/foo.js', /name: 'foo'/],
-            'js/templates/foo.hbs'
+            ['js/views/foo/index.js', /View.extend\(\{/],
+            ['js/views/foo/index.js', /name: 'foo\/index'/],
+            'js/templates/foo/index.hbs',
+            ['test/views/foo/index.spec.js', /define\(\['views\/foo\/index'\], function \(FooIndexView\)/],
+            ['test/views/foo/index.spec.js', /expect\(FooIndexView\)/]
           ]);
           done();
         });
@@ -118,15 +121,17 @@ describe('Sub Generators', function () {
       before(function() { this.features = ['includeCoffeeScript']; });
 
       it('generates a Thorax view', function (done) {
-        var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo']);
+        var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo/index']);
 
         view.run([], function () {
           helpers.assertFiles([
-            ['js/views/foo.coffee', /View.extend/],
-            ['js/views/foo.coffee', /name: 'foo'/],
-            ['js/views/foo.coffee', /'hbs!templates\/foo'/],
-            ['js/views/foo.coffee', /'cs!view'/],
-            'js/templates/foo.hbs'
+            ['js/views/foo/index.coffee', /View.extend/],
+            ['js/views/foo/index.coffee', /name: 'foo\/index'/],
+            ['js/views/foo/index.coffee', /'hbs!templates\/foo\/index'/],
+            ['js/views/foo/index.coffee', /'cs!view'/],
+            'js/templates/foo/index.hbs',
+            ['test/views/foo/index.spec.coffee', /define \["cs!views\/foo\/index"\], \(FooIndexView\) ->/],
+            ['test/views/foo/index.spec.coffee', /expect\(FooIndexView\)/]
           ]);
           done();
         });
@@ -145,7 +150,7 @@ describe('Sub Generators', function () {
           helpers.assertFiles([
             ['js/models/foo.js', /Model.extend\(\{/],
             ['js/models/foo.js', /name: 'foo'/],
-            ['test/models/foo.spec.js', /require\(\['models\/foo'\], function \(Foo\)/],
+            ['test/models/foo.spec.js', /define\(\['models\/foo'\], function \(Foo\)/],
             ['test/models/foo.spec.js', /expect\(Foo\)/]
           ]);
           done();
@@ -164,7 +169,8 @@ describe('Sub Generators', function () {
           helpers.assertFiles([
             ['js/models/foo.coffee', /Model.extend/],
             ['js/models/foo.coffee', /name: 'foo'/],
-            ['test/models/foo.spec.coffee', /require \["cs!models\/foo"\], \(Foo\)/],
+            ['js/models/foo.coffee', /'cs!model'/],
+            ['test/models/foo.spec.coffee', /define \["cs!models\/foo"\], \(Foo\)/],
             ['test/models/foo.spec.coffee', /expect\(Foo\)/]
           ]);
           done();
@@ -185,7 +191,8 @@ describe('Sub Generators', function () {
           helpers.assertFiles([
             ['js/collections/todos.js', /Collection.extend\(\{/],
             ['js/collections/todos.js', /name: 'todos'/],
-            ['test/collections/todos.spec.js', /require\(\['collections\/todos'\], function \(Todos\)/],
+            ['js/collections/todos.js', /'collection'/],
+            ['test/collections/todos.spec.js', /define\(\['collections\/todos'\], function \(Todos\)/],
             ['test/collections/todos.spec.js', /expect\(Todos\)/]
           ]);
           done();
@@ -204,7 +211,8 @@ describe('Sub Generators', function () {
           helpers.assertFiles([
             ['js/collections/todos.coffee', /Collection.extend/],
             ['js/collections/todos.coffee', /name: 'todos'/],
-            ['test/collections/todos.spec.coffee', /require \["cs!collections\/todos"\], \(Todos\)/],
+            ['js/collections/todos.coffee', /'cs!collection'/],
+            ['test/collections/todos.spec.coffee', /define \["cs!collections\/todos"\], \(Todos\)/],
             ['test/collections/todos.spec.coffee', /expect\(Todos\)/]
           ]);
           done();
@@ -224,13 +232,17 @@ describe('Sub Generators', function () {
         collectionView.run([], function () {
           helpers.assertFiles([
             ['js/views/foo-bar.js', /CollectionView.extend\(\{/],
-            ['js/views/foo-bar.js', /name: 'fooBar'/],
+            ['js/views/foo-bar.js', /name: 'foo-bar'/],
+            ['js/views/foo-bar.js', /'collection-view'/],
             ['js/views/foo-bar.js', /'hbs!templates\/foo-bar'/],
             ['js/views/foo-bar.js', /'hbs!templates\/foo-bar-item'/],
             ['js/views/foo-bar.js', /'hbs!templates\/foo-bar-empty'/],
             'js/templates/foo-bar.hbs',
             'js/templates/foo-bar-item.hbs',
-            'js/templates/foo-bar-empty.hbs'
+            'js/templates/foo-bar-empty.hbs',
+            // tests
+            ['test/views/foo-bar.spec.js', /define\(\['views\/foo-bar'\], function \(FooBarCollectionView\)/],
+            ['test/views/foo-bar.spec.js', /expect\(FooBarCollectionView\)/]
           ]);
           done();
         });
@@ -246,13 +258,17 @@ describe('Sub Generators', function () {
         collectionView.run([], function () {
           helpers.assertFiles([
             ['js/views/foo-bar.coffee', /CollectionView.extend/],
-            ['js/views/foo-bar.coffee', /name: 'fooBar'/],
+            ['js/views/foo-bar.coffee', /name: 'foo-bar'/],
+            ['js/views/foo-bar.coffee', /'cs!collection-view'/],
             ['js/views/foo-bar.coffee', /'hbs!templates\/foo-bar'/],
             ['js/views/foo-bar.coffee', /'hbs!templates\/foo-bar-item'/],
             ['js/views/foo-bar.coffee', /'hbs!templates\/foo-bar-empty'/],
             'js/templates/foo-bar.hbs',
             'js/templates/foo-bar-item.hbs',
-            'js/templates/foo-bar-empty.hbs'
+            'js/templates/foo-bar-empty.hbs',
+            // tests
+            ['test/views/foo-bar.spec.coffee', /define \["cs!views\/foo-bar"\], \(FooBarCollectionView\) ->/],
+            ['test/views/foo-bar.spec.coffee', /expect\(FooBarCollectionView\)/]
           ]);
           done();
         });

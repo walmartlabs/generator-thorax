@@ -1,6 +1,6 @@
 define [
-  'model'
+  'cs!model'
 ], (Model) ->
   Model.extend
-    name: '<%= name %>'
+    name: '<%= dasherizedName %>'
 

@@ -1,4 +1,4 @@
-require ["cs!collections/<%= dasherizedName %>"], (<%= classedName %>) ->
+define ["cs!collections/<%= dasherizedName %>"], (<%= classedName %>) ->
   describe "<%= classedName %>", ->
     it "exists", ->
       expect(<%= classedName %>).to.be.ok

@@ -1,9 +1,9 @@
 define [
   'cs!view',
-  'hbs!templates/<%= _.dasherize(name) %>'
+  'hbs!templates/<%= dasherizedName %>'
 ], (View, template) ->
   View.extend
-    name: '<%= name %>'
+    name: '<%= dasherizedName %>'
     template: template
 
 

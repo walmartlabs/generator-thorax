@@ -1,12 +1,12 @@
 define([
   'collection-view',
-  'hbs!templates/<%= _.dasherize(name) %>',
-  'hbs!templates/<%= _.dasherize(name) %>-item',
-  'hbs!templates/<%= _.dasherize(name) %>-empty'
+  'hbs!templates/<%= dasherizedName %>',
+  'hbs!templates/<%= dasherizedName %>-item',
+  'hbs!templates/<%= dasherizedName %>-empty'
 ], function (CollectionView, template, itemTemplate, emptyTemplate) {
 
   return CollectionView.extend({
-    name: '<%= name %>',
+    name: '<%= dasherizedName %>',
     template: template,
     itemTemplate: itemTemplate,
     emptyTemplate: emptyTemplate
