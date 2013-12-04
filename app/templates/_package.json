@@ -8,7 +8,7 @@
   "devDependencies": {
     "grunt-contrib-connect": "~0.5.0",
     "grunt": "~0.4",
-    "thorax-inspector": "eastridge/thorax-inspector-backend",
+    "thorax-inspector": "0.2.7",
     "bower": "~0.10",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-clean": "~0.5.0",
