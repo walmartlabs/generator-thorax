@@ -78,7 +78,6 @@ describe('Thorax Generator (yo thorax:app NAME)', function () {
       'public/index.html',
       'css/base.css',
       'tasks/ensure-installed.js',
-      'tasks/open-browser.js',
       'tasks/styles.js',
       'tasks/options/clean.js',
       'tasks/options/connect.js',

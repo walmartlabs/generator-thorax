@@ -6,10 +6,9 @@
     "connect": "~2.10.x"
   },
   "devDependencies": {
-    "grunt-contrib-connect": "0.3.0",
+    "grunt-contrib-connect": "~0.5.0",
     "grunt": "~0.4",
     "thorax-inspector": "eastridge/thorax-inspector-backend",
-    "open": "0.0.3",
     "bower": "~0.10",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-clean": "~0.5.0",
@@ -29,6 +28,7 @@
     "grunt-mocha-phantomjs": "~0.3.1",
     "grunt-contrib-jshint": "~0.7.1",
     "karma-coverage": "~0.1.2",
+    "express": "~3.4.6",
     "karma-safari-launcher": "~0.1.1"<% if (styleProcessor === 'less') { %>,
     "grunt-contrib-less": "~0.5.0"<% } %><% if (styleProcessor === 'sass') { %>,
     "grunt-contrib-sass": "~0.5.0"<% } %><% if (styleProcessor === 'stylus') { %>,
