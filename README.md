@@ -28,7 +28,7 @@ TODO
   - `collection-view.js`
   - `collection.js`
   - `layout-view.js`
-  - `main.js`
+  - `require-config.js`
   - `model.js`
   - `view.js`
 - `node_modules`
@@ -36,7 +36,7 @@ TODO
   - `css` Generated or copied CSS from the `css` directory, do not modify.
   - `fonts` Any web fonts for your application, safe to modify.
   - `img` Any images, safe to modify
-  - `index.html` Do not modify, add scripts to `/main.js`
+  - `index.html` Do not modify, add scripts to `/require-config.js`
 - `tasks` Put your custom grunt tasks in here
   - `options` Installed grunt options are looked up here, by file name
 - `bower.json` Third party library management via [Bower](http://bower.io/)

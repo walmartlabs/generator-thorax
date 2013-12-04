@@ -35,7 +35,7 @@ module.exports = function(config) {
       {pattern: 'test/**/*.spec.{js,coffee}', included: false},
       {pattern: 'test/fixtures/**/*.{html,hbs,handlebars}', included: false},
       {pattern: 'test/main.js', included: false},
-      {pattern: 'main.js', included: false},
+      {pattern: 'require-config.js', included: false},
       {pattern: 'test/test-setup-*.js', included: false},
       'test/main.karma.js'
     ],

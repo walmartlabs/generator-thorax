@@ -15,5 +15,5 @@
 
 require.config({
   baseUrl: '/base/test',
-  deps: ['/base/main.js']
+  deps: ['/base/require-config.js']
 });

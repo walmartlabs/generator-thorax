@@ -16,14 +16,14 @@
         especially  important when deploying)
 
          Instead, this project uses requirejs:
-         - During development, your-app/main.js is used in conjunction with
+         - During development, your-app/require-config.js is used in conjunction with
            your-app/js/main.js to bootstrap your application and the module
            dependency chain.
-         - During testing, your-app/test/main.js and your-app/main.karma.js are
+         - During testing, your-app/test/main.js and your-app/test/main.karma.js are
            also used to configure requirejs with your test files before booting
            your application in your-app/js/main.js
          - To deploy your application run `grunt production` from your terminal.
-           This task will read the same your-app/main.js and your-app/js/main.js
+           This task will read the same your-app/require-config.js and your-app/js/main.js
            configuration files used during development and furthermore pre-process
            coffeescript files you've required using the cs!./someModule syntax
     -->
