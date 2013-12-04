@@ -164,7 +164,7 @@ describe('Sub Generators', function () {
           helpers.assertFiles([
             ['js/models/foo.coffee', /Model.extend/],
             ['js/models/foo.coffee', /name: 'foo'/],
-            ['test/models/foo.spec.coffee', /require \["models\/foo"\], \(Foo\)/],
+            ['test/models/foo.spec.coffee', /require \["cs!models\/foo"\], \(Foo\)/],
             ['test/models/foo.spec.coffee', /expect\(Foo\)/]
           ]);
           done();
@@ -204,7 +204,7 @@ describe('Sub Generators', function () {
           helpers.assertFiles([
             ['js/collections/todos.coffee', /Collection.extend/],
             ['js/collections/todos.coffee', /name: 'todos'/],
-            ['test/collections/todos.spec.coffee', /require \["collections\/todos"\], \(Todos\)/],
+            ['test/collections/todos.spec.coffee', /require \["cs!collections\/todos"\], \(Todos\)/],
             ['test/collections/todos.spec.coffee', /expect\(Todos\)/]
           ]);
           done();
