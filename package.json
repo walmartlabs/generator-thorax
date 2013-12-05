@@ -29,6 +29,9 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
+  "peerDependencies": {
+    "yo": ">=1.0.0-rc.1.1"
+  },
   "dependencies": {
     "yeoman-generator": "~0.14.0",
     "chalk": "~0.3.0",
