@@ -1,18 +1,16 @@
-var util          = require('util');
-var path          = require('path');
-var ViewGenerator = require('../view');
+'use strict';
+var util = require('util');
+var ScriptBase = require('../script-base.js');
 
-var CollectionViewGenerator = module.exports = function () {
-  ViewGenerator.apply(this, arguments);
+var Generator = module.exports = function Generator() {
+  ScriptBase.apply(this, arguments);
 };
 
-util.inherits(CollectionViewGenerator, ViewGenerator);
+util.inherits(Generator, ScriptBase);
 
-CollectionViewGenerator.prototype._name  = 'collection view';
-CollectionViewGenerator.prototype.askFor = ViewGenerator.prototype.askFor;
-
-CollectionViewGenerator.prototype.createCollectionView = function () {
-  this.createView();
+Generator.prototype.files = function files() {
+  this.generateSourceAndTest('collection-view', 'spec/collection-view.spec', 'views');
+  // write out blank templates
   this.write('js/templates/' + this._.dasherize(this.name) + '-item.hbs', '');
   this.write('js/templates/' + this._.dasherize(this.name) + '-empty.hbs', '');
 };

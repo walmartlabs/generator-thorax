@@ -1,16 +1,13 @@
-var util      = require('util');
-var path      = require('path');
-var Generator = require('../lib/generator');
+'use strict';
+var util = require('util');
+var ScriptBase = require('../script-base.js');
 
-var CollectionGenerator = module.exports = function () {
-  Generator.apply(this, arguments);
+var Generator = module.exports = function Generator() {
+  ScriptBase.apply(this, arguments);
 };
 
-util.inherits(CollectionGenerator, Generator);
+util.inherits(Generator, ScriptBase);
 
-CollectionGenerator.prototype._name  = 'collection';
-CollectionGenerator.prototype.askFor = Generator.prototype.askFor;
-
-CollectionGenerator.prototype.createCollection = function () {
-  this._renderTemplate('js/collections');
+Generator.prototype.files = function files() {
+  this.generateSourceAndTest('collection', 'spec/collection.spec', 'collections');
 };

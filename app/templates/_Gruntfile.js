@@ -34,7 +34,7 @@
 module.exports = function(grunt) {
 
   var settings = {
-    liveReloadPort: process.env.LRPort || 35729,
+    liveReloadPort: process.env.LRPORT || 35729,
     port: process.env.PORT || 8000,
     mochaPhantomPort: process.env.MOCHA_PHANTOM_PORT || 8001,
     hostname: 'localhost',
@@ -83,7 +83,6 @@ module.exports = function(grunt) {
     'styles:development',
     'thorax:inspector',
     'connect:development',
-    'open-browser:dev',
     'watch'
   ]);
 
@@ -102,7 +101,6 @@ module.exports = function(grunt) {
     'thorax:inspector',
     'karma:server',
     'connect:development',
-    'open-browser:dev',
     'watch'
   ]);
 
@@ -114,7 +112,6 @@ module.exports = function(grunt) {
     'cssmin',
     'copy:prepareBuild',
     'requirejs:production',
-    'open-browser:dist',
     'connect:production'
   ]);
 

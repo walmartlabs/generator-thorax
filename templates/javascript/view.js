@@ -1,9 +1,9 @@
 define([
   'view',
-  'hbs!templates/<%= _.dasherize(name) %>'
+  'hbs!templates/<%= dasherizedName %>'
 ], function (View, template) {
   return View.extend({
-    name: '<%= name %>',
+    name: '<%= dasherizedName %>',
     template: template
   });
 });

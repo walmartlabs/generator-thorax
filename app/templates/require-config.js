@@ -15,11 +15,6 @@
  * When running tests, test/main.js is the next stop, where more paths are
  * defined that are test specific
  *
- * TODO: iterate on this explanation, explain what require is really doing b/c
- * it's use is pretty involved in the generator output and people will really
- * appreciate a full example and explanation as given here(I never saw one like
- * this while googling at least).
- *
  */
 
 /**

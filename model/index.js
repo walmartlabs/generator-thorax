@@ -1,16 +1,13 @@
-var util      = require('util');
-var path      = require('path');
-var Generator = require('../lib/generator');
+'use strict';
+var util = require('util');
+var ScriptBase = require('../script-base.js');
 
-var ModelGenerator = module.exports = function () {
-  Generator.apply(this, arguments);
+var Generator = module.exports = function Generator() {
+  ScriptBase.apply(this, arguments);
 };
 
-util.inherits(ModelGenerator, Generator);
+util.inherits(Generator, ScriptBase);
 
-ModelGenerator.prototype._name  = 'model';
-ModelGenerator.prototype.askFor = Generator.prototype.askFor;
-
-ModelGenerator.prototype.createModel = function () {
-  this._renderTemplate('js/models');
+Generator.prototype.files = function files() {
+  this.generateSourceAndTest('model', 'spec/model.spec', 'models');
 };

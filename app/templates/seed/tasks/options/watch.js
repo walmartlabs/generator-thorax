@@ -15,7 +15,7 @@ module.exports = {
       grunt.config('paths.js') + '/**/*.{js,coffee}',
       grunt.config('paths.templates') + '/**/*.{hbs,handlebars}',
       'test/**/*',
-      'main.js'
+      'require-config.js'
     ],
     tasks: ['jshint:all', 'karma:server:run']
   },

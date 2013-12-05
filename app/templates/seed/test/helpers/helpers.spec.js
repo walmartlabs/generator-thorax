@@ -4,12 +4,12 @@ describe('Creating a helper test', function () {
     fixtures.clearCache();
   });
   it('it works with fixture support', function () {
-    Handlebars.registerHelper('get-excited', function() {
+    Handlebars.registerHelper("hello-world", function() {
       return new Handlebars.SafeString('Wow, template fixtures');
     });
 
     var view = new Thorax.View({
-      template: hbsFixture('get-excited.hbs')
+      template: hbsFixture("hello-world.hbs")
     });
     view.render();
     expect(view.$('h1').text()).to.eq('Wow, template fixtures');

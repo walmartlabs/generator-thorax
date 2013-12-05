@@ -2,51 +2,12 @@ var fs   = require('fs');
 var path = require('path');
 var util = require('util');
 var path = require('path');
+var yeoman = require('yeoman-generator');
 var marked = require('marked');
-var Base = require('../lib/base');
+var chalk = require('chalk');
 
 var ThoraxGenerator = module.exports = function (args, options, config) {
-  Base.apply(this, arguments);
-
-  this.prompts.push({
-    type: 'confirm',
-    name: 'newDirectory',
-    message: 'Would you like to generate the app in a new directory?',
-    default: true
-  });
-
-  this.prompts.push({
-    type: 'list',
-    name: 'styleProcessor',
-    choices: ['less', 'sass', 'stylus', 'none'],
-    message: "Choose a css pre-processor\n" +
-              "Notes:\n" +
-                "* 'less' will include bootstrap by default\n" +
-                "* 'none' means plain css",
-    default: 'less'
-  });
-
-  this.prompts.push({
-    type: 'confirm',
-    name: 'includeCoffeeScript',
-    message: 'Would you like to use CoffeeScript?',
-    default: false
-  });
-
-  this.prompts.push({
-    type: 'confirm',
-    name: 'useZepto',
-    message: 'Would you like to use Zepto in place of jQuery (Zepto is best for mobile apps)',
-    default: false
-  });
-
-  this.prompts.push({
-    type: 'list',
-    name: 'starterApp',
-    choices: ["Hello World", "Todo List", "None"],
-    message: 'Would you like to setup your project with a sample application?',
-    default: "Hello World"
-  });
+  yeoman.generators.NamedBase.apply(this, arguments);
 
   this.on('end', function () {
     this._sanitizeBowerJSON();
@@ -58,24 +19,99 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 };
 
-util.inherits(ThoraxGenerator, Base);
+util.inherits(ThoraxGenerator, yeoman.generators.NamedBase);
 
-ThoraxGenerator.prototype._name  = 'application';
-ThoraxGenerator.prototype.askFor = Base.prototype._askFor;
+/**
+ * This prompt runs first. If chosen, it will bypass the remaining prompts
+ * unless the directory being generated already exists, in which case
+ * fixDirectoryNameCollision will directly afterward
+ */
+ThoraxGenerator.prototype.askForChefsChoice = function () {
+  var cb = this.async();
 
-ThoraxGenerator.prototype.directory = function () {
+  // welcome message
+  if (!this.options['skip-welcome-message']) {
+    var thoraxWelcome = chalk.yellow.bold("Welcome to Thorax!\n\n");
+    console.log(thoraxWelcome);
+  }
+
+  var prompts = [
+    {
+      type: 'confirm',
+      name: 'chefsChoice',
+      message: "If this is your first time with Thorax, we've put together the\n" +
+               "Chef's Choice. Would you like to try it?",
+      default: true
+    }
+  ];
+
+  this.prompt(prompts, function (answers) {
+    var features = answers.features;
+    this.chefsChoice = answers.chefsChoice;
+
+    if (this.chefsChoice) {
+      // chefs choice means we choose these without asking
+      this.newDirectory = true;
+      this.includeCoffeeScript = false;
+      this.useZepto = false;
+      this.starterApp = "Hello World";
+      this.styleProcessor = "less";
+    }
+
+    cb();
+  }.bind(this));
+
+};
+
+/**
+ * Runs after chefs choice, which chooses to make a new directory for
+ * your app by default
+ *
+ * Runs before other generators, and specifically before fixDirectoryNameCollision
+ * so directoryNameCollision can run before askForExtendedPrompt allowing user
+ * to bail before choosing a custom setup
+ *
+ * Note that all proto methods without an underscore are run in order by yoeman
+ * therefore the order these prototype methods are arranged have a ryhme/reason
+ */
+ThoraxGenerator.prototype.askForDirectory = function() {
+  if (typeof this.newDirectory !== 'undefined') { return; }
+
+  this._askForDirectory(this.async());
+};
+
+ThoraxGenerator.prototype._askForDirectory = function(cb) {
+  var prompts = [
+    {
+      type: 'confirm',
+      name: 'newDirectory',
+      message: 'Would you like to generate the app in a new directory?',
+      default: true
+    }
+  ];
+
+  this.prompt(prompts, function (answers) {
+    var features = answers.features;
+    this.newDirectory = answers.newDirectory;
+
+    cb();
+  }.bind(this));
+};
+
+/**
+ * Runs after the choice to create a new directory has been made, but before
+ * extended prompts
+ *
+ * Prevents a new app being generated into a previously existing directory by
+ * asking for a new name
+ */
+ThoraxGenerator.prototype.fixDirectoryNameCollision = function () {
   if (!this.newDirectory) { return; }
 
-  this._checkAndCreateDirectory(this._.dasherize(this.name), this.async());
+  this._fixDirectoryNameCollision(this._.dasherize(this.name), this.async());
 };
 
-ThoraxGenerator.prototype.processReadme = function () {
-  var markedFile = fs.readFileSync(path.join(__dirname, '../README.md')).toString();
-  var processedMarkedFile = marked(markedFile);
-  return processedMarkedFile.replace(/{/g, '&#123;').replace(/}/g, '&#125;');
-};
-
-ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
+ThoraxGenerator.prototype._fixDirectoryNameCollision = function (directory, cb) {
   var prompts = [{
     type: 'input',
     name: 'directoryName',
@@ -86,7 +122,7 @@ ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
     prompts[0].message = 'A directory name is required';
 
     return this.prompt(prompts, function (props) {
-      this._checkAndCreateDirectory(props.directoryName, cb);
+      this._fixDirectoryNameCollision(props.directoryName, cb);
     }.bind(this));
   }
 
@@ -101,8 +137,69 @@ ThoraxGenerator.prototype._checkAndCreateDirectory = function (directory, cb) {
     }
 
     return this.prompt(prompts, function (props) {
-      this._checkAndCreateDirectory(props.directoryName, cb);
+      this._fixDirectoryNameCollision(props.directoryName, cb);
     }.bind(this));
+  }.bind(this));
+};
+
+ThoraxGenerator.prototype.askForExtendedPrompt = function() {
+  // checking for pre-defined prompt option and then calling a private
+  // method fixes async issues. Perhaps there is a better way, but
+  // until then that's why this convention is used
+  if (this.chefsChoice) { return; }
+  this._askForExtendedPrompt(this.async());
+};
+
+ThoraxGenerator.prototype._askForExtendedPrompt = function (cb) {
+  var prompts = [
+    {
+      type: 'list',
+      name: 'styleProcessor',
+      message: "Choose a css pre-processor",
+      default: 'less',
+      choices: [{
+        name: 'Less with bootstrap (default choice)',
+        value: 'less'
+      }, {
+        name: 'Sass',
+        value: 'sass'
+      }, {
+        name: 'Stylus',
+        value: 'stylus'
+      }, {
+        name: 'Plain CSS',
+        value: 'none'
+      }]
+    },
+    {
+      type: 'confirm',
+      name: 'includeCoffeeScript',
+      message: 'Would you like to use CoffeeScript?',
+      default: false
+    },
+    {
+      type: 'confirm',
+      name: 'useZepto',
+      message: 'Would you like to use Zepto in place of jQuery (Zepto is best for mobile apps)',
+      default: false
+    },
+    {
+      type: 'list',
+      name: 'starterApp',
+      choices: ["Hello World", "Todo List", "None"],
+      message: 'Would you like to setup your project with a sample application?',
+      default: "Hello World"
+    }
+  ];
+
+  this.prompt(prompts, function (answers) {
+    this.includeCoffeeScript = answers.includeCoffeeScript;
+    this.useZepto = answers.useZepto;
+    this.starterApp = answers.starterApp;
+    this.styleProcessor = answers.styleProcessor;
+    this.newDirectory = answers.newDirectory;
+
+    cb();
   }.bind(this));
 };
 
@@ -140,7 +237,6 @@ ThoraxGenerator.prototype.app = function () {
 
   this.mkdir('tasks');
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
-  this.copy('seed/tasks/open-browser.js', 'tasks/open-browser.js');
   this.copy('seed/tasks/styles.js', 'tasks/styles.js');
 
   this.mkdir('tasks/options');
@@ -158,8 +254,7 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/models');
   this.mkdir('js/collections');
 
-  this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
-  this.copy('seed/js/helpers.js', 'js/helpers.js');
+
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 
   this.copy('_server.js', 'server.js');
@@ -172,11 +267,13 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/jshint.js', 'tasks/options/jshint.js');
 
   this.copy('seed/test/index.html', 'test/index.html');
-  this.copy('seed/test/app.spec.js', 'test/app.spec.js');
+
+  // these don't work well as cs files
   this.copy('seed/test/main.js', 'test/main.js');
   this.copy('seed/test/main.karma.js', 'test/main.karma.js');
   this.copy('seed/test/test-setup-all.js', 'test/test-setup-all.js');
   this.copy('seed/test/test-setup-browser.js', 'test/test-setup-browser.js');
+
   this.copy('seed/test/collections/.gitkeep', 'test/collections/.gitkeep');
   this.copy('seed/test/fixtures/.gitkeep', 'test/fixtures/.gitkeep');
   this.copy('seed/test/helpers/.gitkeep', 'test/helpers/.gitkeep');
@@ -185,22 +282,23 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/test/utils/.gitkeep', 'test/utils/.gitkeep');
   this.copy('seed/test/views/.gitkeep', 'test/views/.gitkeep');
 
-  this.copy('seed/test/views/root.spec.js', 'test/views/root.spec.js');
-
-  // TODO: cs support provided by default
-  this.copy('seed/test/views/root-coffee.spec.coffee', 'test/views/root-coffee.spec.coffee');
-
   this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
-  this.copy('seed/test/fixtures/example.hbs', 'test/fixtures/example.hbs');
-  this.copy('seed/test/fixtures/example2.html', 'test/fixtures/example2.html');
-  this.copy('seed/test/fixtures/example3.handlebars', 'test/fixtures/example3.handlebars');
-  this.copy('seed/test/fixtures/get-excited.hbs', 'test/fixtures/get-excited.hbs');
-  this.copy('seed/test/helpers/helpers.spec.js', 'test/helpers/helpers.spec.js');
-  this.copy('seed/test/helpers/view-helpers.spec.js', 'test/helpers/view-helpers.spec.js');
+  this.copy('seed/test/fixtures/hello-world.hbs', 'test/fixtures/hello-world.hbs');
 
-  this.copy('main.js');
+  this.copy('require-config.js');
   this.copy('_travis.yml', '.travis.yml');
   this.copy(path.join(__dirname, '../README.md'), 'README.md');
+
+
+  // js + cs versions of these files
+  this.copy('seed/js/views/root' + scriptExt, 'js/views/root' + scriptExt);
+  this.copy('seed/js/helpers' + scriptExt, 'js/helpers' + scriptExt);
+
+  this.copy('seed/test/views/root.spec' + scriptExt, 'test/views/root.spec' + scriptExt);
+  this.copy('seed/test/app.spec' + scriptExt, 'test/app.spec' + scriptExt);
+  this.copy('seed/test/helpers/helpers.spec' + scriptExt, 'test/helpers/helpers.spec' + scriptExt);
+  this.copy('seed/test/helpers/view-helpers.spec' + scriptExt, 'test/helpers/view-helpers.spec' + scriptExt);
+
 };
 
 ThoraxGenerator.prototype.scripts = function () {
@@ -221,11 +319,17 @@ ThoraxGenerator.prototype.projectFiles = function () {
   this.copy('gitignore', '.gitignore');
 };
 
+ThoraxGenerator.prototype._processReadme = function () {
+  var markedFile = fs.readFileSync(path.join(__dirname, '../README.md')).toString();
+  var processedMarkedFile = marked(markedFile);
+  return processedMarkedFile.replace(/{/g, '&#123;').replace(/}/g, '&#125;');
+};
+
 ThoraxGenerator.prototype.helloWorld = function() {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   if (this.starterApp === 'Hello World') {
-    this.readmeContent = this.processReadme();
+    this.readmeContent = this._processReadme();
     this.mkdir('js/views/hello-world');
     this.mkdir('js/templates/hello-world');
     this.copy('seed/js/views/hello-world/index' + scriptExt, 'js/views/hello-world/index' + scriptExt);

@@ -15,18 +15,10 @@ define(function(require) {
   global.mocha.reporter('html');
 
   require([ // require test files
-    './app.spec',
-    // routers
-    // views
-    './views/root.spec',
-    'cs!./views/root-coffee.spec', // coffeescript works by default
-    // models
-    // collections
-    // helpers
-    './helpers/helpers.spec',
-    './helpers/view-helpers.spec',
-    // integration
-    // utils
+    '<% if (includeCoffeeScript) { %>cs!<% } %>./app.spec',
+    '<% if (includeCoffeeScript) { %>cs!<% } %>./views/root.spec',
+    '<% if (includeCoffeeScript) { %>cs!<% } %>./helpers/helpers.spec',
+    '<% if (includeCoffeeScript) { %>cs!<% } %>./helpers/view-helpers.spec'
   ], function() { // run mocha
     if (global.mochaPhantomJS) { global.mochaPhantomJS.run(); }
     else { global.mocha.run(); }
