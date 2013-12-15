@@ -3,7 +3,8 @@ module.exports = {
     configFile: 'karma.conf.js'
   },
   server: {
-    background: true
+    background: true,
+    autoWatch: false
   },
   ci: {
     singleRun: true,

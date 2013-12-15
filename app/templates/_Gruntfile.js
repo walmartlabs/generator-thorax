@@ -101,6 +101,7 @@ module.exports = function(grunt) {
     'thorax:inspector',
     'karma:server',
     'connect:development',
+    'addKarmaToWatchTask',
     'watch'
   ]);
 

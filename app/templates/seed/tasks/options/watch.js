@@ -17,7 +17,7 @@ module.exports = {
       'test/**/*',
       'require-config.js'
     ],
-    tasks: ['jshint:all', 'karma:server:run']
+    tasks: ['jshint:all']
   },
   other: { // images, fonts change? livereload browser
     files: [
