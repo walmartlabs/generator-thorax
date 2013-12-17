@@ -4,7 +4,8 @@ module.exports = {
   options: { // livereload will run after all watch tasks finish
     livereload: grunt.config('settings.liveReloadPort'),
     debounceDelay: 0,
-    interval: 20
+    interval: 100,
+    spawn: false
   },
   styles: { // watch all styles and rebuild when change
     files: [grunt.config('paths.css') + '/**/*.{css,sass,scss,less,styl}'],
