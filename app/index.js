@@ -238,6 +238,7 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('tasks');
   this.copy('seed/tasks/ensure-installed.js', 'tasks/ensure-installed.js');
   this.copy('seed/tasks/styles.js', 'tasks/styles.js');
+  this.copy('seed/tasks/add-karma-to-watch.js', 'tasks/add-karma-to-watch.js');
 
   this.mkdir('tasks/options');
   this.copy('seed/tasks/options/clean.js', 'tasks/options/clean.js');
