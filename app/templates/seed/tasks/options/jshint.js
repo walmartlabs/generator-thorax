@@ -1,15 +1,21 @@
+var grunt = require('grunt');
+
 module.exports = {
-  all: {
+  options: {
+    force: true
+  },
+  app: {
     src: [
-      'js/**/*.js',
+      grunt.config('paths.js') + '/js/**/*.js',
       'test/**/*.js',
-      '!tmp*/**/*',
-      'Gruntfile.js',
-      'tasks/**/*.js'
+      '!tmp*/**/*'
     ],
     options: { jshintrc: '.jshintrc' }
   },
-  options: {
-    force: true
+  server: {
+    src: [
+      grunt.config('paths.server') + '/**/*.js'
+    ],
+    options: { jshintrc: grunt.config('paths.server') + '/.jshintrc' }
   }
 };

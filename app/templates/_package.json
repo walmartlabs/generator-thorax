@@ -29,6 +29,8 @@
     "grunt-contrib-jshint": "~0.7.1",
     "karma-coverage": "~0.1.2",
     "express": "~3.4.6",
+    "express-namespace": "~0.1.1",
+    "request": "~2.29.0",
     "karma-safari-launcher": "~0.1.1"<% if (styleProcessor === 'less') { %>,
     "grunt-contrib-less": "~0.5.0"<% } %><% if (styleProcessor === 'sass') { %>,
     "grunt-contrib-sass": "~0.5.0"<% } %><% if (styleProcessor === 'stylus') { %>,

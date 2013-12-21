@@ -255,6 +255,8 @@ ThoraxGenerator.prototype.app = function () {
   this.mkdir('js/models');
   this.mkdir('js/collections');
 
+  this.directory('seed/server', 'server');
+
 
   this.copy('seed/js/templates/root.hbs', 'js/templates/root.hbs');
 

@@ -94,6 +94,10 @@ describe('Thorax Generator (yo thorax:app NAME)', function () {
       'js/views',
       'js/templates',
       'public',
+      'server/app-routes.js',
+      'server/server.js',
+      'server/static-routes.js',
+      'server/.jshintrc'
     ];
 
     helpers.assertFiles(expected);

@@ -1,6 +1,7 @@
-var grunt = require('grunt');
-
-var openUrl = 'http://' + grunt.config('settings.hostname') + ':' + grunt.config('settings.port');
+var grunt = require('grunt'),
+    path = require('path'),
+    openUrl = 'http://' + grunt.config('settings.hostname') +
+              ':' + grunt.config('settings.port');
 
 module.exports = {
   development: {
@@ -28,31 +29,17 @@ module.exports = {
   }
 };
 
-// TODO: move to seperate file, likely when creating mock api feature
-// use express as connect middleware
-var express = require('express');
-var app = express();
-var path = require('path');
-
-var appBase = path.resolve(__dirname, '../..');
-
-// keep app from being browsable @ /public
-app.get('/public', function (req, res) {
-  res.redirect('/');
-});
-app.get('/public/index.html', function (req, res) {
-  res.redirect('/');
-});
-
-// serve everything
-app.use('/', express.static(appBase));
-
-// serve /public @ /
-app.use('/', express.static(path.join(appBase, 'public')));
+/**
+ * Express middleware to inject into dev connect server
+ *
+ * @see api/app.js for more information on customizing it
+ */
+var serverPath = path.join(path.resolve(__dirname, '../..'), 'server/server'),
+    server = require(serverPath);
 
 function devMiddlewares(connect, options) {
   return [
     require('connect-livereload')({port: grunt.config('settings.liveReloadPort')}),
-    connect().use(app),
+    connect().use(server)
   ];
 }
