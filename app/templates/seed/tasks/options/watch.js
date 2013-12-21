@@ -18,7 +18,13 @@ module.exports = {
       'test/**/*',
       'require-config.js'
     ],
-    tasks: ['jshint:all']
+    tasks: ['jshint:app']
+  },
+  server: {
+    files: [
+      grunt.config('paths.server') + '/**/*.js'
+    ],
+    tasks: ['jshint:server']
   },
   other: { // images, fonts change? livereload browser
     files: [

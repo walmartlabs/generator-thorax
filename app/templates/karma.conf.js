@@ -3,6 +3,13 @@
 
 // TODO(karma-grunt): DRY me up, move this all to grunt? what do we lose? (performance?)
 module.exports = function(config) {
+
+  /**
+   * Pass port to CLI. This port should be the same port provided to connect
+   * api server. See `proxies` setting where it's used.
+   */
+  var proxyPort = process.env.PORT || 8000;
+
   config.set({
 
     // base path, that will be used to resolve files and exclude
@@ -69,6 +76,13 @@ module.exports = function(config) {
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
+    },
+
+    /**
+     * http://localhost:8000/api -> proxies to connect server started by `grunt`
+     */
+    proxies: {
+      '/api': 'http://localhost:' + proxyPort + '/api'
     },
 
     // web server port
