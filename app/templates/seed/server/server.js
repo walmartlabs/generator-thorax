@@ -15,6 +15,9 @@ server.set('serverBase', serverBase);
 if (process.env.ENABLE_LOGGING) {
   server.use(express.logger('dev'));
 }
+if (!module.parent) {
+  require('connect-livereload')({port: liveReloadPort});
+}
 server.use(express.bodyParser());
 server.use(express.methodOverride());
 require('./static')(server); // Must be required before all other routes
