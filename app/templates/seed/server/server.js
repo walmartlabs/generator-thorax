@@ -1,10 +1,10 @@
-require('express-namespace') // must come before express()
+require('express-namespace'); // must come before express()
 
-var path = require('path')
-  , express = require('express')
-  , server = express()
-  , port = process.env.PORT || 8000
-  , liveReloadPort = process.env.LRPORT || 35729
+var path = require('path');
+var express = require('express');
+var server = express();
+var port = process.env.PORT || 8000;
+var liveReloadPort = process.env.LRPORT || 35729;
 
 module.exports = server;
 
@@ -12,7 +12,9 @@ var serverBase = path.resolve(__dirname, '../');
 server.set('serverBase', serverBase);
 
 // very loud! To enable: ENABLE_LOGGING=true grunt
-if (process.env.ENABLE_LOGGING) server.use(express.logger('dev'));
+if (process.env.ENABLE_LOGGING) {
+  server.use(express.logger('dev'));
+}
 server.use(express.bodyParser());
 server.use(express.methodOverride());
 require('./static')(server); // Must be required before all other routes
