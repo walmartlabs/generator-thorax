@@ -41,6 +41,7 @@ module.exports = function(grunt) {
     templates: {},
     paths: {
       'public': 'public',
+      server: 'server',
       dist: 'dist',
       tmp: 'tmp',
       distOutput: {
@@ -72,7 +73,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'ensure-installed',
-    'jshint:all'
+    'jshint'
   ]);
 
   /**
@@ -87,13 +88,19 @@ module.exports = function(grunt) {
   ]);
 
   /**
+   * same as 'default' tasks but does not start a connect server. Use
+   * this option when you'd like to start the server using nodemon via
+   * `nodemon server/server.js`
+   */
+  grunt.registerTask('noserver', [
+    'build',
+    'styles:development',
+    'thorax:inspector',
+    'watch'
+  ]);
+
+  /**
    * same as default `grunt` but also runs karma tests on file save
-   *
-   * a faster approach is to actually run the default task and in a seperate
-   * terminal run `karma start` which will bypass grunt's slow file watching,
-   * shaving off about a second on autoreload, however, you'll need to deal
-   * with having to restart two different windows in the event of something
-   * drastic.
    */
   grunt.registerTask('autotest', [
     'build',
@@ -101,6 +108,20 @@ module.exports = function(grunt) {
     'thorax:inspector',
     'karma:server',
     'connect:development',
+    'addKarmaToWatchTask',
+    'watch'
+  ]);
+
+  /**
+   * same as `grunt autotest` but does not start a connect server. Use
+   * this option when you'd like to start the server manually using nodemon via
+   * `nodemon server/server.js`
+   */
+  grunt.registerTask('autotest:noserver', [
+    'build',
+    'styles:development',
+    'thorax:inspector',
+    'karma:server',
     'addKarmaToWatchTask',
     'watch'
   ]);
