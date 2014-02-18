@@ -23,7 +23,8 @@ module.exports = {
         'coffee-script': '../bower_components/coffee-script/index',
         'cs': '../bower_components/require-cs/cs',
         'text': '../bower_components/text/text',
-        'hbs': '../bower_components/requirejs-hbs/hbs'
+        'hbs': '../bower_components/requirejs-hbs/hbs',
+        'localstorage': '../bower_components/backbone.localStorage/backbone.localstorage'
       },
       shim: {
         'handlebars': {
@@ -43,7 +44,10 @@ module.exports = {
         }<% if (useZepto) { %>,
         'zepto': {
           exports: '$'
-        }<% } %>
+        }<% } %>,
+        'localstorage': {
+          deps: ['backbone']
+        }
       }
     }
   }
