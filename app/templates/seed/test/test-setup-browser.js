@@ -14,6 +14,8 @@ define(function(require) {
   global.mocha.setup('bdd');
   global.mocha.reporter('html');
 
+  require("./test-setup-all");
+
   require([ // require test files
     '<% if (includeCoffeeScript) { %>cs!<% } %>./app.spec',
     '<% if (includeCoffeeScript) { %>cs!<% } %>./views/root.spec',
