@@ -46,7 +46,8 @@ require.config({
     'coffee-script': pathPrefix + 'bower_components/coffee-script/index',
     'cs': pathPrefix + 'bower_components/require-cs/cs',
     'text': pathPrefix + 'bower_components/text/text',
-    'hbs': pathPrefix + 'bower_components/requirejs-hbs/hbs'
+    'hbs': pathPrefix + 'bower_components/requirejs-hbs/hbs',
+    'localstorage': pathPrefix + 'bower_components/backbone.localStorage/backbone.localStorage'
   },
   shim: {
     'handlebars': {
@@ -66,6 +67,9 @@ require.config({
     }<% if (useZepto) { %>,
     'zepto': {
       exports: '$'
-    }<% } %>
+    }<% } %>,
+    'localstorage': {
+      deps: ['backbone']
+    }
   }
 });
