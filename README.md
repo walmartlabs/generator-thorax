@@ -342,8 +342,8 @@ define([
       "": "index" //add an index route
     },
     index: function(){
-      var view = new TodoListIndexView({})  //Hey! I'm a view getting instantiated! My template will be rendered
-      RootView.getInstance().setView(view)  //Nuke whatever was in the {{layout-element}} element in root.hbs (and do memory management), replace it with the template rendered by the line above.
+      var view = new TodoListIndexView({});  //Hey! I'm a view getting instantiated! My template will be rendered
+      RootView.getInstance().setView(view);  //Nuke whatever was in the {{layout-element}} element in root.hbs (and do memory management), replace it with the template rendered by the line above.
     }
   });
 });
@@ -368,10 +368,8 @@ The final changes should look like:
     'helpers',
   ], function ($, Backbone, RootView, TodoListRouter) { // MODIFIED
 
-    initialize(function(next) {
+    // Initialize your routers here
       new TodoListRouter(); // ADDED
-      next();
-    });
 
     ...snip...
 ```
@@ -442,12 +440,25 @@ Since we want to be able to mark our todos as done and add new ones, we will add
 </form>
 ```
 
-We'll also create a style sheet called `stylesheets/todo-list.css`, which will be automatically applied ONLY to the view with the same filename. Populate it with the following code:
+We'll also create a style sheet called `css/todo-list.css`, which will be automatically applied ONLY to the view with the same filename. Populate it with the following code:
 
 ```css
 .done {
   text-decoration: line-through;
 }
+
+```
+
+To get our new css file to load we will add the link to our public/index.html file. It should look like this:
+
+```html
+<head>
+    <meta charset="utf-8">
+    <title>Thorax-Todo</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/todo-list.css"> <!-- Add this line to reference our custom stylesheet. -->
+  </head>
+  <body>
 ```
 
 View Behaviors
@@ -455,14 +466,13 @@ View Behaviors
 In order to add new items to the list we should listen to the `submit` event on `form` elements in our view. We can use the events hash in `js/views/todo-list/index.js`:
 
 ```js
-events{
-    "submit form": function(event) {
-      event.preventDefault();
-      var attrs = this.serialize();
-      this.collection.add(attrs);
-      this.$('input[name="title"]').val('');
-    }
-}
+    events: { 
+        "submit form": function(event) {
+            event.preventDefault();
+            var attrs = this.serialize();
+            this.collection.add(attrs)
+            this.$('input[name="title"]').val('');
+        },
 ```
 
 The `serialize` method will return key value pairs of all attributes in form elements on the page. Since we had an input with a name of `title` attrs will be set to: `{title: "your todo"}`. When using the `collection` helper or a `CollectionView`, Thorax adds, removes and updates views in the collection as appropriate. When we `add` a new model to the collection the view will automatically update.
