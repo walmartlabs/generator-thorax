@@ -6,7 +6,7 @@ var yeoman = require('yeoman-generator');
 var marked = require('marked');
 var chalk = require('chalk');
 
-var HandlebonesGenerator = module.exports = function (args, options, config) {
+var Generator = module.exports = function (args, options, config) {
   yeoman.generators.NamedBase.apply(this, arguments);
 
   this.on('end', function () {
@@ -19,14 +19,14 @@ var HandlebonesGenerator = module.exports = function (args, options, config) {
   });
 };
 
-util.inherits(HandlebonesGenerator, yeoman.generators.NamedBase);
+util.inherits(Generator, yeoman.generators.NamedBase);
 
 /**
  * This prompt runs first. If chosen, it will bypass the remaining prompts
  * unless the directory being generated already exists, in which case
  * fixDirectoryNameCollision will directly afterward
  */
-HandlebonesGenerator.prototype.askForChefsChoice = function () {
+Generator.prototype.askForChefsChoice = function () {
   var cb = this.async();
 
   // welcome message
@@ -74,13 +74,13 @@ HandlebonesGenerator.prototype.askForChefsChoice = function () {
  * Note that all proto methods without an underscore are run in order by yoeman
  * therefore the order these prototype methods are arranged have a ryhme/reason
  */
-HandlebonesGenerator.prototype.askForDirectory = function() {
+Generator.prototype.askForDirectory = function() {
   if (typeof this.newDirectory !== 'undefined') { return; }
 
   this._askForDirectory(this.async());
 };
 
-HandlebonesGenerator.prototype._askForDirectory = function(cb) {
+Generator.prototype._askForDirectory = function(cb) {
   var prompts = [
     {
       type: 'confirm',
@@ -105,13 +105,13 @@ HandlebonesGenerator.prototype._askForDirectory = function(cb) {
  * Prevents a new app being generated into a previously existing directory by
  * asking for a new name
  */
-HandlebonesGenerator.prototype.fixDirectoryNameCollision = function () {
+Generator.prototype.fixDirectoryNameCollision = function () {
   if (!this.newDirectory) { return; }
 
   this._fixDirectoryNameCollision(this._.dasherize(this.name), this.async());
 };
 
-HandlebonesGenerator.prototype._fixDirectoryNameCollision = function (directory, cb) {
+Generator.prototype._fixDirectoryNameCollision = function (directory, cb) {
   var prompts = [{
     type: 'input',
     name: 'directoryName',
@@ -142,7 +142,7 @@ HandlebonesGenerator.prototype._fixDirectoryNameCollision = function (directory,
   }.bind(this));
 };
 
-HandlebonesGenerator.prototype.askForExtendedPrompt = function() {
+Generator.prototype.askForExtendedPrompt = function() {
   // checking for pre-defined prompt option and then calling a private
   // method fixes async issues. Perhaps there is a better way, but
   // until then that's why this convention is used
@@ -150,7 +150,7 @@ HandlebonesGenerator.prototype.askForExtendedPrompt = function() {
   this._askForExtendedPrompt(this.async());
 };
 
-HandlebonesGenerator.prototype._askForExtendedPrompt = function (cb) {
+Generator.prototype._askForExtendedPrompt = function (cb) {
   var prompts = [
     {
       type: 'list',
@@ -203,7 +203,7 @@ HandlebonesGenerator.prototype._askForExtendedPrompt = function (cb) {
   }.bind(this));
 };
 
-HandlebonesGenerator.prototype.app = function () {
+Generator.prototype.app = function () {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   this.template('_bower.json', 'bower.json');
@@ -303,7 +303,7 @@ HandlebonesGenerator.prototype.app = function () {
 
 };
 
-HandlebonesGenerator.prototype.scripts = function () {
+Generator.prototype.scripts = function () {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
   var scripts = ['view', 'collection-view', 'layout-view', 'model', 'collection'];
   scripts.forEach(function(script) {
@@ -314,20 +314,20 @@ HandlebonesGenerator.prototype.scripts = function () {
   this.template('_index.html', 'public/index.html');
 };
 
-HandlebonesGenerator.prototype.projectFiles = function () {
+Generator.prototype.projectFiles = function () {
   this.copy('jshintrc', '.jshintrc');
   this.copy('editorconfig', '.editorconfig');
   this.copy('bowerrc', '.bowerrc');
   this.copy('gitignore', '.gitignore');
 };
 
-HandlebonesGenerator.prototype._processReadme = function () {
+Generator.prototype._processReadme = function () {
   var markedFile = fs.readFileSync(path.join(__dirname, '../README.md')).toString();
   var processedMarkedFile = marked(markedFile);
   return processedMarkedFile.replace(/{/g, '&#123;').replace(/}/g, '&#125;');
 };
 
-HandlebonesGenerator.prototype.helloWorld = function() {
+Generator.prototype.helloWorld = function() {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   if (this.starterApp === 'Hello World') {
@@ -341,7 +341,7 @@ HandlebonesGenerator.prototype.helloWorld = function() {
   }
 };
 
-HandlebonesGenerator.prototype.todoList = function() {
+Generator.prototype.todoList = function() {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   if (this.starterApp === 'Todo List') {
@@ -356,12 +356,12 @@ HandlebonesGenerator.prototype.todoList = function() {
 
 // We rendered the JSON files with a template, parse and stringify
 // for ideal spacing
-HandlebonesGenerator.prototype._sanitizeBowerJSON = function() {
+Generator.prototype._sanitizeBowerJSON = function() {
   var bowerJSONPath = path.join(this.destinationRoot(), 'bower.json');
   fs.writeFileSync(bowerJSONPath, JSON.stringify(JSON.parse(fs.readFileSync(bowerJSONPath)), null, 2));
 };
 
-HandlebonesGenerator.prototype._sanitizePackageJSON = function() {
+Generator.prototype._sanitizePackageJSON = function() {
   var packageJSONPath = path.join(this.destinationRoot(), 'package.json');
   fs.writeFileSync(packageJSONPath, JSON.stringify(JSON.parse(fs.readFileSync(packageJSONPath)), null, 2));
 };
