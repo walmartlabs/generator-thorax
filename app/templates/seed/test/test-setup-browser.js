@@ -20,7 +20,6 @@ define(function(require) {
     '<% if (includeCoffeeScript) { %>cs!<% } %>./app.spec',
     '<% if (includeCoffeeScript) { %>cs!<% } %>./views/root.spec',
     '<% if (includeCoffeeScript) { %>cs!<% } %>./helpers/helpers.spec',
-    '<% if (includeCoffeeScript) { %>cs!<% } %>./helpers/view-helpers.spec'
   ], function() { // run mocha
     if (global.mochaPhantomJS) { global.mochaPhantomJS.run(); }
     else { global.mocha.run(); }

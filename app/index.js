@@ -284,7 +284,6 @@ Generator.prototype.app = function () {
   this.copy('seed/test/utils/.gitkeep', 'test/utils/.gitkeep');
   this.copy('seed/test/views/.gitkeep', 'test/views/.gitkeep');
 
-  this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
   this.copy('seed/test/fixtures/hello-world.hbs', 'test/fixtures/hello-world.hbs');
 
   this.copy('require-config.js');
@@ -299,7 +298,6 @@ Generator.prototype.app = function () {
   this.copy('seed/test/views/root.spec' + scriptExt, 'test/views/root.spec' + scriptExt);
   this.copy('seed/test/app.spec' + scriptExt, 'test/app.spec' + scriptExt);
   this.copy('seed/test/helpers/helpers.spec' + scriptExt, 'test/helpers/helpers.spec' + scriptExt);
-  this.copy('seed/test/helpers/view-helpers.spec' + scriptExt, 'test/helpers/view-helpers.spec' + scriptExt);
 
 };
 
