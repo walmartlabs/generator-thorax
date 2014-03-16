@@ -48,7 +48,7 @@ describe('Stylesheet Generators', function(){
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {

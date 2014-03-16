@@ -74,25 +74,25 @@ pre {
   border-bottom: 5px solid #d3dde6;
 }
 
-.thorax-container {
+.handlebones-container {
   width: 60em;
   margin: 0 auto;
 }
 
-.thorax-wrapper {
+.handlebones-wrapper {
   position: relative;
   padding: 75px 0px 25px 0px;
   min-height: 100%;
 }
 
-.thorax-primary {
+.handlebones-primary {
   width: 62.5%;
   font-size: 0.9em;
   line-height: 1.6em;
 }
 
-.thorax-primary ul li code,
-.thorax-primary p code {
+.handlebones-primary ul li code,
+.handlebones-primary p code {
   margin: 0 2px;
   padding: 0px 5px;
   border: 1px solid #ccc;
@@ -100,7 +100,7 @@ pre {
   border-radius: 3px;
 }
 
-.thorax-secondary {
+.handlebones-secondary {
   position: absolute;
   top: 75px;
   right: 0;
@@ -114,38 +114,38 @@ pre {
   background: #edf1f5;
 }
 
-.thorax-secondary h3 {
+.handlebones-secondary h3 {
   font-size: 1em;
   line-height: 1;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
-.thorax-secondary ul {
+.handlebones-secondary ul {
   margin: 1em 0;
   padding: 0;
   font-size: 14px;
   list-style: none;
 }
 
-.thorax-secondary li {
+.handlebones-secondary li {
   margin: 0.5em 0;
 }
 
-.thorax-footer {
+.handlebones-footer {
   padding: 0.4em 0;
   border-top: 6px solid #1a75cf;
   background: #22394f;
   text-align: center;
 }
 
-.thorax-footer ul li {
+.handlebones-footer ul li {
   list-style-type: none;
   display: inline;
   margin: 0px 5px;
 }
 
-.thorax-footer ul li a {
+.handlebones-footer ul li a {
   color: white;
   font-size: 0.9em;
 }

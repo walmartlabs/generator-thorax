@@ -19,7 +19,7 @@ module.exports = {
         'underscore': '../bower_components/underscore/underscore',
         'handlebars': '../bower_components/handlebars/handlebars',
         'backbone': '../bower_components/backbone/backbone',
-        'thorax': '../bower_components/thorax/thorax',
+        'handlebones': '../bower_components/handlebones/handlebones',
         'coffee-script': '../bower_components/coffee-script/index',
         'cs': '../bower_components/require-cs/cs',
         'text': '../bower_components/text/text',
@@ -38,8 +38,8 @@ module.exports = {
         'underscore': {
           exports: '_'
         },
-        'thorax': {
-          exports: 'Thorax',
+        'handlebones': {
+          exports: 'Handlebones',
           deps: ['handlebars', 'backbone']
         }<% if (useZepto) { %>,
         'zepto': {

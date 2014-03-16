@@ -44,7 +44,7 @@ describe('App Generators', function () {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
@@ -70,12 +70,12 @@ describe('App Generators', function () {
           'js/models',
           'js/collections',
           'js/views/root.js',
-          ['js/helpers.js', /define\(\['handlebars', 'thorax'\]/],
-          ['js/view.js', /Thorax.View.extend\(\{/],
-          ['js/model.js', /Thorax.Model.extend\(\{/],
-          ['js/collection.js', /Thorax.Collection.extend\(\{/],
-          ['js/collection-view.js', /Thorax.CollectionView.extend\(\{/],
-          ['js/layout-view.js', /Thorax.LayoutView.extend\(\{/],
+          ['js/helpers.js', /define\(\['handlebars'\]/],
+          ['js/view.js', /Handlebones.View.extend\(\{/],
+          ['js/model.js', /Handlebones.Model.extend\(\{/],
+          ['js/collection.js', /Handlebones.Collection.extend\(\{/],
+          ['js/collection-view.js', /Handlebones.CollectionView.extend\(\{/],
+          ['js/layout-view.js', /Handlebones.LayoutView.extend\(\{/],
           ['js/main.js', /'helpers'/],
           ['js/main.js', /'views\/root'/],
         ]);
@@ -128,12 +128,12 @@ describe('App Generators', function () {
           'js/models',
           'js/collections',
           'js/views/root.coffee',
-          ['js/helpers.coffee', /define \["handlebars", "thorax"\], \(Handlebars\) ->/],
-          ['js/view.coffee', /class View extends Thorax.View/],
-          ['js/model.coffee', /class Model extends Thorax.Model/],
-          ['js/collection.coffee', /class Collection extends Thorax.Collection/],
-          ['js/collection-view.coffee', /class CollectionView extends Thorax.CollectionView/],
-          ['js/layout-view.coffee', /class LayoutView extends Thorax.LayoutView/],
+          ['js/helpers.coffee', /define \["handlebars"\], \(Handlebars\) ->/],
+          ['js/view.coffee', /class View extends Handlebones.View/],
+          ['js/model.coffee', /class Model extends Handlebones.Model/],
+          ['js/collection.coffee', /class Collection extends Handlebones.Collection/],
+          ['js/collection-view.coffee', /class CollectionView extends Handlebones.CollectionView/],
+          ['js/layout-view.coffee', /class LayoutView extends Handlebones.LayoutView/],
           ['js/main.js', /'cs!helpers'/],
           ['js/main.js', /'cs!views\/root'/],
         ]);

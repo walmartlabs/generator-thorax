@@ -63,7 +63,6 @@ module.exports = function(grunt) {
   grunt.config('settings', settings);
   grunt.config('paths', settings.paths);
 
-  grunt.loadNpmTasks('thorax-inspector');
   grunt.loadTasks('tasks');
 
   grunt.registerTask('styles:development', [
@@ -82,7 +81,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'build',
     'styles:development',
-    'thorax:inspector',
     'connect:development',
     'watch'
   ]);
@@ -95,7 +93,6 @@ module.exports = function(grunt) {
   grunt.registerTask('noserver', [
     'build',
     'styles:development',
-    'thorax:inspector',
     'watch'
   ]);
 
@@ -105,7 +102,6 @@ module.exports = function(grunt) {
   grunt.registerTask('autotest', [
     'build',
     'styles:development',
-    'thorax:inspector',
     'karma:server',
     'connect:development',
     'addKarmaToWatchTask',
@@ -120,7 +116,6 @@ module.exports = function(grunt) {
   grunt.registerTask('autotest:noserver', [
     'build',
     'styles:development',
-    'thorax:inspector',
     'karma:server',
     'addKarmaToWatchTask',
     'watch'

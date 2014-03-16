@@ -6,7 +6,7 @@ var yeoman = require('yeoman-generator');
 var marked = require('marked');
 var chalk = require('chalk');
 
-var ThoraxGenerator = module.exports = function (args, options, config) {
+var Generator = module.exports = function (args, options, config) {
   yeoman.generators.NamedBase.apply(this, arguments);
 
   this.on('end', function () {
@@ -19,27 +19,27 @@ var ThoraxGenerator = module.exports = function (args, options, config) {
   });
 };
 
-util.inherits(ThoraxGenerator, yeoman.generators.NamedBase);
+util.inherits(Generator, yeoman.generators.NamedBase);
 
 /**
  * This prompt runs first. If chosen, it will bypass the remaining prompts
  * unless the directory being generated already exists, in which case
  * fixDirectoryNameCollision will directly afterward
  */
-ThoraxGenerator.prototype.askForChefsChoice = function () {
+Generator.prototype.askForChefsChoice = function () {
   var cb = this.async();
 
   // welcome message
   if (!this.options['skip-welcome-message']) {
-    var thoraxWelcome = chalk.yellow.bold("Welcome to Thorax!\n\n");
-    console.log(thoraxWelcome);
+    var handlebonesWelcome = chalk.yellow.bold("Welcome to Handlebones!\n\n");
+    console.log(handlebonesWelcome);
   }
 
   var prompts = [
     {
       type: 'confirm',
       name: 'chefsChoice',
-      message: "If this is your first time with Thorax, we've put together the\n" +
+      message: "If this is your first time with Handlebones, we've put together the\n" +
                "Chef's Choice. Would you like to try it?",
       default: true
     }
@@ -74,13 +74,13 @@ ThoraxGenerator.prototype.askForChefsChoice = function () {
  * Note that all proto methods without an underscore are run in order by yoeman
  * therefore the order these prototype methods are arranged have a ryhme/reason
  */
-ThoraxGenerator.prototype.askForDirectory = function() {
+Generator.prototype.askForDirectory = function() {
   if (typeof this.newDirectory !== 'undefined') { return; }
 
   this._askForDirectory(this.async());
 };
 
-ThoraxGenerator.prototype._askForDirectory = function(cb) {
+Generator.prototype._askForDirectory = function(cb) {
   var prompts = [
     {
       type: 'confirm',
@@ -105,13 +105,13 @@ ThoraxGenerator.prototype._askForDirectory = function(cb) {
  * Prevents a new app being generated into a previously existing directory by
  * asking for a new name
  */
-ThoraxGenerator.prototype.fixDirectoryNameCollision = function () {
+Generator.prototype.fixDirectoryNameCollision = function () {
   if (!this.newDirectory) { return; }
 
   this._fixDirectoryNameCollision(this._.dasherize(this.name), this.async());
 };
 
-ThoraxGenerator.prototype._fixDirectoryNameCollision = function (directory, cb) {
+Generator.prototype._fixDirectoryNameCollision = function (directory, cb) {
   var prompts = [{
     type: 'input',
     name: 'directoryName',
@@ -142,7 +142,7 @@ ThoraxGenerator.prototype._fixDirectoryNameCollision = function (directory, cb) 
   }.bind(this));
 };
 
-ThoraxGenerator.prototype.askForExtendedPrompt = function() {
+Generator.prototype.askForExtendedPrompt = function() {
   // checking for pre-defined prompt option and then calling a private
   // method fixes async issues. Perhaps there is a better way, but
   // until then that's why this convention is used
@@ -150,7 +150,7 @@ ThoraxGenerator.prototype.askForExtendedPrompt = function() {
   this._askForExtendedPrompt(this.async());
 };
 
-ThoraxGenerator.prototype._askForExtendedPrompt = function (cb) {
+Generator.prototype._askForExtendedPrompt = function (cb) {
   var prompts = [
     {
       type: 'list',
@@ -203,7 +203,7 @@ ThoraxGenerator.prototype._askForExtendedPrompt = function (cb) {
   }.bind(this));
 };
 
-ThoraxGenerator.prototype.app = function () {
+Generator.prototype.app = function () {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   this.template('_bower.json', 'bower.json');
@@ -246,7 +246,6 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/copy.js', 'tasks/options/copy.js');
   this.copy('seed/tasks/options/cssmin.js', 'tasks/options/cssmin.js');
   this.copy('seed/tasks/options/requirejs.js', 'tasks/options/requirejs.js');
-  this.copy('seed/tasks/options/thorax.js', 'tasks/options/thorax.js');
   this.copy('seed/tasks/options/watch.js', 'tasks/options/watch.js');
 
   this.mkdir('js');
@@ -285,7 +284,6 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/test/utils/.gitkeep', 'test/utils/.gitkeep');
   this.copy('seed/test/views/.gitkeep', 'test/views/.gitkeep');
 
-  this.copy('seed/test/fixtures/adding-machine.hbs', 'test/fixtures/adding-machine.hbs');
   this.copy('seed/test/fixtures/hello-world.hbs', 'test/fixtures/hello-world.hbs');
 
   this.copy('require-config.js');
@@ -300,11 +298,10 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/test/views/root.spec' + scriptExt, 'test/views/root.spec' + scriptExt);
   this.copy('seed/test/app.spec' + scriptExt, 'test/app.spec' + scriptExt);
   this.copy('seed/test/helpers/helpers.spec' + scriptExt, 'test/helpers/helpers.spec' + scriptExt);
-  this.copy('seed/test/helpers/view-helpers.spec' + scriptExt, 'test/helpers/view-helpers.spec' + scriptExt);
 
 };
 
-ThoraxGenerator.prototype.scripts = function () {
+Generator.prototype.scripts = function () {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
   var scripts = ['view', 'collection-view', 'layout-view', 'model', 'collection'];
   scripts.forEach(function(script) {
@@ -315,20 +312,20 @@ ThoraxGenerator.prototype.scripts = function () {
   this.template('_index.html', 'public/index.html');
 };
 
-ThoraxGenerator.prototype.projectFiles = function () {
+Generator.prototype.projectFiles = function () {
   this.copy('jshintrc', '.jshintrc');
   this.copy('editorconfig', '.editorconfig');
   this.copy('bowerrc', '.bowerrc');
   this.copy('gitignore', '.gitignore');
 };
 
-ThoraxGenerator.prototype._processReadme = function () {
+Generator.prototype._processReadme = function () {
   var markedFile = fs.readFileSync(path.join(__dirname, '../README.md')).toString();
   var processedMarkedFile = marked(markedFile);
   return processedMarkedFile.replace(/{/g, '&#123;').replace(/}/g, '&#125;');
 };
 
-ThoraxGenerator.prototype.helloWorld = function() {
+Generator.prototype.helloWorld = function() {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   if (this.starterApp === 'Hello World') {
@@ -342,7 +339,7 @@ ThoraxGenerator.prototype.helloWorld = function() {
   }
 };
 
-ThoraxGenerator.prototype.todoList = function() {
+Generator.prototype.todoList = function() {
   var scriptExt = this.includeCoffeeScript ? '.coffee' : '.js';
 
   if (this.starterApp === 'Todo List') {
@@ -357,12 +354,12 @@ ThoraxGenerator.prototype.todoList = function() {
 
 // We rendered the JSON files with a template, parse and stringify
 // for ideal spacing
-ThoraxGenerator.prototype._sanitizeBowerJSON = function() {
+Generator.prototype._sanitizeBowerJSON = function() {
   var bowerJSONPath = path.join(this.destinationRoot(), 'bower.json');
   fs.writeFileSync(bowerJSONPath, JSON.stringify(JSON.parse(fs.readFileSync(bowerJSONPath)), null, 2));
 };
 
-ThoraxGenerator.prototype._sanitizePackageJSON = function() {
+Generator.prototype._sanitizePackageJSON = function() {
   var packageJSONPath = path.join(this.destinationRoot(), 'package.json');
   fs.writeFileSync(packageJSONPath, JSON.stringify(JSON.parse(fs.readFileSync(packageJSONPath)), null, 2));
 };

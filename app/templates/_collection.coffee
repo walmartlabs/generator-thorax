@@ -1,2 +1,2 @@
-define ['thorax'], (Thorax) ->
-  class Collection extends Thorax.Collection
+define ['handlebones'], (Handlebones) ->
+  class Collection extends Handlebones.Collection

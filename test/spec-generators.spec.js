@@ -90,7 +90,6 @@ describe('Spec Generators', function () {
     });
     it('provides example fixtures', function () {
       helpers.assertFiles([
-        'test/fixtures/adding-machine.hbs',
         'test/fixtures/hello-world.hbs'
       ]);
     });
@@ -106,7 +105,7 @@ describe('Spec Generators', function () {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
@@ -137,7 +136,6 @@ describe('Spec Generators', function () {
       helpers.assertFiles([
         ['test/helpers/helpers.spec.js', /Handlebars\.registerHelper\("hello-world"/],
         ['test/helpers/helpers.spec.js', /hbsFixture\("hello-world\.hbs"\)/],
-        ['test/helpers/view-helpers.spec.js', /hbsFixture\("adding-machine\.hbs"\)/]
       ]);
     });
 
@@ -148,7 +146,6 @@ describe('Spec Generators', function () {
         [file, /'.\/app\.spec'/],
         [file, /'.\/views\/root.spec'/],
         [file, /'.\/helpers\/helpers.spec'/],
-        [file, /'.\/helpers\/view-helpers.spec'/],
       ]);
     });
   });
@@ -168,7 +165,6 @@ describe('Spec Generators', function () {
       helpers.assertFiles([
         ['test/helpers/helpers.spec.coffee', /Handlebars\.registerHelper "hello-world"/],
         ['test/helpers/helpers.spec.coffee', /hbsFixture\("hello-world\.hbs"\)/],
-        ['test/helpers/view-helpers.spec.coffee', /hbsFixture\("adding-machine\.hbs"\)/]
       ]);
     });
 
@@ -179,7 +175,6 @@ describe('Spec Generators', function () {
         [file, /'cs!.\/app\.spec'/],
         [file, /'cs!.\/views\/root.spec'/],
         [file, /'cs!.\/helpers\/helpers.spec'/],
-        [file, /'cs!.\/helpers\/view-helpers.spec'/],
       ]);
     });
 

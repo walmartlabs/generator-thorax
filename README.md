@@ -1,20 +1,18 @@
-# Thorax Generator
+# Handlebones Generator
 
-Generate a new [Thorax](http://thoraxjs.org/) application. Includes some configurable options and some opinions.
+Generate a new [Handlebones](http://thoraxjs.org/) application. Includes some configurable options and some opinions.
 
 ```sh
-$ npm install -g yo generator-thorax
-$ yo thorax desired-application
+$ npm install -g yo generator-handlebones
+$ yo handlebones desired-application
 $ cd desired-application
 $ grunt
 ```
 
-For a snazzier development environment, it's recommended that you install the [Thorax Inspector Chrome Extension](https://chrome.google.com/webstore/detail/thorax-inspector/poioalbefcopgeaeaadelomciijaondk?hl=en-US) before getting started.
-
 ## Stack
 
-- Thorax, a framework for building better Backbone applications
-- Handlebars, a framework that works out of the box with Thorax for writing dynamic JavaScript views in HTML, variables are inserted using the `{{ handlebars }}` syntax
+- Handlebones, a framework for building better Backbone applications
+- Handlebars, a framework that works out of the box with Handlebones for writing dynamic JavaScript views in HTML, variables are inserted using the `{{ handlebars }}` syntax
 - Grunt, a framework for declaratively defining CLI tasks, e.g., for running tests, compiling stylesheets, creating a production build of your app.
 - Bower, a package manager for the browser making it easy to pull in 3rd party libraries
 - Your choice of LESS/Stylus/SASS for more productive stylesheets
@@ -94,7 +92,7 @@ You still may want to run `grunt` in a second terminal window to hook up liverel
 
 #### Debugging Karma
 
-To gain access to the console and debugging tools provided by Chrome, click on the `Debug` button at the top of the window booted by karma. Within here you'll have full access to your Thorax application, even though the page itself is white.
+To gain access to the console and debugging tools provided by Chrome, click on the `Debug` button at the top of the window booted by karma. Within here you'll have full access to your Handlebones application, even though the page itself is white.
 
 ### Production
 
@@ -161,7 +159,7 @@ Out of the box all generators can optionally output CoffeeScript.
 
 When generating a new application, the generator will simply ask you if you want CoffeeScript or JavaScript and act accordingly by outputting the generated application with the files of the chosen format.
 
-Running a sub generator, like `yo thorax:router`, will look for the presence of at least one `.coffee` file within `js/` and choose whether to output CoffeeScript or JavaScript accordingly. 
+Running a sub generator, like `yo handlebones:router`, will look for the presence of at least one `.coffee` file within `js/` and choose whether to output CoffeeScript or JavaScript accordingly. 
 
 To force CoffeeScript output, append `--coffee` to any of the following commands.
 
@@ -199,29 +197,29 @@ One current caveat with this approach is that the `template` option within a vie
 
 ### Application Generator:
 
-Generate a new Thorax Application using the software stack mentioned above:
+Generate a new Handlebones Application using the software stack mentioned above:
 
 ```sh
-$ yo thorax app-name
+$ yo handlebones app-name
 ```
 
 ### Sub Generators:
 
-Use these within an existing Thorax application:
+Use these within an existing Handlebones application:
 
 ```sh
-$ yo thorax:router name
-$ yo thorax:view name
-$ yo thorax:model name
-$ yo thorax:collection name
-$ yo thorax:collection-view name
+$ yo handlebones:router name
+$ yo handlebones:view name
+$ yo handlebones:model name
+$ yo handlebones:collection name
+$ yo handlebones:collection-view name
 ```
 
 The `name` argument may include a directory path, such as `todo-list/index`:
 
 ```sh
-$ yo thorax:router todo-list
-$ yo thorax:view todo-list/index
+$ yo handlebones:router todo-list
+$ yo handlebones:view todo-list/index
 ```
 
 ## From Zero to Todos
@@ -229,13 +227,13 @@ $ yo thorax:view todo-list/index
 ### Install the generator
 
 ```sh
-$ npm install -g yo generator-thorax
+$ npm install -g yo generator-handlebones
 ```
 
 ### Generate your application
 
 ```sh
-$ yo thorax todo-list
+$ yo handlebones todo-list
 [?] Would you like to generate the app in a new directory? Yes
 [?] Choose a css pre-processor: (Use arrow keys)
     ❯ Less with bootstrap (default choice) 
@@ -265,7 +263,7 @@ In the following section, we'll build a Todo App using sub-generators. Note that
 ##### Generate a View:
 
 ```sh
-$ yo thorax:view todo-list/index
+$ yo handlebones:view todo-list/index
 ```
 
 This generates two new files, a view and a matching template:
@@ -306,7 +304,7 @@ Those familiar with RequireJS will be thrilled to see the define() call above, a
 ##### Generate a Router:
 
 ```sh
-$ yo thorax:router todo-list
+$ yo handlebones:router todo-list
 ```
 
 This will generate one new file...
@@ -322,7 +320,7 @@ define([
   'backbone'
   'views/root',
 ], function (Backbone, RootView) {
-  return Backbone.Router.extend({  //plain Backbone. Thorax doesn't touch the router.
+  return Backbone.Router.extend({  //plain Backbone. Handlebones doesn't touch the router.
     routes: {
     }
   });
@@ -380,7 +378,7 @@ Now that we have something on screen, let's get some data on the screen and fini
 
 ##### Render a Collection
 
-To implement a todo list, we need to create a collection and set it on the view. Unlike a `Backbone.View` instance, a `Thorax.View` instance does not have an `options` object. All properties passed to the constructor are set on the instance and also become available inside of the handlebars template. We'll now update `js/routers/todo-list.js`...
+To implement a todo list, we need to create a collection and set it on the view. Unlike a `Backbone.View` instance, a `Handlebones.View` instance does not have an `options` object. All properties passed to the constructor are set on the instance and also become available inside of the handlebars template. We'll now update `js/routers/todo-list.js`...
 
 ```js
 define([
@@ -454,7 +452,7 @@ To get our new css file to load we will add the link to our public/index.html fi
 ```html
 <head>
     <meta charset="utf-8">
-    <title>Thorax-Todo</title>
+    <title>Handlebones-Todo</title>
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/todo-list.css"> <!-- Add this line to reference our custom stylesheet. -->
   </head>
@@ -475,7 +473,7 @@ In order to add new items to the list we should listen to the `submit` event on 
         },
 ```
 
-The `serialize` method will return key value pairs of all attributes in form elements on the page. Since we had an input with a name of `title` attrs will be set to: `{title: "your todo"}`. When using the `collection` helper or a `CollectionView`, Thorax adds, removes and updates views in the collection as appropriate. When we `add` a new model to the collection the view will automatically update.
+The `serialize` method will return key value pairs of all attributes in form elements on the page. Since we had an input with a name of `title` attrs will be set to: `{title: "your todo"}`. When using the `collection` helper or a `CollectionView`, Handlebones adds, removes and updates views in the collection as appropriate. When we `add` a new model to the collection the view will automatically update.
 
 ```js
 'change input[type="checkbox"]': function(event) {
@@ -484,7 +482,7 @@ The `serialize` method will return key value pairs of all attributes in form ele
 }
 ```
 
-We also need to listen for a change in a checkbox so we can mark a model as done. Thorax extends the jQuery or Zepto `$` object with three methods: `$.view`, `$.model` and `$.collection`. They will retrieve closest bound object to an element. In this case, a model was automatically bound to the `li` tag passed into the `collection` helper in the template. Now that we have a reference to the `model` we can update it and the view will automatically update.
+We also need to listen for a change in a checkbox so we can mark a model as done. Handlebones extends the jQuery or Zepto `$` object with three methods: `$.view`, `$.model` and `$.collection`. They will retrieve closest bound object to an element. In this case, a model was automatically bound to the `li` tag passed into the `collection` helper in the template. Now that we have a reference to the `model` we can update it and the view will automatically update.
 
 Our finished `js/views/todo-list/index.js` file should look like:
 
@@ -512,7 +510,7 @@ define([
 });
 ```
 
-And that's a finished non-persistent todo list application! For more complex examples and tutorials using the thorax framework, see the [tutorials on the Thorax homepage](http://thoraxjs.org)
+And that's a finished non-persistent todo list application! For more complex examples and tutorials using the handlebones framework, see the [tutorials on the Handlebones homepage](http://thoraxjs.org)
 
 ## Require JS
 
@@ -523,7 +521,7 @@ Instead of compiling requiring script tags in your HTML, Require JS is used to l
 To add a new library to your app. Here are the steps:
 
 1. Install the library via bower by running `bower install library-name --save-dev`. If the library is not updated regularly from bower try pointing the version to a github tag, for example: `"library-name": "some-github-profile/library-name#v0.1"` inside of your `bower.json` file.
-2. Open `require-config.js` at the root of your application and add a `path` that points the the AMD module version of the library installed by bower. If the library does not have an AMD module version(many don't) you'll need to setup a `shim` settings, which tells Require JS to wrap a normal JS file as a module you can require. Also make sure to set the `deps` array for any libraries the library depends on. For an example, take a look at how Thorax itself is setup within `require-config.js`.
+2. Open `require-config.js` at the root of your application and add a `path` that points the the AMD module version of the library installed by bower. If the library does not have an AMD module version(many don't) you'll need to setup a `shim` settings, which tells Require JS to wrap a normal JS file as a module you can require. Also make sure to set the `deps` array for any libraries the library depends on. For an example, take a look at how Handlebones itself is setup within `require-config.js`.
 3. Inside an existing or new module, require the library by adding an item to the array of required modules - the name you'll use here is the name of the `path` you setup in step 2 above. Then, pass a new argument into the callback function, name the argument whatever you'd like, but remember that uppercase names should be reserved for modules that export constructor functions. When all the modules that this module depends on resolve, the callback function will be called and the argument representing the exported object from the module will be available for use inside.
 
 For in depth information on Require JS make sure to check out [http://requirejs.org/](http://requirejs.org/).

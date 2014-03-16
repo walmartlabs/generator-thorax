@@ -23,10 +23,10 @@ define(function(require) {
 
   require("sinon");
 
-  // unique to thorax apps
+  // unique to handlebones apps
   require('handlebars');
   require('backbone');
-  require('thorax');
+  require('handlebones');
 
   // hbs fixture support
   global.fixtures = require('fixtures');

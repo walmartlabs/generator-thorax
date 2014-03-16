@@ -8,7 +8,7 @@ describe('Creating a helper test', function () {
       return new Handlebars.SafeString('Wow, template fixtures');
     });
 
-    var view = new Thorax.View({
+    var view = new Handlebones.View({
       template: hbsFixture("hello-world.hbs")
     });
     view.render();

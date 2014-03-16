@@ -1,5 +1,5 @@
-define(['thorax'], function (Thorax) {
-  return Thorax.Collection.extend({
+define(['handlebones'], function (Handlebones) {
+  return Handlebones.Collection.extend({
 
   });
 });
