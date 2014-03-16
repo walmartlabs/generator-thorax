@@ -1,2 +1,2 @@
-define ['thorax'], (Thorax) ->
-  class LayoutView extends Thorax.LayoutView
+define ['handlebones'], (Handlebones) ->
+  class LayoutView extends Handlebones.LayoutView

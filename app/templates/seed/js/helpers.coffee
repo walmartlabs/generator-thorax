@@ -1,4 +1,4 @@
-define ["handlebars", "thorax"], (Handlebars) ->
+define ["handlebars", "handlebones"], (Handlebars) ->
 
   ###
   Register a normal handlebars helper

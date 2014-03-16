@@ -7,6 +7,6 @@ describe "Creating a helper test", ->
     Handlebars.registerHelper "hello-world", ->
       new Handlebars.SafeString("Wow, template fixtures")
 
-    view = new Thorax.View(template: hbsFixture("hello-world.hbs"))
+    view = new Handlebones.View(template: hbsFixture("hello-world.hbs"))
     view.render()
     expect(view.$("h1").text()).to.eq "Wow, template fixtures"

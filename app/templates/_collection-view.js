@@ -1,5 +1,5 @@
-define(['thorax'], function (Thorax) {
-  return Thorax.CollectionView.extend({
+define(['handlebones'], function (Handlebones) {
+  return Handlebones.CollectionView.extend({
 
   });
 });

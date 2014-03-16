@@ -6,7 +6,7 @@ describe('A simple adding machine', function () {
       });
     });
 
-    var view = new Thorax.View({
+    var view = new Handlebones.View({
       template: hbsFixture("adding-machine.hbs"),
       events: {
         incremented: function() {

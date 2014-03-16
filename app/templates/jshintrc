@@ -13,7 +13,7 @@
     "beforeEach",
     "Handlebars",
     "Backbone",
-    "Thorax",
+    "Handlebones",
     "chai",
     "fixtures",
     "afterEach",

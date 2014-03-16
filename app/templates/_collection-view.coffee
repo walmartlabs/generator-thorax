@@ -1,2 +1,2 @@
-define ['thorax'], (Thorax) ->
-  class CollectionView extends Thorax.CollectionView
+define ['handlebones'], (Handlebones) ->
+  class CollectionView extends Handlebones.CollectionView

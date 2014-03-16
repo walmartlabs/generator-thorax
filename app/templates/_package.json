@@ -8,7 +8,6 @@
   "devDependencies": {
     "grunt-contrib-connect": "~0.5.0",
     "grunt": "~0.4",
-    "thorax-inspector": "~0.2.0",
     "bower": "~0.10",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-clean": "~0.5.0",
@@ -42,7 +41,7 @@
     "test": "node ./node_modules/.bin/grunt test"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   }
 }
 

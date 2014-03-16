@@ -4,7 +4,7 @@ describe "A simple adding machine", ->
       helperView.parent.on eventName, ->
         helperView.render()
 
-    view = new Thorax.View
+    view = new Handlebones.View
       template: hbsFixture("adding-machine.hbs")
       events:
         incremented: ->

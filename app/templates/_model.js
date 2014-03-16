@@ -1,5 +1,5 @@
-define(['thorax'], function (Thorax) {
-  return Thorax.Model.extend({
+define(['handlebones'], function (Handlebones) {
+  return Handlebones.Model.extend({
 
   });
 });

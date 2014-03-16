@@ -42,7 +42,7 @@ require.config({
     'underscore': pathPrefix + 'bower_components/underscore/underscore',
     'handlebars': pathPrefix + 'bower_components/handlebars/handlebars',
     'backbone': pathPrefix + 'bower_components/backbone/backbone',
-    'thorax': pathPrefix + 'bower_components/thorax/thorax',
+    'handlebones': pathPrefix + 'bower_components/handlebones/handlebones',
     'coffee-script': pathPrefix + 'bower_components/coffee-script/index',
     'cs': pathPrefix + 'bower_components/require-cs/cs',
     'text': pathPrefix + 'bower_components/text/text',
@@ -61,8 +61,8 @@ require.config({
     'underscore': {
       exports: '_'
     },
-    'thorax': {
-      exports: 'Thorax',
+    'handlebones': {
+      exports: 'Handlebones',
       deps: ['handlebars', 'backbone']
     }<% if (useZepto) { %>,
     'zepto': {

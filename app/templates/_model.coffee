@@ -1,2 +1,2 @@
-define ['thorax'], (Thorax) ->
-  class Model extends Thorax.Model
+define ['handlebones'], (Handlebones) ->
+  class Model extends Handlebones.Model

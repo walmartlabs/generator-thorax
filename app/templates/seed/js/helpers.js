@@ -1,4 +1,4 @@
-define(['handlebars', 'thorax'], function (Handlebars) {
+define(['handlebars', 'handlebones'], function (Handlebars) {
 
   /**
    * Register a normal handlebars helper
