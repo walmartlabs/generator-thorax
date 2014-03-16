@@ -37,12 +37,12 @@ function requireOption(option, message) {
   return option;
 };
 
-describe('Thorax Generator (yo thorax:app NAME)', function () {
+describe('Handlebones Generator (yo handlebones:app NAME)', function () {
   beforeEach(function (done) {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
@@ -86,7 +86,6 @@ describe('Thorax Generator (yo thorax:app NAME)', function () {
       'tasks/options/copy.js',
       'tasks/options/cssmin.js',
       'tasks/options/requirejs.js',
-      'tasks/options/thorax.js',
       'tasks/options/watch.js',
       ['require-config.js', /deps: \['main'\]/],
       'js',
@@ -111,7 +110,7 @@ describe('jQuery or Zepto option', function () {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
@@ -165,7 +164,7 @@ describe('JSHint support', function () {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
@@ -193,7 +192,7 @@ describe('Requirejs abstraction', function () {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
@@ -229,7 +228,7 @@ describe('Production Build', function () {
       helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
         if (err) { return done(err); }
 
-        this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+        this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
         this.app.options['skip-install'] = true;
 
         helpers.mockPrompt(this.app, {

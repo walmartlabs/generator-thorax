@@ -246,7 +246,6 @@ ThoraxGenerator.prototype.app = function () {
   this.copy('seed/tasks/options/copy.js', 'tasks/options/copy.js');
   this.copy('seed/tasks/options/cssmin.js', 'tasks/options/cssmin.js');
   this.copy('seed/tasks/options/requirejs.js', 'tasks/options/requirejs.js');
-  this.copy('seed/tasks/options/thorax.js', 'tasks/options/thorax.js');
   this.copy('seed/tasks/options/watch.js', 'tasks/options/watch.js');
 
   this.mkdir('js');

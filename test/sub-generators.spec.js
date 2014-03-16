@@ -43,7 +43,7 @@ describe('Sub Generators', function () {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) { return done(err); }
 
-      this.app = helpers.createGenerator('thorax:app', ['../../app'], 'test');
+      this.app = helpers.createGenerator('handlebones:app', ['../../app'], 'test');
       this.app.options['skip-install'] = true;
 
       helpers.mockPrompt(this.app, {
@@ -58,12 +58,12 @@ describe('Sub Generators', function () {
     }.bind(this));
   });
 
-  describe('yo thorax:router foo', function () {
+  describe('yo handlebones:router foo', function () {
     describe('When app is JS based(not CS)', function () {
       before(function() { this.includeCoffeeScript = false; });
 
       it('generates a Backbone router in javascript', function (done) {
-        var router = helpers.createGenerator('thorax:router', ['../../router'], ['foo']);
+        var router = helpers.createGenerator('handlebones:router', ['../../router'], ['foo']);
 
         router.run([], function () {
           helpers.assertFiles([
@@ -81,7 +81,7 @@ describe('Sub Generators', function () {
       before(function() { this.includeCoffeeScript = true; });
 
       it('generates a backbone router in coffeescript', function (done) {
-        var router = helpers.createGenerator('thorax:router', ['../../router'], 'foo');
+        var router = helpers.createGenerator('handlebones:router', ['../../router'], 'foo');
 
         router.run([], function () {
           helpers.assertFiles([
@@ -97,13 +97,13 @@ describe('Sub Generators', function () {
     });
   });
 
-  describe('yo thorax:view foo/index', function () {
+  describe('yo handlebones:view foo/index', function () {
     describe('when app is JS based(not CS)', function () {
 
       before(function() { this.includeCoffeeScript = false; });
 
-      it('generates a Thorax view', function (done) {
-        var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo/index']);
+      it('generates a handlebones view', function (done) {
+        var view = helpers.createGenerator('handlebones:view', ['../../view'], ['foo/index']);
 
         view.run([], function () {
           helpers.assertFiles([
@@ -121,8 +121,8 @@ describe('Sub Generators', function () {
     describe('when app is CS based', function () {
       before(function() { this.includeCoffeeScript = true; });
 
-      it('generates a Thorax view', function (done) {
-        var view = helpers.createGenerator('thorax:view', ['../../view'], ['foo/index']);
+      it('generates a handlebones view', function (done) {
+        var view = helpers.createGenerator('handlebones:view', ['../../view'], ['foo/index']);
 
         view.run([], function () {
           helpers.assertFiles([
@@ -140,12 +140,12 @@ describe('Sub Generators', function () {
     });
   });
 
-  describe('yo thorax:model', function () {
+  describe('yo handlebones:model', function () {
     describe('when app is JS based(not CS)', function () {
       before(function() { this.includeCoffeeScript = false; });
 
-      it('generates a Thorax model', function (done) {
-        var model = helpers.createGenerator('thorax:model', ['../../model'], ['foo']);
+      it('generates a handlebones model', function (done) {
+        var model = helpers.createGenerator('handlebones:model', ['../../model'], ['foo']);
 
         model.run([], function () {
           helpers.assertFiles([
@@ -163,8 +163,8 @@ describe('Sub Generators', function () {
     describe('when app is CS based', function () {
       before(function() { this.includeCoffeeScript = true; });
 
-      it('generates a Thorax model', function (done) {
-        var model = helpers.createGenerator('thorax:model', ['../../model'], ['foo']);
+      it('generates a handlebones model', function (done) {
+        var model = helpers.createGenerator('handlebones:model', ['../../model'], ['foo']);
 
         model.run([], function () {
           helpers.assertFiles([
@@ -180,13 +180,13 @@ describe('Sub Generators', function () {
     });
   });
 
-  describe('yo thorax:collection todos', function () {
+  describe('yo handlebones:collection todos', function () {
     describe('when app is JS based(not CS)', function () {
 
       before(function() { this.includeCoffeeScript = false; });
 
-      it('generates a Thorax collection', function (done) {
-        var collection = helpers.createGenerator('thorax:collection', ['../../collection'], ['todos']);
+      it('generates a handlebones collection', function (done) {
+        var collection = helpers.createGenerator('handlebones:collection', ['../../collection'], ['todos']);
 
         collection.run([], function () {
           helpers.assertFiles([
@@ -205,8 +205,8 @@ describe('Sub Generators', function () {
     describe('when app is CS based', function () {
       before(function() { this.includeCoffeeScript = true; });
 
-      it('generates a Thorax collection', function (done) {
-        var collection = helpers.createGenerator('thorax:collection', ['../../collection'], ['todos']);
+      it('generates a handlebones collection', function (done) {
+        var collection = helpers.createGenerator('handlebones:collection', ['../../collection'], ['todos']);
 
         collection.run([], function () {
           helpers.assertFiles([
@@ -222,13 +222,13 @@ describe('Sub Generators', function () {
     });
   });
 
-  describe('yo thorax:collection-view fooBar', function () {
+  describe('yo handlebones:collection-view fooBar', function () {
     describe('when app is JS based(not CS)', function () {
 
       before(function() { this.includeCoffeeScript = false; });
 
-      it('generates a Thorax collection view', function (done) {
-        var collectionView = helpers.createGenerator('thorax:collection-view', ['../../collection-view'], ['fooBar']);
+      it('generates a handlebones collection view', function (done) {
+        var collectionView = helpers.createGenerator('handlebones:collection-view', ['../../collection-view'], ['fooBar']);
 
         collectionView.run([], function () {
           helpers.assertFiles([
@@ -251,8 +251,8 @@ describe('Sub Generators', function () {
 
     describe('when the app is CS based', function () {
       before(function() { this.includeCoffeeScript = true; });
-      it('generates a Thorax collection view', function (done) {
-        var collectionView = helpers.createGenerator('thorax:collection-view', ['../../collection-view'], ['fooBar']);
+      it('generates a handlebones collection view', function (done) {
+        var collectionView = helpers.createGenerator('handlebones:collection-view', ['../../collection-view'], ['fooBar']);
 
         collectionView.run([], function () {
           helpers.assertFiles([

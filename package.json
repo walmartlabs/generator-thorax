@@ -1,14 +1,14 @@
 {
-  "name": "generator-thorax",
-  "version": "0.0.7",
-  "description": "A Thorax generator for Yeoman",
+  "name": "generator-handlebones",
+  "version": "0.0.1",
+  "description": "A Handlebones generator for Yeoman",
   "keywords": [
-    "thorax",
+    "handlebones",
     "generator",
     "yeoman-generator"
   ],
-  "homepage": "https://github.com/walmartlabs/generator-thorax",
-  "bugs": "https://github.com/walmartlabs/generator-thorax/issues",
+  "homepage": "https://github.com/walmartlabs/generator-handlebones",
+  "bugs": "https://github.com/walmartlabs/generator-handlebones/issues",
   "author": {
     "name": "Ryan Eastridge",
     "email": "ryan.eastridge@formidablelabs.com",
@@ -19,12 +19,17 @@
       "name": "Blake Embrey",
       "email": "blake.embrey@formidablelabs.com",
       "url": "https://github.com/blakeembrey"
+    },
+    {
+      "name": "Erik Trom",
+      "email": "erik.trom@gmail.com",
+      "url": "https://github.com/trombom"
     }
   ],
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/walmartlabs/generator-thorax.git"
+    "url": "git://github.com/walmartlabs/generator-handlebones.git"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha"
@@ -46,7 +51,7 @@
     "sinon": "~1.7.3"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "licenses": [
     {
