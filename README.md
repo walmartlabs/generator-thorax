@@ -52,7 +52,7 @@ For a snazzier development environment, it's recommended that you install the [T
   - `css` Generated or copied CSS from the `css` directory, do not modify.
   - `fonts` Any web fonts for your application, safe to modify.
   - `img` Any images, safe to modify
-  - `index.html` Do not modify, add add new libraries to `/require-config.js`
+  - `index.html` Do not modify, and add new libraries to `/require-config.js`
 - `tasks` Put your custom grunt tasks in here
   - `options` Installed grunt options are looked up here, by file name
 - `bower.json` Third party library management via [Bower](http://bower.io/)
