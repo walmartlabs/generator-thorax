@@ -2,17 +2,17 @@
   "name": "<%= _.dasherize(name) %>",
   "version": "0.0.0",
   "dependencies": {
-    "requirejs": "~2.1",
-    "thorax": "~2.0",
+    "requirejs": "2.1.10",
+    "thorax": "2.0.3",
+    "handlebars": "1.0.0",
+    "backbone": "1.0.0",
     "underscore": "1.6.0",
-    "handlebars": "1.1.2",
-    "backbone": "1.1.2",
-    "almond": "~0.2.6",
-    "fixtures": "~1.3.1",
-    "mocha": "1.x",
-    "chai": "1.x",
+    "almond": "0.2.9",
+    "fixtures": "1.3.1",
+    "mocha": "1.17.0",
+    "chai": "1.8.1",
     "sinon": "http://sinonjs.org/releases/sinon-1.7.3.js",
-    "sinon-chai": "2.x",
+    "sinon-chai": "2.4.0",
     "text": "requirejs/text#~2.0.10",
     "requirejs-hbs": "trombom/requirejs-hbs#v0.1",
     "require-cs": "~0.4.4"<% if (!useZepto) { %>,
@@ -20,5 +20,8 @@
     "zepto": "1.0.0"<% } %><% if (styleProcessor === 'less') { %>,
     "bootstrap": "3.x"<% } %>,
     "backbone.localStorage": "1.1.7"
+  },
+  "resolutions": {
+    "underscore": "1.6.0"
   }
 }
