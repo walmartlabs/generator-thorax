@@ -62,7 +62,7 @@ For a snazzier development environment, it's recommended that you install the [T
 
 ## Grunt Tasks
 
-Every generated application comes fully loaded with an amazing development and testing environment. Furthermore, when your ready to show the world what you've made, building a production version of your application and deploying it to the cloud is painless and even testable in multiple browsers.
+Every generated application comes fully loaded with an amazing development and testing environment. Furthermore, when you're ready to show the world what you've made, building a production version of your application and deploying it to the cloud is painless and even testable in multiple browsers.
 
 ### Development
 
@@ -100,7 +100,7 @@ To gain access to the console and debugging tools provided by Chrome, click on t
 
 ** Run `grunt production`**
 
-When your ready to build concatenated and minified versions of your css and JavaScript source run `grunt production`. The output can be found in `dist/` and a browser window will be booted so you can play with the production version of your application before deployment.
+When you're ready to build concatenated and minified versions of your css and JavaScript source run `grunt production`. The output can be found in `dist/` and a browser window will be booted so you can play with the production version of your application before deployment.
 
 #### Test Your Production Build in Multiple Browsers
 
