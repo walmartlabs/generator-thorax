@@ -88,7 +88,7 @@ To try this out run `grunt autotest` from the command line. By default karma is 
 
 ** Run `grunt` in one window and `karma start` in a second**
 
-Another option for running your tests is too skip grunt altogether and simply run `karma start` from your terminal window. This option will provide the fastest feedback loop during development and is recommended once your comfortable running your tests completely on the command line.
+Another option for running your tests is to skip grunt altogether and simply run `karma start` from your terminal window. This option will provide the fastest feedback loop during development and is recommended once your comfortable running your tests completely on the command line.
 
 You still may want to run `grunt` in a second terminal window to hook up livereload to your application when adjusting styles or manually clicking through your app, but running `karma start` will shave roughly a second off of each test run making for a very tight feedback loop.
 
