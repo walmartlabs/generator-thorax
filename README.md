@@ -62,7 +62,7 @@ For a snazzier development environment, it's recommended that you install the [T
 
 ## Grunt Tasks
 
-Every generated application comes fully loaded with an amazing development and testing environment. Furthermore, when your ready to show the world what you've made, building a production version of your application and deploying it to the cloud is painless and even testable in multiple browsers.
+Every generated application comes fully loaded with an amazing development and testing environment. Furthermore, when you're ready to show the world what you've made, building a production version of your application and deploying it to the cloud is painless and even testable in multiple browsers.
 
 ### Development
 
@@ -88,7 +88,7 @@ To try this out run `grunt autotest` from the command line. By default karma is 
 
 ** Run `grunt` in one window and `karma start` in a second**
 
-Another option for running your tests is too skip grunt altogether and simply run `karma start` from your terminal window. This option will provide the fastest feedback loop during development and is recommended once your comfortable running your tests completely on the command line. 
+Another option for running your tests is to skip grunt altogether and simply run `karma start` from your terminal window. This option will provide the fastest feedback loop during development and is recommended once your comfortable running your tests completely on the command line.
 
 You still may want to run `grunt` in a second terminal window to hook up livereload to your application when adjusting styles or manually clicking through your app, but running `karma start` will shave roughly a second off of each test run making for a very tight feedback loop.
 
@@ -100,7 +100,7 @@ To gain access to the console and debugging tools provided by Chrome, click on t
 
 ** Run `grunt production`**
 
-When your ready to build concatenated and minified versions of your css and JavaScript source run `grunt production`. The output can be found in `dist/` and a browser window will be booted so you can play with the production version of your application before deployment.
+When you're ready to build concatenated and minified versions of your css and JavaScript source run `grunt production`. The output can be found in `dist/` and a browser window will be booted so you can play with the production version of your application before deployment.
 
 #### Test Your Production Build in Multiple Browsers
 
@@ -157,11 +157,11 @@ That's it. Your `package.json` file already has a `scripts` option named `start`
 
 ### CoffeeScript Support
 
-Out of the box all generators can optionally output CoffeeScript. 
+Out of the box all generators can optionally output CoffeeScript.
 
 When generating a new application, the generator will simply ask you if you want CoffeeScript or JavaScript and act accordingly by outputting the generated application with the files of the chosen format.
 
-Running a sub generator, like `yo thorax:router`, will look for the presence of at least one `.coffee` file within `js/` and choose whether to output CoffeeScript or JavaScript accordingly. 
+Running a sub generator, like `yo thorax:router`, will look for the presence of at least one `.coffee` file within `js/` and choose whether to output CoffeeScript or JavaScript accordingly.
 
 To force CoffeeScript output, append `--coffee` to any of the following commands.
 
@@ -169,7 +169,7 @@ To force JavaScript output, append `--js` to any of the following commands.
 
 ##### Requiring a CoffeeScript Module
 
-Regardless of what a generator outputs, `.coffee` files are always supported out of the box. 
+Regardless of what a generator outputs, `.coffee` files are always supported out of the box.
 
 To require a CoffeeScript module instead of a JavaScript module simply prefix the module name with `cs!`. For example: (inside a JavaScript module or CoffeeScript module)
 
@@ -238,9 +238,9 @@ $ npm install -g yo generator-thorax
 $ yo thorax todo-list
 [?] Would you like to generate the app in a new directory? Yes
 [?] Choose a css pre-processor: (Use arrow keys)
-    ❯ Less with bootstrap (default choice) 
-      Sass 
-      Stylus 
+    ❯ Less with bootstrap (default choice)
+      Sass
+      Stylus
       Plain CSS
 [?] Would you like to use CoffeeScript? No
 [?] Would you like to use Zepto in place of jQuery (Zepto is best for mobile apps)
@@ -250,7 +250,7 @@ $ yo thorax todo-list
     ❯ None
 ```
 
-...and then `$ cd todo-list`. 
+...and then `$ cd todo-list`.
 
 Note that had you chosen `Todo List` for the sample application above, you would have generated the completed version of the app we're about to build. You may want to do this when we're finished to check your work.
 
@@ -466,7 +466,7 @@ View Behaviors
 In order to add new items to the list we should listen to the `submit` event on `form` elements in our view. We can use the events hash in `js/views/todo-list/index.js`:
 
 ```js
-    events: { 
+    events: {
         "submit form": function(event) {
             event.preventDefault();
             var attrs = this.serialize();
