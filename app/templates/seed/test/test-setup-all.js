@@ -6,17 +6,20 @@
  *      how sinon is shimed in test/main.js for an example).
  *   2. Require the module using the `require('moduleName')` syntax below.
  *   3. Optionally export a property provided by the module to mocha's global
- *      object, e.g, `global.expect = require('chai').expect`.
+ *      object, e.g, `expect = require('chai').expect`.
  *
  * This file is itself a module and it will not be resolved to it's consumer until
  * all modules it consumes are themselves resolved.
  *
  */
 
+/*global expect:true */
+/*global fixtures:true */
+/*global hbsFixture:true */
+
 define(function(require) {
   var chai = require('chai');
-  global.expect = chai.expect;
-  global.AssertionError = chai.AssertionError;
+  expect = chai.expect;
 
   var sinonChai = require("sinon-chai");
   chai.use(sinonChai);
@@ -29,14 +32,14 @@ define(function(require) {
   require('thorax');
 
   // hbs fixture support
-  global.fixtures = require('fixtures');
-  if (typeof window.__karma__ !== "undefined") {
-    global.fixtures.path = 'base/test/fixtures';
+  fixtures = require('fixtures');
+  if (window.__karma__) {
+    fixtures.path = 'base/test/fixtures';
   } else {
-    global.fixtures.path = 'fixtures';
+    fixtures.path = 'fixtures';
   }
-  global.hbsFixture = function(template) {
-    var raw = global.fixtures.read(template);
+  hbsFixture = function(template) {
+    var raw = fixtures.read(template);
     return Handlebars.compile(raw);
   };
 });
