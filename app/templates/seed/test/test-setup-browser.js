@@ -6,13 +6,14 @@
  *
  */
 
+/*global mocha:true */
+/*global mochaPhantomJS:true */
 
 define(function(require) {
-
   require('mocha');
-  global.mocha.checkLeaks();
-  global.mocha.setup('bdd');
-  global.mocha.reporter('html');
+  mocha.checkLeaks();
+  mocha.setup('bdd');
+  mocha.reporter('html');
 
   require("./test-setup-all");
 
@@ -22,8 +23,8 @@ define(function(require) {
     '<% if (includeCoffeeScript) { %>cs!<% } %>./helpers/helpers.spec',
     '<% if (includeCoffeeScript) { %>cs!<% } %>./helpers/view-helpers.spec'
   ], function() { // run mocha
-    if (global.mochaPhantomJS) { global.mochaPhantomJS.run(); }
-    else { global.mocha.run(); }
+    if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+    else { mocha.run(); }
   });
 
 });
