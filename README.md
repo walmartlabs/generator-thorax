@@ -1,5 +1,8 @@
 # Thorax Generator
 
+## Please note:
+This is no longer under active development by it's maintainer. The dependencies templated in this generator do not map to those in the rest of the Thorax project. Use of this generator is no longer supported.
+
 Generate a new [Thorax](http://thoraxjs.org/) application. Includes some configurable options and some opinions.
 
 ```sh
